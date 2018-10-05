@@ -1,0 +1,386 @@
+fileFormatVersion: 2
+guid: 43e3030a6cc964c72913838ff2765ed6
+timeCreated: 1507756080
+licenseType: Free
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: CHWindConveyor01
+    21300002: CHWindConveyor02
+    21300004: CHWindConveyor03
+    21300006: CHWindConveyor04
+    21300008: CHWindConveyor05
+    21300010: CHWindConveyor06
+    21300012: CHWindConveyor07
+    21300014: CHWindConveyor08
+    21300016: CHWindConveyor09
+    21300018: CHWindConveyor10
+    21300020: CHWindConveyor11
+    21300022: CHWindConveyor12
+    21300024: CHWindConveyor13
+    21300026: CHWindConveyor14
+    21300028: CHWindConveyor15
+    21300030: CHWindConveyor16
+    21300032: CHWindConveyor17
+    21300034: CHWindConveyor18
+    21300036: CHWindConveyor19
+    21300038: CHWindConveyor20
+    21300040: CHWindConveyorFloating01
+    21300042: CHWindConveyorFloating02
+    21300044: CHWindConveyorFloating03
+    21300046: CHWindConveyorFloating04
+    21300048: CHWindConveyorFloating05
+    21300050: CHWindConveyorFloating06
+    21300052: CHWindConveyorFloating07
+    21300054: CHWindConveyorFloating08
+    21300056: CHWindConveyorFloating09
+    21300058: CHWindConveyorFloating10
+    21300060: CHWindConveyorFloating11
+    21300062: CHWindConveyorFloating12
+    21300064: CHWindConveyorFloating13
+    21300066: CHWindConveyorFloating14
+    21300068: CHWindConveyorFloating15
+    21300070: CHWindConveyorFloating16
+    21300072: CHWindConveyorFloating17
+    21300074: CHWindConveyorFloating18
+    21300076: CHWindConveyorFloating19
+    21300078: CHWindConveyorFloating20
+    21300080: CHCrumblingPlatform1
+    21300082: CHCrumblingPlatform2
+    21300084: CHCrumblingPlatform3
+    21300086: CHCrumblingPlatform4
+    21300088: CHCrumblingPlatform5
+    21300090: CHCrumblingPlatform6
+    21300092: CHCrumblingPlatform7
+    21300094: CHCrumblingPlatform8
+    21300096: CHCrumblingPlatform9
+    21300098: CHCrumblingPlatform10
+    21300100: CHCrumblingPlatform11
+    21300102: CHCrumblingPlatform12
+    21300104: CHCrumblingPlatform13
+    21300106: CHCrumblingPlatform14
+    21300108: CHCrumblingPlatform15
+    21300110: CHCrumblingPlatform16
+    21300112: CHCrumblingPlatform17
+    21300114: FallingPlatformEffect1
+    21300116: FallingPlatformEffect2
+    21300118: FallingPlatformEffect3
+    21300120: FallingPlatformEffect4
+    21300122: FallingPlatformEffect5
+    21300124: FallingPlatformEffect6
+    21300126: FallingPlatformEffect7
+    21300128: FallingPlatformEffect8
+    21300130: FallingPlatformEffect9
+    21300132: FallingPlatformEffect10
+    21300134: FallingPlatformEffect11
+    21300136: FallingPlatformEffect12
+    21300138: FallingPlatformEffect13
+    21300140: FallingPlatformEffect14
+    21300142: FallingPlatformEffect15
+    21300144: FallingPlatformEffect16
+    21300146: FallingPlatformEffect17
+  serializedVersion: 4
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: -1
+    aniso: -1
+    mipBias: -1
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 100
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  platformSettings:
+  - buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: CHCrumblingPlatform1
+      rect:
+        serializedVersion: 2
+        x: 765
+        y: 542
+        width: 190
+        height: 76
+      alignment: 9
+      pivot: {x: 0.5026316, y: -1.5921053}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: CHCrumblingPlatform2
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 5
+        width: 203
+        height: 98
+      alignment: 9
+      pivot: {x: 0.5049261, y: -1.1836735}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: CHCrumblingPlatform3
+      rect:
+        serializedVersion: 2
+        x: 305
+        y: 11
+        width: 206
+        height: 104
+      alignment: 9
+      pivot: {x: 0.50728154, y: -1.0769231}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: CHCrumblingPlatform4
+      rect:
+        serializedVersion: 2
+        x: 769
+        y: 771
+        width: 213
+        height: 113
+      alignment: 9
+      pivot: {x: 0.5140845, y: -0.91150445}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: CHCrumblingPlatform5
+      rect:
+        serializedVersion: 2
+        x: 656
+        y: 14
+        width: 221
+        height: 122
+      alignment: 9
+      pivot: {x: 0.5045249, y: -0.7704918}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: CHCrumblingPlatform6
+      rect:
+        serializedVersion: 2
+        x: 769
+        y: 886
+        width: 240
+        height: 137
+      alignment: 9
+      pivot: {x: 0.5104167, y: -0.57664233}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: CHCrumblingPlatform7
+      rect:
+        serializedVersion: 2
+        x: 765
+        y: 620
+        width: 253
+        height: 148
+      alignment: 9
+      pivot: {x: 0.50395256, y: -0.45945945}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: CHCrumblingPlatform8
+      rect:
+        serializedVersion: 2
+        x: 748
+        y: 371
+        width: 268
+        height: 158
+      alignment: 9
+      pivot: {x: 0.5018657, y: -0.35443038}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: CHCrumblingPlatform9
+      rect:
+        serializedVersion: 2
+        x: 656
+        y: 138
+        width: 285
+        height: 167
+      alignment: 9
+      pivot: {x: 0.5, y: -0.26347306}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: CHCrumblingPlatform10
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 105
+        width: 302
+        height: 181
+      alignment: 9
+      pivot: {x: 0.49834436, y: -0.1436464}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: CHCrumblingPlatform11
+      rect:
+        serializedVersion: 2
+        x: 337
+        y: 117
+        width: 317
+        height: 188
+      alignment: 9
+      pivot: {x: 0.49684542, y: -0.05851064}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: CHCrumblingPlatform12
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 288
+        width: 334
+        height: 205
+      alignment: 9
+      pivot: {x: 0.49550897, y: 0.043902438}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: CHCrumblingPlatform13
+      rect:
+        serializedVersion: 2
+        x: 395
+        y: 307
+        width: 351
+        height: 222
+      alignment: 9
+      pivot: {x: 0.494302, y: 0.13963965}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: CHCrumblingPlatform14
+      rect:
+        serializedVersion: 2
+        x: 395
+        y: 531
+        width: 368
+        height: 237
+      alignment: 9
+      pivot: {x: 0.49320653, y: 0.22362868}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: CHCrumblingPlatform15
+      rect:
+        serializedVersion: 2
+        x: 383
+        y: 770
+        width: 384
+        height: 253
+      alignment: 9
+      pivot: {x: 0.4908854, y: 0.3043478}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: CHCrumblingPlatform16
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 754
+        width: 380
+        height: 269
+      alignment: 9
+      pivot: {x: 0.5171053, y: 0.37918216}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: CHCrumblingPlatform17
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 495
+        width: 392
+        height: 257
+      alignment: 9
+      pivot: {x: 0.5089286, y: 0.38910505}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    outline: []
+    physicsShape: []
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

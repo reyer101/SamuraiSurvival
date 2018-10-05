@@ -1,0 +1,66 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!687078895 &4343727234628468602
+SpriteAtlas:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: CHDebris
+  m_EditorData:
+    textureSettings:
+      serializedVersion: 2
+      anisoLevel: 1
+      compressionQuality: 50
+      maxTextureSize: 2048
+      textureCompression: 0
+      filterMode: 1
+      generateMipMaps: 0
+      readable: 0
+      crunchedCompression: 0
+      sRGB: 0
+    platformSettings: []
+    packingParameters:
+      serializedVersion: 2
+      padding: 4
+      blockOffset: 1
+      allowAlphaSplitting: 0
+      enableRotation: 1
+      enableTightPacking: 0
+    packedHash:
+      serializedVersion: 2
+      Hash: a943ccef5ec887f112ef05d528afa23d
+    variantMultiplier: 1
+    bindAsDefault: 1
+    finalFormat: 4
+    hashString: a943ccef5ec887f112ef05d528afa23d
+    totalSpriteSurfaceArea: 280000
+    packables:
+    - {fileID: 102900000, guid: 3f65a1f4add544d5d8dea582cdcb3f79, type: 3}
+    - {fileID: 102900000, guid: eb1aa5fd5e79e4afab4f049cf9a80e00, type: 3}
+    packedSpriteRenderDataKeys:
+    - 57e30f4477ac94fd6807158f310b79ea: 21300000
+    - 02682f4c688894072bfe974e76db3e61: 21300000
+    - 85427b7e4c2b54beabda1472f7d45efa: 21300000
+    - 110f4ff0bfbc54c6da4071f8910ced91: 21300000
+    - 9cda966d2636946f5937aeb4da111fed: 21300000
+    - ae68727abed03435cb36baccea3ce0b2: 21300000
+    - e56c9bca64da04383bbaeb6a0525f7b9: 21300000
+  m_MasterAtlas: {fileID: 0}
+  m_PackedSprites:
+  - {fileID: 21300000, guid: 57e30f4477ac94fd6807158f310b79ea, type: 3}
+  - {fileID: 21300000, guid: 02682f4c688894072bfe974e76db3e61, type: 3}
+  - {fileID: 21300000, guid: 85427b7e4c2b54beabda1472f7d45efa, type: 3}
+  - {fileID: 21300000, guid: 110f4ff0bfbc54c6da4071f8910ced91, type: 3}
+  - {fileID: 21300000, guid: 9cda966d2636946f5937aeb4da111fed, type: 3}
+  - {fileID: 21300000, guid: ae68727abed03435cb36baccea3ce0b2, type: 3}
+  - {fileID: 21300000, guid: e56c9bca64da04383bbaeb6a0525f7b9, type: 3}
+  m_PackedSpriteNamesToIndex:
+  - Dust1
+  - Dust3
+  - Dust2
+  - Rock4
+  - Rock1
+  - Rock2
+  - Rock3
+  m_Tag: CHDebris
+  m_IsVariant: 0

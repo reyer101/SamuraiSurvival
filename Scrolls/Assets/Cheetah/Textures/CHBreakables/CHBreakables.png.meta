@@ -1,0 +1,434 @@
+fileFormatVersion: 2
+guid: 22e1b2353cd8ab741897b181eefc832c
+timeCreated: 1507596883
+licenseType: Free
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: CHBreakableNugget1
+    21300002: CHBreakableNugget2
+    21300004: CHBreakableNugget3
+    21300006: CHBreakableNugget4
+    21300008: CHBreakableNugget5
+    21300010: CHBreakableNugget6
+    21300012: CHBreakableNugget7
+    21300014: CHBreakableNugget8
+    21300016: CHBreakableNugget9
+    21300018: CHBreakableNugget10
+    21300020: CHBreakableNugget11
+    21300022: CHBreakableNugget12
+    21300024: CHBreakableTender1
+    21300026: CHBreakableTender2
+    21300028: CHBreakableTender3
+    21300030: CHBreakableTender4
+    21300032: CHBreakableTender5
+    21300034: CHBreakableTender6
+    21300036: CHBreakableTender7
+    21300038: CHBreakableTender8
+    21300040: CHBreakableTender9
+    21300042: CHBreakableTender10
+    21300044: CHBreakableTender11
+    21300046: CHBreakableTender12
+  serializedVersion: 4
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: -1
+    aniso: -1
+    mipBias: -1
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 100
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  platformSettings:
+  - buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: CHBreakableNugget1
+      rect:
+        serializedVersion: 2
+        x: 725
+        y: 997
+        width: 120
+        height: 116
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: CHBreakableNugget2
+      rect:
+        serializedVersion: 2
+        x: 867
+        y: 1543
+        width: 150
+        height: 154
+      alignment: 9
+      pivot: {x: 0.47333333, y: 0.45454547}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: CHBreakableNugget3
+      rect:
+        serializedVersion: 2
+        x: 867
+        y: 1389
+        width: 145
+        height: 152
+      alignment: 9
+      pivot: {x: 0.5448276, y: 0.47368422}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: CHBreakableNugget4
+      rect:
+        serializedVersion: 2
+        x: 699
+        y: 645
+        width: 164
+        height: 172
+      alignment: 9
+      pivot: {x: 0.5243902, y: 0.47093022}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: CHBreakableNugget5
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 362
+        width: 175
+        height: 171
+      alignment: 9
+      pivot: {x: 0.52, y: 0.47953215}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: CHBreakableNugget6
+      rect:
+        serializedVersion: 2
+        x: 240
+        y: 661
+        width: 204
+        height: 200
+      alignment: 9
+      pivot: {x: 0.5294118, y: 0.485}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: CHBreakableNugget7
+      rect:
+        serializedVersion: 2
+        x: 492
+        y: 896
+        width: 231
+        height: 217
+      alignment: 9
+      pivot: {x: 0.5281385, y: 0.516129}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: CHBreakableNugget8
+      rect:
+        serializedVersion: 2
+        x: 247
+        y: 1116
+        width: 244
+        height: 231
+      alignment: 9
+      pivot: {x: 0.5, y: 0.51082253}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: CHBreakableNugget9
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 868
+        width: 243
+        height: 233
+      alignment: 9
+      pivot: {x: 0.4979424, y: 0.53218883}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: CHBreakableNugget10
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 1103
+        width: 244
+        height: 244
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: CHBreakableNugget11
+      rect:
+        serializedVersion: 2
+        x: 605
+        y: 1115
+        width: 244
+        height: 250
+      alignment: 9
+      pivot: {x: 0.5, y: 0.488}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: CHBreakableNugget12
+      rect:
+        serializedVersion: 2
+        x: 247
+        y: 863
+        width: 243
+        height: 251
+      alignment: 9
+      pivot: {x: 0.5020576, y: 0.49003986}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: CHBreakableTender1
+      rect:
+        serializedVersion: 2
+        x: 867
+        y: 1224
+        width: 130
+        height: 163
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: CHBreakableTender2
+      rect:
+        serializedVersion: 2
+        x: 847
+        y: 819
+        width: 176
+        height: 195
+      alignment: 9
+      pivot: {x: 0.54829544, y: 0.50256413}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: CHBreakableTender3
+      rect:
+        serializedVersion: 2
+        x: 851
+        y: 1016
+        width: 170
+        height: 206
+      alignment: 9
+      pivot: {x: 0.57941175, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: CHBreakableTender4
+      rect:
+        serializedVersion: 2
+        x: 240
+        y: 418
+        width: 192
+        height: 241
+      alignment: 9
+      pivot: {x: 0.46614584, y: 0.46887967}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: CHBreakableTender5
+      rect:
+        serializedVersion: 2
+        x: 492
+        y: 624
+        width: 205
+        height: 270
+      alignment: 9
+      pivot: {x: 0.44634145, y: 0.5037037}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: CHBreakableTender6
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 535
+        width: 237
+        height: 331
+      alignment: 9
+      pivot: {x: 0.5337553, y: 0.51359516}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: CHBreakableTender7
+      rect:
+        serializedVersion: 2
+        x: 605
+        y: 1367
+        width: 260
+        height: 330
+      alignment: 9
+      pivot: {x: 0.525, y: 0.5090909}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: CHBreakableTender8
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 1349
+        width: 301
+        height: 348
+      alignment: 9
+      pivot: {x: 0.5332226, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: CHBreakableTender9
+      rect:
+        serializedVersion: 2
+        x: 304
+        y: 1349
+        width: 299
+        height: 348
+      alignment: 9
+      pivot: {x: 0.46989965, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: CHBreakableTender10
+      rect:
+        serializedVersion: 2
+        x: 323
+        y: 1699
+        width: 317
+        height: 348
+      alignment: 9
+      pivot: {x: 0.49684542, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: CHBreakableTender11
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 1699
+        width: 320
+        height: 348
+      alignment: 9
+      pivot: {x: 0.5015625, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: CHBreakableTender12
+      rect:
+        serializedVersion: 2
+        x: 642
+        y: 1699
+        width: 317
+        height: 348
+      alignment: 9
+      pivot: {x: 0.50630915, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    outline: []
+    physicsShape: []
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

@@ -1,0 +1,4 @@
+sceneSetups:
+- path: Assets/Cheetah/Scenes/1-1KH.unity
+  isLoaded: 1
+  isActive: 1

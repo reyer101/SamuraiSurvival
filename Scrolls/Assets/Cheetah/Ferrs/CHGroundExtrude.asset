@@ -1,0 +1,153 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3cfe511f5ae84c24e82fbf88db7e24ae, type: 3}
+  m_Name: CHGroundExtrude
+  m_EditorClassIdentifier: 
+  _fillMaterial: {fileID: 2100000, guid: ccb868d6b7a47f94b8a2bfc77a807767, type: 2}
+  _edgeMaterial: {fileID: 2100000, guid: 14630d5756379954ba9f26a1ab172b64, type: 2}
+  _descriptors:
+  - applyTo: 0
+    zOffset: 0
+    yOffset: 0
+    leftCap:
+      serializedVersion: 2
+      x: 0.0009765625
+      y: 0.0107421875
+      width: 0.029296875
+      height: 0.078125
+    innerLeftCap:
+      serializedVersion: 2
+      x: 0
+      y: 0
+      width: 0
+      height: 0
+    rightCap:
+      serializedVersion: 2
+      x: 0.31982422
+      y: 0.0107421875
+      width: 0.029296875
+      height: 0.078125
+    innerRightCap:
+      serializedVersion: 2
+      x: 0
+      y: 0
+      width: 0
+      height: 0
+    body:
+    - serializedVersion: 2
+      x: 0.046875
+      y: 0.0107421875
+      width: 0.25878906
+      height: 0.078125
+    capOffset: 0
+  - applyTo: 1
+    zOffset: 0.02
+    yOffset: 0
+    leftCap:
+      serializedVersion: 2
+      x: 0
+      y: 0
+      width: 0
+      height: 0
+    innerLeftCap:
+      serializedVersion: 2
+      x: 0
+      y: 0
+      width: 0
+      height: 0
+    rightCap:
+      serializedVersion: 2
+      x: 0
+      y: 0
+      width: 0
+      height: 0
+    innerRightCap:
+      serializedVersion: 2
+      x: 0
+      y: 0
+      width: 0
+      height: 0
+    body:
+    - serializedVersion: 2
+      x: 0.39111328
+      y: 0.032226562
+      width: 0.25634766
+      height: 0.060058594
+    capOffset: 0
+  - applyTo: 2
+    zOffset: 0.03
+    yOffset: 0
+    leftCap:
+      serializedVersion: 2
+      x: 0
+      y: 0
+      width: 0
+      height: 0
+    innerLeftCap:
+      serializedVersion: 2
+      x: 0
+      y: 0
+      width: 0
+      height: 0
+    rightCap:
+      serializedVersion: 2
+      x: 1
+      y: 0
+      width: 0
+      height: 0
+    innerRightCap:
+      serializedVersion: 2
+      x: 0
+      y: 0
+      width: 0
+      height: 0
+    body:
+    - serializedVersion: 2
+      x: 0.69091797
+      y: 0.030761719
+      width: 0.25634766
+      height: 0.060058594
+    capOffset: 0
+  - applyTo: 3
+    zOffset: 0.01
+    yOffset: 0.44
+    leftCap:
+      serializedVersion: 2
+      x: 0.005859375
+      y: 0.1171875
+      width: 0.040039062
+      height: 0.078125
+    innerLeftCap:
+      serializedVersion: 2
+      x: 0
+      y: 0
+      width: 0
+      height: 0
+    rightCap:
+      serializedVersion: 2
+      x: 0.34228516
+      y: 0.1171875
+      width: 0.040039062
+      height: 0.078125
+    innerRightCap:
+      serializedVersion: 2
+      x: 0
+      y: 0
+      width: 0
+      height: 0
+    body:
+    - serializedVersion: 2
+      x: 0.068359375
+      y: 0.1171875
+      width: 0.25683594
+      height: 0.078124985
+    capOffset: 0.2
+  isPixel: 0
