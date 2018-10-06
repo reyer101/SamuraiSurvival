@@ -24,26 +24,28 @@ public class AlecController : MonoBehaviour {
 	void Update () {
         if (!m_Jump && m_CanMove)
         {
-            m_Jump = CrossPlatformInputManager.GetButtonDown("Jump");
-        }          
-    }
+            m_Jump = CrossPlatformInputManager.GetButtonDown("Jump");            
+        }
 
-    // FixedUpdate
-    void FixedUpdate()
-    {
-        if(m_CanMove)
+        if (m_CanMove)
         {
-            float h = CrossPlatformInputManager.GetAxis("Horizontal");
-            m_Player.Move(h, m_Jump, m_Crouch);            
+            float h = CrossPlatformInputManager.GetAxis("Horizontal");            
+            m_Player.Move(h, m_Jump, m_Crouch);
         }
         else
         {
-            m_Player.Move(0, false, m_Crouch);            
+            m_Player.Move(0, false, m_Crouch);
         }
 
         m_Jump = false;
 
-        float v = CrossPlatformInputManager.GetAxis("Vertical");      
+        float v = CrossPlatformInputManager.GetAxis("Vertical");
+    }
+
+    // FixedUpdate
+    void FixedUpdate()
+    {        
+            
     }
 
     /*

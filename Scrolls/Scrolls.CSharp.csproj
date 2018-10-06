@@ -328,13 +328,6 @@
     <Compile Include="Assets\Ferr\2D\Scripts\poly2tri.cs\Utility\Point2D.cs" />
     <Compile Include="Assets\Ferr\2D\Scripts\poly2tri.cs\Utility\Point2DList.cs" />
     <Compile Include="Assets\Ferr\2D\Scripts\poly2tri.cs\Utility\Rect2D.cs" />
-    <Compile Include="Assets\Ferr\2DTerrain\Examples\Assets\BlobShadow.cs" />
-    <Compile Include="Assets\Ferr\2DTerrain\Examples\Assets\InfiniteTerrain.cs" />
-    <Compile Include="Assets\Ferr\2DTerrain\Examples\Assets\InfiniteTerrainCamera.cs" />
-    <Compile Include="Assets\Ferr\2DTerrain\Examples\Assets\ProceduralInsert.cs" />
-    <Compile Include="Assets\Ferr\2DTerrain\Examples\Assets\Toss.cs" />
-    <Compile Include="Assets\Ferr\2DTerrain\Examples\Assets\TumbleweedMotion.cs" />
-    <Compile Include="Assets\Ferr\2DTerrain\Examples\Assets\TumbleweedSpawner.cs" />
     <Compile Include="Assets\Ferr\2DTerrain\Scripts\Ferr2DT_PathTerrain.cs" />
     <Compile Include="Assets\Ferr\2DTerrain\Scripts\Ferr2DT_TerrainMaterial.cs" />
     <Compile Include="Assets\Ferr\Common\2DT\Ferr2DT_Material.cs" />
