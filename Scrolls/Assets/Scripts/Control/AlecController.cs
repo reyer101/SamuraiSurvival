@@ -27,6 +27,11 @@ public class AlecController : MonoBehaviour {
             m_Jump = CrossPlatformInputManager.GetButtonDown("Jump");            
         }
 
+        if(m_Jump)
+        {
+            Debug.Log("Should jump");
+        }        
+
         if (m_CanMove)
         {
             float h = CrossPlatformInputManager.GetAxis("Horizontal");            
@@ -37,9 +42,7 @@ public class AlecController : MonoBehaviour {
             m_Player.Move(0, false, m_Crouch);
         }
 
-        m_Jump = false;
-
-        float v = CrossPlatformInputManager.GetAxis("Vertical");
+        m_Jump = false;        
     }
 
     // FixedUpdate

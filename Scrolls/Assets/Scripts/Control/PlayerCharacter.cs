@@ -24,7 +24,7 @@ public class PlayerCharacter : MonoBehaviour {
     
     private String m_AnimPrefix;  
     private float lastJumpTime;    
-    private float k_GroundedRadius = .5f;   
+    private float k_GroundedRadius = 15f;   
     private float k_ClimbRadius = 1.0f;
     private float k_UnderRadius = 1f;
     public float k_GroundDistance;
@@ -61,7 +61,7 @@ public class PlayerCharacter : MonoBehaviour {
 
         if(m_Grounded)
         {
-            //m_Animator.speed = Mathf.Abs(.2f * m_Rigidbody2D.velocity.x);                    
+            m_Animator.speed = Mathf.Abs(.2f * m_RigidBody.velocity.x);                    
         }
         else
         {            
@@ -92,29 +92,21 @@ public class PlayerCharacter : MonoBehaviour {
             movement = Vector3.zero;
         }
 
+        m_RigidBody.velocity = movement * m_MaxSpeed;
         m_Animator.speed = movement.x * m_MaxSpeed;
 
-        Debug.Log("m_Grounded: " + m_Grounded);
+        //Debug.Log("m_Grounded: " + m_Grounded);
         if (m_Grounded && jump)
         {            
             m_Grounded = false;
-            m_RigidBody.AddForce(new Vector2(0, m_JumpForce));
+            Debug.Log("Add force");
+            m_RigidBody.AddForce(new Vector2(0f, m_JumpForce));
             
             lastJumpTime = Time.time;
             m_Animator.runtimeAnimatorController = Resources.Load(
                 m_AnimPrefix + Constants.Jump) as RuntimeAnimatorController;
-        }
-
-        m_RigidBody.velocity = movement * m_MaxSpeed;
-                        
-        /*if(horizontal <= 0 && m_Rigidbody2D.velocity.x > 0
-            || horizontal >= 0 && m_Rigidbody2D.velocity.x < 0) {
-            m_Rigidbody2D.constraints = RigidbodyConstraints2D.FreezePositionX
-                | RigidbodyConstraints2D.FreezeRotation;
-        }*/
-                             
-        /*m_Rigidbody2D.velocity = new Vector2(
-            horizontal * m_MaxSpeed, m_Rigidbody2D.velocity.y);*/
+        }                               
+        
         m_GroundCheck.localPosition = m_WalkGroundCheck;
 
         if(m_Grounded && Time.time - lastJumpTime > .1f)
@@ -133,11 +125,5 @@ public class PlayerCharacter : MonoBehaviour {
         {            
             SceneManager.LoadScene(SceneManager.GetSceneAt(0).name);            
         }
-    }
-    
-    // OnTriggerEnter2D
-    void OnTriggerEnter2D(Collider2D other)
-    {
-        
-    } 
+    }   
 }
