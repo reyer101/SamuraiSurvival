@@ -6,12 +6,12 @@ using UnityEngine;
 // PlayerCharacter
 public class PlayerCharacter : MonoBehaviour {    
     public LinkedList<GameObject> m_LevitateTargets;    
-    public float m_MaxSpeed, m_ClimbSpeed, m_CrouchSpeed, m_JumpSpeed, 
+    public float m_MaxSpeed, m_ClimbSpeed, m_CrouchSpeed, m_JumpForce, 
         m_FireSpellCD, m_LevitateRadius, m_LevitateSpeed, m_Gravity;
     public int HP;
     public bool m_DropWhenOutOfRange, m_CanLevitateAndMove;    
     private bool m_Grounded;
-    private CharacterController m_CharacterController;  
+    private Rigidbody2D m_RigidBody;  
     private AudioSource m_Audio;
     private Animator m_Animator;      
     private BoxCollider2D[] m_Colliders;
@@ -32,7 +32,7 @@ public class PlayerCharacter : MonoBehaviour {
 
     // Awake
     void Awake () {
-        m_CharacterController = GetComponent<CharacterController>();
+        m_RigidBody = GetComponent<Rigidbody2D>();
         m_Colliders = GetComponents<BoxCollider2D>();
         m_Audio = GetComponent<AudioSource>();
         m_Animator = GetComponent<Animator>();
@@ -98,15 +98,14 @@ public class PlayerCharacter : MonoBehaviour {
         if (m_Grounded && jump)
         {            
             m_Grounded = false;
-            float movementY = m_JumpSpeed;
-            movement.y = m_JumpSpeed - (m_Gravity * Time.deltaTime);
+            m_RigidBody.AddForce(new Vector2(0, m_JumpForce));
             
             lastJumpTime = Time.time;
             m_Animator.runtimeAnimatorController = Resources.Load(
                 m_AnimPrefix + Constants.Jump) as RuntimeAnimatorController;
         }
 
-        m_CharacterController.Move(movement * m_MaxSpeed * Time.deltaTime);
+        m_RigidBody.velocity = movement * m_MaxSpeed;
                         
         /*if(horizontal <= 0 && m_Rigidbody2D.velocity.x > 0
             || horizontal >= 0 && m_Rigidbody2D.velocity.x < 0) {

@@ -287,6 +287,12 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\2D Platformer Controller\Scripts\CameraFollow.cs" />
+    <Compile Include="Assets\2D Platformer Controller\Scripts\Controller2D.cs" />
+    <Compile Include="Assets\2D Platformer Controller\Scripts\PlatformController.cs" />
+    <Compile Include="Assets\2D Platformer Controller\Scripts\Player.cs" />
+    <Compile Include="Assets\2D Platformer Controller\Scripts\PlayerInput.cs" />
+    <Compile Include="Assets\2D Platformer Controller\Scripts\RaycastController.cs" />
     <Compile Include="Assets\Cheetah\SampleScenes\Scripts\SlowMoButton.cs" />
     <Compile Include="Assets\Ferr\2D\Scripts\Ferr2D_DynamicMesh.cs" />
     <Compile Include="Assets\Ferr\2D\Scripts\Ferr2D_IPath.cs" />
@@ -328,6 +334,13 @@
     <Compile Include="Assets\Ferr\2D\Scripts\poly2tri.cs\Utility\Point2D.cs" />
     <Compile Include="Assets\Ferr\2D\Scripts\poly2tri.cs\Utility\Point2DList.cs" />
     <Compile Include="Assets\Ferr\2D\Scripts\poly2tri.cs\Utility\Rect2D.cs" />
+    <Compile Include="Assets\Ferr\2DTerrain\Examples\Assets\BlobShadow.cs" />
+    <Compile Include="Assets\Ferr\2DTerrain\Examples\Assets\InfiniteTerrain.cs" />
+    <Compile Include="Assets\Ferr\2DTerrain\Examples\Assets\InfiniteTerrainCamera.cs" />
+    <Compile Include="Assets\Ferr\2DTerrain\Examples\Assets\ProceduralInsert.cs" />
+    <Compile Include="Assets\Ferr\2DTerrain\Examples\Assets\Toss.cs" />
+    <Compile Include="Assets\Ferr\2DTerrain\Examples\Assets\TumbleweedMotion.cs" />
+    <Compile Include="Assets\Ferr\2DTerrain\Examples\Assets\TumbleweedSpawner.cs" />
     <Compile Include="Assets\Ferr\2DTerrain\Scripts\Ferr2DT_PathTerrain.cs" />
     <Compile Include="Assets\Ferr\2DTerrain\Scripts\Ferr2DT_TerrainMaterial.cs" />
     <Compile Include="Assets\Ferr\Common\2DT\Ferr2DT_Material.cs" />
@@ -444,12 +457,22 @@
     <Compile Include="Assets\ProCamera2D\Examples\TopDownShooter\Scripts\RotateTowardsMouse.cs" />
     <Compile Include="Assets\ProCamera2D\Examples\TopDownShooter\Scripts\SwitchCameraProjection.cs" />
     <Compile Include="Assets\ProCamera2D\ProCamera2D.cs" />
+    <Compile Include="Assets\SampleScenes\Menu\Scripts\MenuSceneLoader.cs" />
+    <Compile Include="Assets\SampleScenes\Menu\Scripts\PauseMenu.cs" />
+    <Compile Include="Assets\SampleScenes\Menu\Scripts\SceneAndURLLoader.cs" />
+    <Compile Include="Assets\SampleScenes\Scripts\CameraSwitch.cs" />
+    <Compile Include="Assets\SampleScenes\Scripts\LevelReset.cs" />
+    <Compile Include="Assets\SampleScenes\Scripts\ParticleSceneControls.cs" />
+    <Compile Include="Assets\SampleScenes\Scripts\PlaceTargetWithMouse.cs" />
     <Compile Include="Assets\Scripts\Control\AlecController.cs" />
     <Compile Include="Assets\Scripts\Control\PlayerCharacter.cs" />
     <Compile Include="Assets\Scripts\Utils\Constants.cs" />
     <Compile Include="Assets\Scripts\Utils\MusicManager.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Assets\2D Platformer Controller\LICENSE.txt" />
+    <None Include="Assets\2D Platformer Controller\LICENSE02.txt" />
+    <None Include="Assets\2D Platformer Controller\Readme.txt" />
     <None Include="Assets\Cheetah\SampleScenes\Shaders\Skybox-Procedural.shader" />
     <None Include="Assets\Ferr\2D\Scripts\poly2tri.cs\AUTHORS.txt" />
     <None Include="Assets\Ferr\2D\Scripts\poly2tri.cs\LICENSE.txt" />
@@ -479,6 +502,7 @@
     <None Include="Assets\Ferr\Common\Shaders\UnlitVertexColorTex.shader" />
     <None Include="Assets\Ferr\Common\Shaders\UnlitVertexColorTexTransparent.shader" />
     <None Include="Assets\Ferr\Common\Shaders\UnlitVertexColorTransparent.shader" />
+    <None Include="Assets\Ferr\Docs\Ferr2DTerrainTool - Readme.txt" />
     <None Include="Assets\ProCamera2D\Code\Helpers\Letterbox\Resources\Letterbox.shader" />
     <None Include="Assets\ProCamera2D\Code\Helpers\TransitionFX\Resources\PC2D_Blinds.shader" />
     <None Include="Assets\ProCamera2D\Code\Helpers\TransitionFX\Resources\PC2D_Circle.shader" />
@@ -488,6 +512,8 @@
     <None Include="Assets\ProCamera2D\Code\Helpers\TransitionFX\Resources\PC2D_Wipe.shader" />
     <None Include="Assets\ProCamera2D\README.txt" />
     <None Include="Assets\ProCamera2D\TransitionFX Textures\README.txt" />
+    <None Include="Assets\SampleScenes\Shaders\Skybox-Procedural.shader" />
+    <None Include="Assets\Standard Assets\Cameras\CameraGuidelines.txt" />
     <None Include="Assets\Standard Assets\CrossPlatformInput\CrossPlatformInputGuidelines.txt" />
     <None Include="Assets\Standard Assets\Effects\GlassRefraction\Shaders\GlassStainedBumpDistort.shader" />
     <None Include="Assets\Standard Assets\Effects\ImageEffects\Readme.txt" />
@@ -505,6 +531,7 @@
     <None Include="Assets\Standard Assets\ParticleSystems\Shaders\PriorityParticleAdd.shader" />
     <None Include="Assets\Standard Assets\ParticleSystems\Shaders\PriorityParticleAddSoft.shader" />
     <None Include="Assets\Standard Assets\ParticleSystems\Shaders\PriorityParticleAlpha.shader" />
+    <None Include="Assets\Standard Assets\Prototyping\Shaders\WorldCoordDiffuse.shader" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\SyntaxTree\UnityVS\2015\UnityVS.CSharp.targets" />
 </Project>
