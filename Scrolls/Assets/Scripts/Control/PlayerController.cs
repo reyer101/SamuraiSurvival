@@ -23,7 +23,7 @@ public class PlayerController : MonoBehaviour {
             m_Jump = CrossPlatformInputManager.GetButtonDown("Jump");
         }
 
-	    m_Block = CrossPlatformInputManager.GetButtonDown("Block");
+	    m_Block = CrossPlatformInputManager.GetButton("Block");
 	}
 
     // FixedUpdate

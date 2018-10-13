@@ -101,7 +101,6 @@ public class PlayerCharacter : MonoBehaviour {
             m_Grounded = false;
             m_Rigidbody2D.AddForce(new Vector2(0f, m_JumpForce));
             lastJumpTime = Time.time;
-            m_Animator.speed = m_Animator.speed / 10f;
             m_Animator.runtimeAnimatorController = Resources.Load(
                 Constants.ANIM_JUMP) as RuntimeAnimatorController;
         }               
@@ -113,15 +112,21 @@ public class PlayerCharacter : MonoBehaviour {
     */
     public void Attack(bool attack, bool block)
     {
-        if (block)
+        if (block && m_Grounded)
         {
-            m_SpriteRenderer.sprite = Resources.Load(
-                Constants.SPRITE_BLOCK) as Sprite;
+            Debug.Log("Loading block sprite...");
+            m_Animator.runtimeAnimatorController = Resources.Load(
+                Constants.ANIM_EMPTY) as RuntimeAnimatorController;
+            m_SpriteRenderer.sprite = Resources.Load<Sprite>(
+                Constants.SPRITE_BLOCK);
             m_MaxSpeed = blockSpeed;
 
             return;
         }
 
+        m_SpriteRenderer.sprite = Resources.Load<Sprite>(
+            Constants.SPRITE_IDLE);
+        m_MaxSpeed = baseSpeed;
         if (attack)
         {
             
