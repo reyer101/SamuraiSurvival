@@ -1,0 +1,565 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ContentModelStore">
+    <e p="$PROJECT_DIR$" t="IncludeRecursive">
+      <e p="Assembly-CSharp-Editor-firstpass.csproj" t="IncludeRecursive" />
+      <e p="Assembly-CSharp-Editor.csproj" t="IncludeRecursive" />
+      <e p="Assembly-CSharp-firstpass.csproj" t="IncludeRecursive" />
+      <e p="Assembly-CSharp.csproj" t="IncludeRecursive" />
+      <e p="Assets/2D Platformer Controller" t="Include">
+        <e p="LICENSE.txt" t="Include" />
+        <e p="LICENSE02.txt" t="Include" />
+        <e p="Readme.txt" t="Include" />
+        <e p="Scripts" t="Include">
+          <e p="CameraFollow.cs" t="Include" />
+          <e p="Controller2D.cs" t="Include" />
+          <e p="PlatformController.cs" t="Include" />
+          <e p="Player.cs" t="Include" />
+          <e p="PlayerInput.cs" t="Include" />
+          <e p="RaycastController.cs" t="Include" />
+        </e>
+      </e>
+      <e p="Assets/Cheetah" t="Include">
+        <e p="SampleScenes" t="Include">
+          <e p="Scripts" t="Include">
+            <e p="SlowMoButton.cs" t="Include" />
+          </e>
+          <e p="Shaders" t="Include">
+            <e p="Skybox-Procedural.shader" t="Include" />
+          </e>
+        </e>
+      </e>
+      <e p="Assets/Ferr" t="Include">
+        <e p="2D" t="Include">
+          <e p="Editor" t="Include">
+            <e p="Ferr2D_PathEditor.cs" t="Include" />
+            <e p="Ferr2D_Visual.cs" t="Include" />
+          </e>
+          <e p="Scripts" t="Include">
+            <e p="Ferr2D_DynamicMesh.cs" t="Include" />
+            <e p="Ferr2D_IPath.cs" t="Include" />
+            <e p="Ferr2D_Path.cs" t="Include" />
+            <e p="Ferr2D_Triangulator.cs" t="Include" />
+            <e p="poly2tri.cs" t="Include">
+              <e p="AUTHORS.txt" t="Include" />
+              <e p="LICENSE.txt" t="Include" />
+              <e p="P2T.cs" t="Include" />
+              <e p="Triangulation" t="Include">
+                <e p="Delaunay" t="Include">
+                  <e p="DelaunayTriangle.cs" t="Include" />
+                  <e p="Sweep" t="Include">
+                    <e p="AdvancingFront.cs" t="Include" />
+                    <e p="AdvancingFrontNode.cs" t="Include" />
+                    <e p="DTSweep.cs" t="Include" />
+                    <e p="DTSweepBasin.cs" t="Include" />
+                    <e p="DTSweepConstraint.cs" t="Include" />
+                    <e p="DTSweepContext.cs" t="Include" />
+                    <e p="DTSweepDebugContext.cs" t="Include" />
+                    <e p="DTSweepEdgeEvent.cs" t="Include" />
+                    <e p="DTSweepPointComparator.cs" t="Include" />
+                    <e p="PointOnEdgeException.cs" t="Include" />
+                  </e>
+                </e>
+                <e p="ITriangulatable.cs" t="Include" />
+                <e p="Orientation.cs" t="Include" />
+                <e p="Polygon" t="Include">
+                  <e p="Contour.cs" t="Include" />
+                  <e p="Polygon.cs" t="Include" />
+                  <e p="PolygonPoint.cs" t="Include" />
+                  <e p="PolygonSet.cs" t="Include" />
+                  <e p="PolygonUtil.cs" t="Include" />
+                </e>
+                <e p="Sets" t="Include">
+                  <e p="ConstrainedPointSet.cs" t="Include" />
+                  <e p="PointSet.cs" t="Include" />
+                </e>
+                <e p="TriangulationAlgorithm.cs" t="Include" />
+                <e p="TriangulationConstraint.cs" t="Include" />
+                <e p="TriangulationContext.cs" t="Include" />
+                <e p="TriangulationDebugContext.cs" t="Include" />
+                <e p="TriangulationMode.cs" t="Include" />
+                <e p="TriangulationPoint.cs" t="Include" />
+                <e p="Util" t="Include">
+                  <e p="PointGenerator.cs" t="Include" />
+                  <e p="PolygonGenerator.cs" t="Include" />
+                  <e p="TriangulationUtil.cs" t="Include" />
+                </e>
+              </e>
+              <e p="Utility" t="Include">
+                <e p="FixedArray3.cs" t="Include" />
+                <e p="FixedBitArray3.cs" t="Include" />
+                <e p="MathUtil.cs" t="Include" />
+                <e p="Point2D.cs" t="Include" />
+                <e p="Point2DList.cs" t="Include" />
+                <e p="Rect2D.cs" t="Include" />
+              </e>
+            </e>
+          </e>
+        </e>
+        <e p="2DTerrain" t="Include">
+          <e p="Editor" t="Include">
+            <e p="Ferr2DT_Builder.cs" t="Include" />
+            <e p="Ferr2DT_MaterialSelector.cs" t="Include" />
+            <e p="Ferr2DT_Menu.cs" t="Include" />
+            <e p="Ferr2DT_PathTerrainEditor.cs" t="Include" />
+            <e p="Ferr2DT_SceneOverlay.cs" t="Include" />
+            <e p="Ferr2DT_TerrainMaterialEditor.cs" t="Include" />
+            <e p="Ferr2DT_TerrainMaterialWindow.cs" t="Include" />
+          </e>
+          <e p="Examples" t="Include">
+            <e p="Assets" t="Include">
+              <e p="BlobShadow.cs" t="Include" />
+              <e p="InfiniteTerrain.cs" t="Include" />
+              <e p="InfiniteTerrainCamera.cs" t="Include" />
+              <e p="ProceduralInsert.cs" t="Include" />
+              <e p="Toss.cs" t="Include" />
+              <e p="TumbleweedMotion.cs" t="Include" />
+              <e p="TumbleweedSpawner.cs" t="Include" />
+            </e>
+          </e>
+          <e p="Scripts" t="Include">
+            <e p="Ferr2DT_PathTerrain.cs" t="Include" />
+            <e p="Ferr2DT_TerrainMaterial.cs" t="Include" />
+          </e>
+          <e p="Shaders" t="Include">
+            <e p="Ferr2DTCommon.cginc" t="Include" />
+            <e p="LightmapColored.shader" t="Include" />
+            <e p="LightmapColoredTransparent.shader" t="Include" />
+            <e p="LitColored.shader" t="Include" />
+            <e p="LitColoredTint.shader" t="Include" />
+            <e p="LitColoredTintTransparent.shader" t="Include" />
+            <e p="LitColoredTransparent.shader" t="Include" />
+            <e p="LitWavyTransparent.shader" t="Include" />
+            <e p="UnitColoredTransparent.shader" t="Include" />
+            <e p="UnlitColored.shader" t="Include" />
+            <e p="UnlitColoredTint.shader" t="Include" />
+            <e p="UnlitColoredTintTransparent.shader" t="Include" />
+            <e p="UnlitWavyTransparent.shader" t="Include" />
+            <e p="Vertlit.shader" t="Include" />
+            <e p="VertlitTransparent.shader" t="Include" />
+            <e p="VertlitWavyTransparent.shader" t="Include" />
+          </e>
+        </e>
+        <e p="Common" t="Include">
+          <e p="2DT" t="Include">
+            <e p="Editor" t="Include">
+              <e p="Ferr2DT_MaterialInspector.cs" t="Include" />
+            </e>
+            <e p="Ferr2DT_Material.cs" t="Include" />
+            <e p="Ferr2DT_SegmentDescription.cs" t="Include" />
+            <e p="IFerr2DTMaterial.cs" t="Include" />
+          </e>
+          <e p="Editor" t="Include">
+            <e p="ClampDrawer.cs" t="Include" />
+            <e p="EditorTools.cs" t="Include" />
+            <e p="InspectorNameDrawer.cs" t="Include" />
+            <e p="ProceduralMeshSaver.cs" t="Include" />
+            <e p="RestoreMeshInspector.cs" t="Include" />
+            <e p="UnlitVertexColorEditor.cs" t="Include" />
+          </e>
+          <e p="Interfaces" t="Include">
+            <e p="IBlendPaintable.cs" t="Include" />
+            <e p="IBlendPaintType.cs" t="Include" />
+            <e p="IProceduralMesh.cs" t="Include" />
+            <e p="IToFromDataString.cs" t="Include" />
+          </e>
+          <e p="Scripts" t="Include">
+            <e p="CameraShake.cs" t="Include" />
+            <e p="ClampAttribute.cs" t="Include" />
+            <e p="ColorUtil.cs" t="Include" />
+            <e p="DataStringUtil.cs" t="Include" />
+            <e p="EditInIsolation.cs" t="Include" />
+            <e p="GizmoUtil.cs" t="Include" />
+            <e p="InspectorName.cs" t="Include" />
+            <e p="Juice.cs" t="Include" />
+            <e p="LambdaComparer.cs" t="Include" />
+            <e p="LayerUtil.cs" t="Include" />
+            <e p="LayoutAdvancer.cs" t="Include" />
+            <e p="LogoLock.cs" t="Include" />
+            <e p="ProceduralMeshUtil.cs" t="Include" />
+            <e p="RecolorTree.cs" t="Include" />
+            <e p="RenderUtility.cs" t="Include" />
+            <e p="RestoreMesh.cs" t="Include" />
+            <e p="Singleton.cs" t="Include" />
+            <e p="SOUtil.cs" t="Include" />
+            <e p="WebMessager.cs" t="Include" />
+          </e>
+          <e p="Shaders" t="Include">
+            <e p="GizmoShader2D.shader" t="Include" />
+            <e p="GizmoShader3D.shader" t="Include" />
+            <e p="LitVertexColor.shader" t="Include" />
+            <e p="ShadowOnly.shader" t="Include" />
+            <e p="UnlitSolidColor.shader" t="Include" />
+            <e p="UnlitSolidColorTransparent.shader" t="Include" />
+            <e p="UnlitVertexColor.shader" t="Include" />
+            <e p="UnlitVertexColorTex.shader" t="Include" />
+            <e p="UnlitVertexColorTexTransparent.shader" t="Include" />
+            <e p="UnlitVertexColorTransparent.shader" t="Include" />
+          </e>
+        </e>
+        <e p="Docs" t="Include">
+          <e p="Ferr2DTerrainTool - Readme.txt" t="Include" />
+        </e>
+      </e>
+      <e p="Assets/ProCamera2D" t="Include">
+        <e p="3rd Party Plugins Support" t="Include">
+          <e p="PlayMakerActions" t="Include">
+            <e p="FsmStateActionProCamera2DBase.cs" t="Include" />
+            <e p="PC2DAddCameraTarget.cs" t="Include" />
+            <e p="PC2DAdjustCameraTargetInfluence.cs" t="Include" />
+            <e p="PC2DApplyInfluence.cs" t="Include" />
+            <e p="PC2DApplyInfluencesTimed.cs" t="Include" />
+            <e p="PC2DCinematicsToggle.cs" t="Include" />
+            <e p="PC2DMoveCameraInstantlyToPosition.cs" t="Include" />
+            <e p="PC2DRemoveCameraTarget.cs" t="Include" />
+            <e p="PC2DRoomsEnter.cs" t="Include" />
+            <e p="PC2DShakeConstantStop.cs" t="Include" />
+            <e p="PC2DShakeConstantWithPreset.cs" t="Include" />
+            <e p="PC2DShakeStop.cs" t="Include" />
+            <e p="PC2DShakeWithPreset.cs" t="Include" />
+            <e p="PC2DShakeWithValues.cs" t="Include" />
+          </e>
+        </e>
+        <e p="Code" t="Include">
+          <e p="Core" t="Include">
+            <e p="BasePC2D.cs" t="Include" />
+            <e p="BaseTrigger.cs" t="Include" />
+            <e p="BoundariesAnimator.cs" t="Include" />
+            <e p="CameraTarget.cs" t="Include" />
+            <e p="ConstantShakePreset.cs" t="Include" />
+            <e p="Editor" t="Include">
+              <e p="CleanupMissingScripts.cs" t="Include" />
+              <e p="ConstantShakePresetEditor.cs" t="Include" />
+              <e p="MinMaxSliderDrawer.cs" t="Include" />
+              <e p="ProCamera2DEditor.cs" t="Include" />
+              <e p="ProCamera2DEditorHelper.cs" t="Include" />
+              <e p="ProCamera2DEditorResources.cs" t="Include" />
+              <e p="ProCamera2DHierarchyIcon.cs" t="Include" />
+              <e p="ProCamera2DPrefs.cs" t="Include" />
+              <e p="ScriptableObjectUtility.cs" t="Include" />
+              <e p="ShakePresetEditor.cs" t="Include" />
+            </e>
+            <e p="EnumMovementAxis.cs" t="Include" />
+            <e p="EnumUpdateType.cs" t="Include" />
+            <e p="IPositionDeltaChanger.cs" t="Include" />
+            <e p="IPositionOverrider.cs" t="Include" />
+            <e p="IPostMover.cs" t="Include" />
+            <e p="IPreMover.cs" t="Include" />
+            <e p="ISizeDeltaChanger.cs" t="Include" />
+            <e p="ISizeOverrider.cs" t="Include" />
+            <e p="KDTree.cs" t="Include" />
+            <e p="MoveInColliderBoundaries.cs" t="Include" />
+            <e p="ShakePreset.cs" t="Include" />
+            <e p="Utils" t="Include">
+              <e p="EditorPrefsX.cs" t="Include" />
+              <e p="MinMaxSliderAttribute.cs" t="Include" />
+              <e p="PrefsData.cs" t="Include" />
+              <e p="Utils.cs" t="Include" />
+            </e>
+          </e>
+          <e p="Extensions" t="Include">
+            <e p="Editor" t="Include">
+              <e p="ProCamera2DCameraWindowEditor.cs" t="Include" />
+              <e p="ProCamera2DCinematicsEditor.cs" t="Include" />
+              <e p="ProCamera2DForwardFocusEditor.cs" t="Include" />
+              <e p="ProCamera2DGeometryBoundariesEditor.cs" t="Include" />
+              <e p="ProCamera2DLimitDistanceEditor.cs" t="Include" />
+              <e p="ProCamera2DLimitSpeedEditor.cs" t="Include" />
+              <e p="ProCamera2DNumericBoundariesEditor.cs" t="Include" />
+              <e p="ProCamera2DPanAndZoomEditor.cs" t="Include" />
+              <e p="ProCamera2DParallaxEditor.cs" t="Include" />
+              <e p="ProCamera2DPixelPerfectEditor.cs" t="Include" />
+              <e p="ProCamera2DPointerInfluenceEditor.cs" t="Include" />
+              <e p="ProCamera2DRailsEditor.cs" t="Include" />
+              <e p="ProCamera2DRepeaterEditor.cs" t="Include" />
+              <e p="ProCamera2DRoomsEditor.cs" t="Include" />
+              <e p="ProCamera2DShakeEditor.cs" t="Include" />
+              <e p="ProCamera2DSpeedBasedZoomEditor.cs" t="Include" />
+              <e p="ProCamera2DTransitionsFXEditor.cs" t="Include" />
+              <e p="ProCamera2DZoomToFitTargetsEditor.cs" t="Include" />
+            </e>
+            <e p="ProCamera2DCameraWindow.cs" t="Include" />
+            <e p="ProCamera2DCinematics.cs" t="Include" />
+            <e p="ProCamera2DForwardFocus.cs" t="Include" />
+            <e p="ProCamera2DGeometryBoundaries.cs" t="Include" />
+            <e p="ProCamera2DLimitDistance.cs" t="Include" />
+            <e p="ProCamera2DLimitSpeed.cs" t="Include" />
+            <e p="ProCamera2DNumericBoundaries.cs" t="Include" />
+            <e p="ProCamera2DPanAndZoom.cs" t="Include" />
+            <e p="ProCamera2DParallax.cs" t="Include" />
+            <e p="ProCamera2DPixelPerfect.cs" t="Include" />
+            <e p="ProCamera2DPointerInfluence.cs" t="Include" />
+            <e p="ProCamera2DRails.cs" t="Include" />
+            <e p="ProCamera2DRepeater.cs" t="Include" />
+            <e p="ProCamera2DRooms.cs" t="Include" />
+            <e p="ProCamera2DShake.cs" t="Include" />
+            <e p="ProCamera2DSpeedBasedZoom.cs" t="Include" />
+            <e p="ProCamera2DTransitionsFX.cs" t="Include" />
+            <e p="ProCamera2DZoomToFitTargets.cs" t="Include" />
+          </e>
+          <e p="Helpers" t="Include">
+            <e p="Letterbox" t="Include">
+              <e p="ProCamera2DLetterbox.cs" t="Include" />
+              <e p="Resources" t="Include">
+                <e p="Letterbox.shader" t="Include" />
+              </e>
+            </e>
+            <e p="Parallax" t="Include">
+              <e p="ProCamera2DParallaxObject.cs" t="Include" />
+            </e>
+            <e p="Pixel Perfect" t="Include">
+              <e p="Editor" t="Include">
+                <e p="ProCamera2DPixelPerfectSpriteEditor.cs" t="Include" />
+              </e>
+              <e p="ProCamera2DPixelPerfectSprite.cs" t="Include" />
+            </e>
+            <e p="TransitionFX" t="Include">
+              <e p="BasicBlit.cs" t="Include" />
+              <e p="Resources" t="Include">
+                <e p="PC2D_Blinds.shader" t="Include" />
+                <e p="PC2D_Circle.shader" t="Include" />
+                <e p="PC2D_Fade.shader" t="Include" />
+                <e p="PC2D_Shutters.shader" t="Include" />
+                <e p="PC2D_Texture.shader" t="Include" />
+                <e p="PC2D_Wipe.shader" t="Include" />
+              </e>
+            </e>
+          </e>
+          <e p="Triggers" t="Include">
+            <e p="Editor" t="Include">
+              <e p="ProCamera2DTriggerBoundariesEditor.cs" t="Include" />
+              <e p="ProCamera2DTriggerInfluenceEditor.cs" t="Include" />
+              <e p="ProCamera2DTriggerRailsEditor.cs" t="Include" />
+              <e p="ProCamera2DTriggerZoomEditor.cs" t="Include" />
+            </e>
+            <e p="ProCamera2DTriggerBoundaries.cs" t="Include" />
+            <e p="ProCamera2DTriggerInfluence.cs" t="Include" />
+            <e p="ProCamera2DTriggerRails.cs" t="Include" />
+            <e p="ProCamera2DTriggerZoom.cs" t="Include" />
+          </e>
+        </e>
+        <e p="Examples" t="Include">
+          <e p="Platformer" t="Include">
+            <e p="Scripts" t="Include">
+              <e p="DollyZoomExample.cs" t="Include" />
+              <e p="Player" t="Include">
+                <e p="PlayerInput.cs" t="Include" />
+                <e p="PlayerInputBot.cs" t="Include" />
+              </e>
+              <e p="RoomsEventsExample.cs" t="Include" />
+              <e p="ShakeExample.cs" t="Include" />
+              <e p="ToggleCinematics.cs" t="Include" />
+              <e p="ToggleTransitionsFX.cs" t="Include" />
+            </e>
+          </e>
+          <e p="TopDownShooter" t="Include">
+            <e p="Scripts" t="Include">
+              <e p="Bullet.cs" t="Include" />
+              <e p="Door.cs" t="Include" />
+              <e p="DoorKey.cs" t="Include" />
+              <e p="Enemy" t="Include">
+                <e p="EnemyAttack.cs" t="Include" />
+                <e p="EnemyFSM.cs" t="Include" />
+                <e p="EnemyPatrol.cs" t="Include" />
+                <e p="EnemySight.cs" t="Include" />
+                <e p="EnemyWander.cs" t="Include" />
+                <e p="PatrolWaypoint.cs" t="Include" />
+              </e>
+              <e p="GameOver.cs" t="Include" />
+              <e p="Goal.cs" t="Include" />
+              <e p="ObjectMove.cs" t="Include" />
+              <e p="ObjectRotate.cs" t="Include" />
+              <e p="Player" t="Include">
+                <e p="PlayerFire.cs" t="Include" />
+                <e p="PlayerHealth.cs" t="Include" />
+                <e p="PlayerInput.cs" t="Include" />
+              </e>
+              <e p="Pool" t="Include">
+                <e p="Pool.cs" t="Include" />
+                <e p="PoolMember.cs" t="Include" />
+              </e>
+              <e p="RotateTowardsMouse.cs" t="Include" />
+              <e p="SwitchCameraProjection.cs" t="Include" />
+            </e>
+          </e>
+        </e>
+        <e p="ProCamera2D.cs" t="Include" />
+        <e p="Readme.txt" t="Include" />
+        <e p="TransitionFX Textures" t="Include">
+          <e p="Readme.txt" t="Include" />
+        </e>
+      </e>
+      <e p="Assets/SampleScenes" t="Include">
+        <e p="Menu" t="Include">
+          <e p="Scripts" t="Include">
+            <e p="MenuSceneLoader.cs" t="Include" />
+            <e p="PauseMenu.cs" t="Include" />
+            <e p="SceneAndURLLoader.cs" t="Include" />
+          </e>
+        </e>
+        <e p="Scripts" t="Include">
+          <e p="CameraSwitch.cs" t="Include" />
+          <e p="LevelReset.cs" t="Include" />
+          <e p="ParticleSceneControls.cs" t="Include" />
+          <e p="PlaceTargetWithMouse.cs" t="Include" />
+        </e>
+        <e p="Shaders" t="Include">
+          <e p="Skybox-Procedural.shader" t="Include" />
+        </e>
+      </e>
+      <e p="Assets/Scripts" t="Include">
+        <e p="Control" t="Include">
+          <e p="PlayerCharacter.cs" t="Include" />
+          <e p="PlayerController.cs" t="Include" />
+        </e>
+        <e p="Utils" t="Include">
+          <e p="Constants.cs" t="Include" />
+          <e p="MusicManager.cs" t="Include" />
+        </e>
+      </e>
+      <e p="Assets/Standard Assets" t="Include">
+        <e p="2D" t="Include">
+          <e p="Scripts" t="Include">
+            <e p="Camera2DFollow.cs" t="Include" />
+            <e p="CameraFollow.cs" t="Include" />
+            <e p="Platformer2DUserControl.cs" t="Include" />
+            <e p="PlatformerCharacter2D.cs" t="Include" />
+            <e p="Restarter.cs" t="Include" />
+          </e>
+        </e>
+        <e p="Cameras" t="Include">
+          <e p="CameraGuidelines.txt" t="Include" />
+          <e p="Scripts" t="Include">
+            <e p="AbstractTargetFollower.cs" t="Include" />
+            <e p="AutoCam.cs" t="Include" />
+            <e p="FreeLookCam.cs" t="Include" />
+            <e p="HandHeldCam.cs" t="Include" />
+            <e p="LookatTarget.cs" t="Include" />
+            <e p="PivotBasedCameraRig.cs" t="Include" />
+            <e p="ProtectCameraFromWallClip.cs" t="Include" />
+            <e p="TargetFieldOfView.cs" t="Include" />
+          </e>
+        </e>
+        <e p="CrossPlatformInput" t="Include">
+          <e p="CrossPlatformInputGuidelines.txt" t="Include" />
+          <e p="Scripts" t="Include">
+            <e p="AxisTouchButton.cs" t="Include" />
+            <e p="ButtonHandler.cs" t="Include" />
+            <e p="CrossPlatformInputManager.cs" t="Include" />
+            <e p="InputAxisScrollbar.cs" t="Include" />
+            <e p="Joystick.cs" t="Include" />
+            <e p="MobileControlRig.cs" t="Include" />
+            <e p="PlatformSpecific" t="Include">
+              <e p="MobileInput.cs" t="Include" />
+              <e p="StandaloneInput.cs" t="Include" />
+            </e>
+            <e p="TiltInput.cs" t="Include" />
+            <e p="TouchPad.cs" t="Include" />
+            <e p="VirtualInput.cs" t="Include" />
+          </e>
+        </e>
+        <e p="Editor" t="Include">
+          <e p="CrossPlatformInput" t="Include">
+            <e p="CrossPlatformInputInitialize.cs" t="Include" />
+          </e>
+        </e>
+        <e p="Effects" t="Include">
+          <e p="GlassRefraction" t="Include">
+            <e p="Shaders" t="Include">
+              <e p="GlassStainedBumpDistort.shader" t="Include" />
+            </e>
+          </e>
+          <e p="ImageEffects" t="Include">
+            <e p="Readme.txt" t="Include" />
+          </e>
+          <e p="Projectors" t="Include">
+            <e p="Guidelines.txt" t="Include" />
+            <e p="Shaders" t="Include">
+              <e p="ProjectorLight.shader" t="Include" />
+              <e p="ProjectorMultiply.shader" t="Include" />
+            </e>
+          </e>
+          <e p="TessellationShaders" t="Include">
+            <e p="Shaders" t="Include">
+              <e p="BumpedSpecularDisplacement.shader" t="Include" />
+              <e p="BumpedSpecularSmooth.shader" t="Include" />
+            </e>
+          </e>
+          <e p="ToonShading" t="Include">
+            <e p="Shaders" t="Include">
+              <e p="ToonBasic.shader" t="Include" />
+              <e p="ToonBasicOutline.shader" t="Include" />
+              <e p="ToonLit.shader" t="Include" />
+              <e p="ToonLitOutline.shader" t="Include" />
+            </e>
+          </e>
+        </e>
+        <e p="Fonts" t="Include">
+          <e p="OpenSans" t="Include">
+            <e p="License!.txt" t="Include" />
+          </e>
+        </e>
+        <e p="ParticleSystems" t="Include">
+          <e p="ParticleSystemsGuidelines.txt" t="Include" />
+          <e p="Scripts" t="Include">
+            <e p="AfterburnerPhysicsForce.cs" t="Include" />
+            <e p="ExplosionFireAndDebris.cs" t="Include" />
+            <e p="ExplosionPhysicsForce.cs" t="Include" />
+            <e p="Explosive.cs" t="Include" />
+            <e p="ExtinguishableParticleSystem.cs" t="Include" />
+            <e p="FireLight.cs" t="Include" />
+            <e p="Hose.cs" t="Include" />
+            <e p="ParticleSystemMultiplier.cs" t="Include" />
+            <e p="SmokeParticles.cs" t="Include" />
+            <e p="WaterHoseParticles.cs" t="Include" />
+          </e>
+          <e p="Shaders" t="Include">
+            <e p="PriorityParticleAdd.shader" t="Include" />
+            <e p="PriorityParticleAddSoft.shader" t="Include" />
+            <e p="PriorityParticleAlpha.shader" t="Include" />
+          </e>
+        </e>
+        <e p="Prototyping" t="Include">
+          <e p="Shaders" t="Include">
+            <e p="WorldCoordDiffuse.shader" t="Include" />
+          </e>
+        </e>
+        <e p="Utility" t="Include">
+          <e p="ActivateTrigger.cs" t="Include" />
+          <e p="AlphaButtonClickMask.cs" t="Include" />
+          <e p="AutoMobileShaderSwitch.cs" t="Include" />
+          <e p="AutoMoveAndRotate.cs" t="Include" />
+          <e p="CameraRefocus.cs" t="Include" />
+          <e p="CurveControlledBob.cs" t="Include" />
+          <e p="DragRigidbody.cs" t="Include" />
+          <e p="DynamicShadowSettings.cs" t="Include" />
+          <e p="EventSystemChecker.cs" t="Include" />
+          <e p="FollowTarget.cs" t="Include" />
+          <e p="ForcedReset.cs" t="Include" />
+          <e p="FOVKick.cs" t="Include" />
+          <e p="FPSCounter.cs" t="Include" />
+          <e p="LerpControlledBob.cs" t="Include" />
+          <e p="ObjectResetter.cs" t="Include" />
+          <e p="ParticleSystemDestroyer.cs" t="Include" />
+          <e p="PlatformSpecificContent.cs" t="Include" />
+          <e p="SimpleActivatorMenu.cs" t="Include" />
+          <e p="SimpleMouseRotator.cs" t="Include" />
+          <e p="SmoothFollow.cs" t="Include" />
+          <e p="TimedObjectActivator.cs" t="Include" />
+          <e p="TimedObjectDestructor.cs" t="Include" />
+          <e p="WaypointCircuit.cs" t="Include" />
+          <e p="WaypointProgressTracker.cs" t="Include" />
+        </e>
+      </e>
+      <e p="Library" t="ExcludeRecursive" />
+      <e p="obj" t="ExcludeRecursive" />
+      <e p="packages" t="ExcludeRecursive" />
+      <e p="Scrolls.sln" t="IncludeFlat" />
+      <e p="Temp" t="ExcludeRecursive">
+        <e p="bin" t="ExcludeRecursive" />
+      </e>
+    </e>
+    <e p="$USER_HOME$/Library/Caches/Rider2018.2/extResources" t="IncludeRecursive" />
+    <e p="$USER_HOME$/Library/Caches/Rider2018.2/resharper-host/local/Transient/ReSharperHost/v182/SolutionCaches/_Scrolls.430349286.00" t="ExcludeRecursive" />
+  </component>
+</project>
