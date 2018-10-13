@@ -1,53 +1,48 @@
 ﻿using System;
 using System.Collections.Generic;
+using UnityEditorInternal;
 using UnityEngine.SceneManagement;
 using UnityEngine;
 
 // PlayerCharacter
 public class PlayerCharacter : MonoBehaviour {    
-    public LinkedList<GameObject> m_LevitateTargets;    
-    public float m_MaxSpeed, m_ClimbSpeed, m_JumpForce, 
-        m_FireSpellCD, m_LevitateRadius, m_LevitateSpeed;
+    public float m_MaxSpeed, m_JumpForce, m_AnimationSpeed;
     public int HP;     
     private bool m_Grounded;    
     private AudioSource m_Audio;
     private Animator m_Animator;  
     private Rigidbody2D m_Rigidbody2D;
-    private BoxCollider2D[] m_Colliders;
-    private Transform m_GroundCheck, m_ClimbCheck;
+    private SpriteRenderer m_SpriteRenderer;
+    private Transform m_GroundCheck;
     private CircleCollider2D m_CircleCollider2D;
     private LayerMask m_LayerMask;     
-    private Vector2 m_NormalSize, m_CrouchSize, m_CrouchGroundCheck, m_WalkGroundCheck;
+    private Vector2 m_CrouchGroundCheck, m_WalkGroundCheck;
     private Quaternion m_ForwardRotation, m_BackRotation;    
-    
-    private String m_AnimPrefix;      
-    private float lastJumpTime;    
+          
+    private float lastJumpTime, baseSpeed, blockSpeed, attackSpeed;    
     private float k_GroundedRadius = .5f;   
     private float k_ClimbRadius = 1.0f;
     private float k_UnderRadius = 1f;
-    private float m_LevitateCD = 1f;
-    public float k_GroundDistance;
-         
 
     // Awake
     void Awake () {             
         m_Rigidbody2D = GetComponent<Rigidbody2D>();
-        m_Colliders = GetComponents<BoxCollider2D>();
+        m_SpriteRenderer = GetComponent<SpriteRenderer>();
         m_Audio = GetComponent<AudioSource>();
         m_Animator = GetComponent<Animator>();
-        m_GroundCheck = transform.Find("GroundCheck");       
-        m_ClimbCheck = transform.Find("ClimbCheck");
-        m_NormalSize = m_Colliders[0].size;
-        m_CrouchSize = new Vector2(m_Colliders[0].size.x, m_Colliders[0].size.y / 2f);        
+        m_GroundCheck = transform.Find("GroundCheck");              
         m_ForwardRotation = transform.rotation;              
         m_BackRotation = new Quaternion(0, m_ForwardRotation.y - 1, 0, 0);          
         m_LayerMask = -1;
         m_WalkGroundCheck = m_GroundCheck.localPosition;
-        lastJumpTime = Time.time;        
-        m_AnimPrefix = Constants.GirlPrefix;      
+        lastJumpTime = Time.time;             
 
         m_Animator.runtimeAnimatorController = Resources.Load(
-            m_AnimPrefix + Constants.Walk) as RuntimeAnimatorController;
+            Constants.ANIM_WALK) as RuntimeAnimatorController;
+
+        baseSpeed = m_MaxSpeed;
+        blockSpeed = 0f;
+        attackSpeed = m_MaxSpeed * (2 / 3f);
     }
 	
 	// FixedUpdate
@@ -59,17 +54,15 @@ public class PlayerCharacter : MonoBehaviour {
         Collider2D[] gColliders = Physics2D.OverlapCircleAll(m_GroundCheck.position, k_GroundedRadius, m_LayerMask);
         for (int i = 0; i < gColliders.Length; i++)
         {                      
-            if (gColliders[i].gameObject != gameObject 
-                && gColliders[i].gameObject.tag != "Checkpoint")  
+            if (gColliders[i].gameObject != gameObject)  
             {                
                 m_Grounded = true;
-               
             }                   
         }              
 
         if(m_Grounded)
         {
-            m_Animator.speed = Mathf.Abs(.2f * m_Rigidbody2D.velocity.x);                    
+            m_Animator.speed = Mathf.Abs(m_AnimationSpeed * .2f * m_Rigidbody2D.velocity.x);                    
         }
         else
         {            
@@ -100,7 +93,7 @@ public class PlayerCharacter : MonoBehaviour {
         {
             // switch to walk animation
             m_Animator.runtimeAnimatorController = Resources.Load(
-                m_AnimPrefix + Constants.Walk) as RuntimeAnimatorController;
+                Constants.ANIM_WALK) as RuntimeAnimatorController;
         }             
 
         if (m_Grounded && jump)
@@ -108,10 +101,33 @@ public class PlayerCharacter : MonoBehaviour {
             m_Grounded = false;
             m_Rigidbody2D.AddForce(new Vector2(0f, m_JumpForce));
             lastJumpTime = Time.time;
+            m_Animator.speed = m_Animator.speed / 10f;
             m_Animator.runtimeAnimatorController = Resources.Load(
-                m_AnimPrefix + Constants.Jump) as RuntimeAnimatorController;                
+                Constants.ANIM_JUMP) as RuntimeAnimatorController;
         }               
-    }   
+    }  
+    
+    /*
+    Name: Attack
+    Parameters: bool attack, bool block
+    */
+    public void Attack(bool attack, bool block)
+    {
+        if (block)
+        {
+            m_SpriteRenderer.sprite = Resources.Load(
+                Constants.SPRITE_BLOCK) as Sprite;
+            m_MaxSpeed = blockSpeed;
+
+            return;
+        }
+
+        if (attack)
+        {
+            
+        }
+    }
+    
 
     // takeDamage
     void takeDamage()

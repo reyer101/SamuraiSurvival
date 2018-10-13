@@ -5,7 +5,7 @@ using UnityStandardAssets.CrossPlatformInput;
 public class PlayerController : MonoBehaviour {
     private PlayerCharacter m_Player;    
     private LayerMask m_LayerMask;
-    private bool m_Jump, m_CanMove;
+    private bool m_Jump, m_CanMove, m_Block, m_Attack;
 
     private float k_CrouchRadius = 1.5f;
 
@@ -21,13 +21,15 @@ public class PlayerController : MonoBehaviour {
         if (!m_Jump && m_CanMove)
         {
             m_Jump = CrossPlatformInputManager.GetButtonDown("Jump");
-        }               
-    }
+        }
+
+	    m_Block = CrossPlatformInputManager.GetButtonDown("Block");
+	}
 
     // FixedUpdate
     void FixedUpdate()
     {
-        if(m_CanMove)
+        if(m_CanMove && !m_Block)
         {
             float h = CrossPlatformInputManager.GetAxis("Horizontal");
             m_Player.Move(h, m_Jump);            
@@ -36,6 +38,8 @@ public class PlayerController : MonoBehaviour {
         {
             m_Player.Move(0, false);            
         }
+        
+        m_Player.Attack(false, m_Block);
 
         m_Jump = false;             
     }

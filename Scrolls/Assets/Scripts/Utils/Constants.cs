@@ -3,16 +3,15 @@
 // Constants
 public class Constants : MonoBehaviour {
     // Audio
-    public static string FireSpellAudio = "Audio/FireSpell";
-    public static string EnemySpellAudio = "Audio/EnemySpell";
 
-    // General Animation
-    private static string AnimationPrefix = "AnimationControllers/";  
+    // Prefixes
+    private static string PREFIX_ANIM = "AnimationControllers/";
+    private static string PREFIX_SPRITE = "Sprites/";
 
     // Player Animations 
-    public static string GirlPrefix = AnimationPrefix + "Girl/";
-    public static string BoyPrefix = AnimationPrefix + "Boy/";
-    public static string Walk = "main_walk";
-    public static string Crouch = "main_crouch";
-    public static string Jump = "main_jump";     
+    public static string ANIM_WALK = PREFIX_ANIM + "main_walk_0";
+    public static string ANIM_JUMP = PREFIX_ANIM + "main_walk_1";
+    
+    // Player Sprites
+    public static string SPRITE_BLOCK = PREFIX_SPRITE + "block";
 }

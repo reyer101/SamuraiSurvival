@@ -389,24 +389,6 @@
           <e p="Readme.txt" t="Include" />
         </e>
       </e>
-      <e p="Assets/SampleScenes" t="Include">
-        <e p="Menu" t="Include">
-          <e p="Scripts" t="Include">
-            <e p="MenuSceneLoader.cs" t="Include" />
-            <e p="PauseMenu.cs" t="Include" />
-            <e p="SceneAndURLLoader.cs" t="Include" />
-          </e>
-        </e>
-        <e p="Scripts" t="Include">
-          <e p="CameraSwitch.cs" t="Include" />
-          <e p="LevelReset.cs" t="Include" />
-          <e p="ParticleSceneControls.cs" t="Include" />
-          <e p="PlaceTargetWithMouse.cs" t="Include" />
-        </e>
-        <e p="Shaders" t="Include">
-          <e p="Skybox-Procedural.shader" t="Include" />
-        </e>
-      </e>
       <e p="Assets/Scripts" t="Include">
         <e p="Control" t="Include">
           <e p="PlayerCharacter.cs" t="Include" />
