@@ -13,6 +13,8 @@ public class Constants : MonoBehaviour {
     public static string ANIM_WALK = PREFIX_ANIM + "main_walk_0";
     public static string ANIM_JUMP = PREFIX_ANIM + "main_walk_1";
     public static string ANIM_BLOCK = PREFIX_ANIM + "main_walk_2";
+    public static string ANIM_ATTACK1 = PREFIX_ANIM + "attack_1_0";
+    public static string ANIM_ATTACK2 = PREFIX_ANIM + "attack_2_0";
     
     // Player Sprites
     public static string SPRITE_BLOCK = PREFIX_SPRITE + "block";

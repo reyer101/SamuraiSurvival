@@ -1,14 +1,17 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using JetBrains.Rider.Unity.Editor;
 using UnityEditorInternal;
 using UnityEngine.SceneManagement;
 using UnityEngine;
 
 // PlayerCharacter
 public class PlayerCharacter : MonoBehaviour {    
-    public float m_MaxSpeed, m_JumpForce, m_AnimationSpeed;
-    public int HP;     
-    private bool m_Grounded;    
+    public float m_MaxSpeed, m_JumpForce, m_AnimationSpeed, m_AttackDelay;
+    public int HP;
+    private int m_AttackIdx;
+    private bool m_Grounded, m_Attacking;    
     private AudioSource m_Audio;
     private Animator m_Animator;  
     private Rigidbody2D m_Rigidbody2D;
@@ -17,9 +20,10 @@ public class PlayerCharacter : MonoBehaviour {
     private CircleCollider2D m_CircleCollider2D;
     private LayerMask m_LayerMask;     
     private Vector2 m_CrouchGroundCheck, m_WalkGroundCheck;
-    private Quaternion m_ForwardRotation, m_BackRotation;    
+    private Quaternion m_ForwardRotation, m_BackRotation;
+    private string[] m_Attacks;
           
-    private float lastJumpTime, baseSpeed, blockSpeed, attackSpeed;    
+    private float lastJumpTime, lastAttackTime, baseSpeed, blockSpeed, attackSpeed;    
     private float k_GroundedRadius = .5f;   
     private float k_ClimbRadius = 1.0f;
     private float k_UnderRadius = 1f;
@@ -30,12 +34,15 @@ public class PlayerCharacter : MonoBehaviour {
         m_SpriteRenderer = GetComponent<SpriteRenderer>();
         m_Audio = GetComponent<AudioSource>();
         m_Animator = GetComponent<Animator>();
+        m_AttackIdx = 0;
         m_GroundCheck = transform.Find("GroundCheck");              
         m_ForwardRotation = transform.rotation;              
         m_BackRotation = new Quaternion(0, m_ForwardRotation.y - 1, 0, 0);          
         m_LayerMask = -1;
         m_WalkGroundCheck = m_GroundCheck.localPosition;
-        lastJumpTime = Time.time;             
+        lastJumpTime = Time.time;
+        lastAttackTime = Time.time;
+        m_Attacks = new[] {Constants.ANIM_ATTACK1, Constants.ANIM_ATTACK2};
 
         m_Animator.runtimeAnimatorController = Resources.Load(
             Constants.ANIM_WALK) as RuntimeAnimatorController;
@@ -63,12 +70,18 @@ public class PlayerCharacter : MonoBehaviour {
         if(m_Grounded)
         {
             m_Animator.speed = Mathf.Abs(m_AnimationSpeed * .2f * m_Rigidbody2D.velocity.x);                    
-        }
+        } 
         else
         {            
             m_Animator.speed = 0;
-        }       
-    }  
+        }
+
+	    if (m_Attacking)
+	    {
+	        Debug.Log("Attacking animation speed");
+	        m_Animator.speed = Mathf.Abs(m_AnimationSpeed);
+	    }
+	}  
 
     /*
     Name: Move
@@ -89,7 +102,7 @@ public class PlayerCharacter : MonoBehaviour {
             horizontal * m_MaxSpeed, m_Rigidbody2D.velocity.y);
         m_GroundCheck.localPosition = m_WalkGroundCheck;
 
-        if(m_Grounded && Time.time - lastJumpTime > .1f)
+        if(m_Grounded && Time.time - lastJumpTime > .1f && !m_Attacking)
         {
             // switch to walk animation
             m_Animator.runtimeAnimatorController = Resources.Load(
@@ -114,7 +127,6 @@ public class PlayerCharacter : MonoBehaviour {
     {
         if (block && m_Grounded)
         {
-            Debug.Log("Loading block sprite...");
             m_Animator.runtimeAnimatorController = Resources.Load(
                 Constants.ANIM_EMPTY) as RuntimeAnimatorController;
             m_SpriteRenderer.sprite = Resources.Load<Sprite>(
@@ -127,10 +139,28 @@ public class PlayerCharacter : MonoBehaviour {
         m_SpriteRenderer.sprite = Resources.Load<Sprite>(
             Constants.SPRITE_IDLE);
         m_MaxSpeed = baseSpeed;
-        if (attack)
+        if (attack && (Time.time - lastAttackTime > m_AttackDelay))
         {
+            m_Attacking = true;
+            m_Animator.runtimeAnimatorController = Resources
+                .Load(m_Attacks[m_AttackIdx % 2]) as RuntimeAnimatorController;
+            Debug.Log("Attack idx: " + m_AttackIdx % 2);
+            ++m_AttackIdx;
+            lastAttackTime = Time.time;
             
+            Invoke("stopAttacking", m_AttackDelay);
         }
+    }
+    
+    // isAttacking
+    public bool isAttacking()
+    {
+        return m_Attacking;
+    }
+
+    void stopAttacking()
+    {
+        m_Attacking = false;
     }
     
 

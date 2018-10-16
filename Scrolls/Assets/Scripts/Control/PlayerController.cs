@@ -24,6 +24,8 @@ public class PlayerController : MonoBehaviour {
         }
 
 	    m_Block = CrossPlatformInputManager.GetButton("Block");
+	    m_Attack = CrossPlatformInputManager.GetButtonDown("Attack");
+	    Debug.Log(m_Attack);
 	}
 
     // FixedUpdate
@@ -39,7 +41,7 @@ public class PlayerController : MonoBehaviour {
             m_Player.Move(0, false);            
         }
         
-        m_Player.Attack(false, m_Block);
+        m_Player.Attack(m_Attack, m_Block);
 
         m_Jump = false;             
     }
