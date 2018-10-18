@@ -8,10 +8,11 @@ using UnityEngine;
 
 // PlayerCharacter
 public class PlayerCharacter : MonoBehaviour {    
-    public float m_MaxSpeed, m_JumpForce, m_AnimationSpeed, m_AttackDelay;
+    public float m_MaxSpeed, m_JumpForce, m_AnimationSpeed, m_AttackDelay,
+        m_ThrowDelay;
     public int HP;
     private int m_AttackIdx;
-    private bool m_Grounded, m_Attacking;    
+    private bool m_Grounded, m_Attacking, m_Threw;    
     private AudioSource m_Audio;
     private Animator m_Animator;  
     private Rigidbody2D m_Rigidbody2D;
@@ -23,7 +24,8 @@ public class PlayerCharacter : MonoBehaviour {
     private Quaternion m_ForwardRotation, m_BackRotation;
     private string[] m_Attacks;
           
-    private float lastJumpTime, lastAttackTime, baseSpeed, blockSpeed, attackSpeed;    
+    private float lastJumpTime, lastAttackTime, lastThrowTime, baseSpeed, 
+        blockSpeed, attackSpeed;    
     private float k_GroundedRadius = .5f;   
     private float k_ClimbRadius = 1.0f;
     private float k_UnderRadius = 1f;
@@ -42,6 +44,7 @@ public class PlayerCharacter : MonoBehaviour {
         m_WalkGroundCheck = m_GroundCheck.localPosition;
         lastJumpTime = Time.time;
         lastAttackTime = Time.time;
+        lastThrowTime = Time.time;
         m_Attacks = new[] {Constants.ANIM_ATTACK1, Constants.ANIM_ATTACK2};
 
         m_Animator.runtimeAnimatorController = Resources.Load(
@@ -78,7 +81,6 @@ public class PlayerCharacter : MonoBehaviour {
 
 	    if (m_Attacking)
 	    {
-	        Debug.Log("Attacking animation speed");
 	        m_Animator.speed = Mathf.Abs(m_AnimationSpeed);
 	    }
 	}  
@@ -121,35 +123,40 @@ public class PlayerCharacter : MonoBehaviour {
     
     /*
     Name: Attack
-    Parameters: bool attack, bool block
+    Parameters: bool attack, bool block, bool
     */
-    public void Attack(bool attack, bool block)
+    public void Attack(bool attack, bool block, bool t)
     {
-        if (block && m_Grounded)
+        if (!m_Threw)
         {
-            m_Animator.runtimeAnimatorController = Resources.Load(
-                Constants.ANIM_EMPTY) as RuntimeAnimatorController;
+            if (block && m_Grounded)
+            {
+                m_Animator.runtimeAnimatorController = Resources.Load(
+                    Constants.ANIM_EMPTY) as RuntimeAnimatorController;
+                m_SpriteRenderer.sprite = Resources.Load<Sprite>(
+                    Constants.SPRITE_BLOCK);
+                m_MaxSpeed = blockSpeed;
+
+                return;
+            }
+
             m_SpriteRenderer.sprite = Resources.Load<Sprite>(
-                Constants.SPRITE_BLOCK);
-            m_MaxSpeed = blockSpeed;
-
-            return;
-        }
-
-        m_SpriteRenderer.sprite = Resources.Load<Sprite>(
-            Constants.SPRITE_IDLE);
-        m_MaxSpeed = baseSpeed;
-        if (attack && (Time.time - lastAttackTime > m_AttackDelay))
-        {
-            m_Attacking = true;
-            m_Animator.runtimeAnimatorController = Resources
-                .Load(m_Attacks[m_AttackIdx % 2]) as RuntimeAnimatorController;
-            Debug.Log("Attack idx: " + m_AttackIdx % 2);
-            ++m_AttackIdx;
-            lastAttackTime = Time.time;
+                Constants.SPRITE_IDLE);
+            m_MaxSpeed = baseSpeed;
+            if (attack && (Time.time - lastAttackTime > m_AttackDelay))
+            {
+                m_Attacking = true;
+                m_Animator.runtimeAnimatorController = Resources
+                    .Load(m_Attacks[m_AttackIdx % 2]) as RuntimeAnimatorController;
+                ++m_AttackIdx;
+                lastAttackTime = Time.time;
             
-            Invoke("stopAttacking", m_AttackDelay);
+                Invoke("stopAttacking", m_AttackDelay);
+                return;
+            }
         }
+        
+        
     }
     
     // isAttacking
@@ -158,11 +165,17 @@ public class PlayerCharacter : MonoBehaviour {
         return m_Attacking;
     }
 
+    // stopAttacking
     void stopAttacking()
     {
         m_Attacking = false;
     }
-    
+
+    // stopThrowing
+    void stopThrowing()
+    {
+        m_Threw = false;
+    }
 
     // takeDamage
     void takeDamage()
