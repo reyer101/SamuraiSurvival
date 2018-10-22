@@ -42,9 +42,9 @@ public class PlayerCharacter : MonoBehaviour {
         m_BackRotation = new Quaternion(0, m_ForwardRotation.y - 1, 0, 0);          
         m_LayerMask = -1;
         m_WalkGroundCheck = m_GroundCheck.localPosition;
-        lastJumpTime = Time.time;
-        lastAttackTime = Time.time;
-        lastThrowTime = Time.time;
+        lastJumpTime = -999f;
+        lastAttackTime = -999f;
+        lastThrowTime = -999f;
         m_Attacks = new[] {Constants.ANIM_ATTACK1, Constants.ANIM_ATTACK2};
 
         m_Animator.runtimeAnimatorController = Resources.Load(
@@ -79,7 +79,7 @@ public class PlayerCharacter : MonoBehaviour {
             m_Animator.speed = 0;
         }
 
-	    if (m_Attacking)
+	    if (m_Attacking || m_Threw)
 	    {
 	        m_Animator.speed = Mathf.Abs(m_AnimationSpeed);
 	    }
@@ -104,11 +104,15 @@ public class PlayerCharacter : MonoBehaviour {
             horizontal * m_MaxSpeed, m_Rigidbody2D.velocity.y);
         m_GroundCheck.localPosition = m_WalkGroundCheck;
 
-        if(m_Grounded && Time.time - lastJumpTime > .1f && !m_Attacking)
+        // default no animation 
+        String animPath = Constants.ANIM_EMPTY;
+        if(m_Grounded && Time.time - lastJumpTime > .1f && !m_Attacking && 
+           !(Time.time - lastThrowTime < m_AttackDelay))
         {
             // switch to walk animation
+            animPath = m_Threw ? Constants.ANIM_WALKN : Constants.ANIM_WALK; 
             m_Animator.runtimeAnimatorController = Resources.Load(
-                Constants.ANIM_WALK) as RuntimeAnimatorController;
+                animPath) as RuntimeAnimatorController;
         }             
 
         if (m_Grounded && jump)
@@ -116,19 +120,38 @@ public class PlayerCharacter : MonoBehaviour {
             m_Grounded = false;
             m_Rigidbody2D.AddForce(new Vector2(0f, m_JumpForce));
             lastJumpTime = Time.time;
+            String spritePath = m_Threw ? Constants.SPITE_JUMPN 
+                : Constants.SPRITE_JUMP;
             m_Animator.runtimeAnimatorController = Resources.Load(
-                Constants.ANIM_JUMP) as RuntimeAnimatorController;
-        }               
+                Constants.ANIM_EMPTY) as RuntimeAnimatorController;
+            Debug.Log("Sprite path: " + spritePath);
+            Sprite sprite = Resources.Load<Sprite>(spritePath);
+
+            Debug.Log("Sprite name: " + sprite.name);
+            m_SpriteRenderer.sprite = sprite;
+        }
     }  
     
     /*
     Name: Attack
     Parameters: bool attack, bool block, bool
     */
-    public void Attack(bool attack, bool block, bool t)
+    public void Attack(bool attack, bool block, bool threw)
     {
         if (!m_Threw)
         {
+            m_MaxSpeed = baseSpeed;
+            if (threw && Time.time - lastThrowTime > m_ThrowDelay)
+            {
+                m_Animator.runtimeAnimatorController = Resources.Load(
+                    Constants.ANIM_THROW) as RuntimeAnimatorController;
+                m_Threw = true;
+                lastThrowTime = Time.time;
+                
+                Invoke("stopThrowing", m_ThrowDelay);
+                return;
+            }
+            
             if (block && m_Grounded)
             {
                 m_Animator.runtimeAnimatorController = Resources.Load(
@@ -140,25 +163,20 @@ public class PlayerCharacter : MonoBehaviour {
                 return;
             }
 
-            m_SpriteRenderer.sprite = Resources.Load<Sprite>(
-                Constants.SPRITE_IDLE);
-            m_MaxSpeed = baseSpeed;
-            if (attack && (Time.time - lastAttackTime > m_AttackDelay))
+            
+            if (attack && (Time.time - lastAttackTime > m_AttackDelay) && !m_Threw)
             {
                 m_Attacking = true;
                 m_Animator.runtimeAnimatorController = Resources
                     .Load(m_Attacks[m_AttackIdx % 2]) as RuntimeAnimatorController;
                 ++m_AttackIdx;
                 lastAttackTime = Time.time;
-            
+
                 Invoke("stopAttacking", m_AttackDelay);
-                return;
             }
         }
-        
-        
     }
-    
+
     // isAttacking
     public bool isAttacking()
     {

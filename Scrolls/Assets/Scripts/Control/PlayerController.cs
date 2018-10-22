@@ -31,7 +31,7 @@ public class PlayerController : MonoBehaviour {
     // FixedUpdate
     void FixedUpdate()
     {
-        if(m_CanMove && !m_Block)
+        if(m_CanMove)
         {
             float h = CrossPlatformInputManager.GetAxis("Horizontal");
             m_Player.Move(h, m_Jump);            
