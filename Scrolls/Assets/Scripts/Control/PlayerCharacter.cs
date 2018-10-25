@@ -12,7 +12,7 @@ public class PlayerCharacter : MonoBehaviour {
         m_ThrowDelay;
     public int HP;
     private int m_AttackIdx;
-    private bool m_Grounded, m_Attacking, m_Threw;    
+    private bool m_Grounded, m_Attacking, m_HasSword;    
     private AudioSource m_Audio;
     private Animator m_Animator;  
     private Rigidbody2D m_Rigidbody2D;
@@ -25,7 +25,7 @@ public class PlayerCharacter : MonoBehaviour {
     private string[] m_Attacks;
           
     private float lastJumpTime, lastAttackTime, lastThrowTime, baseSpeed, 
-        blockSpeed, attackSpeed;    
+        blockSpeed, throwAnimDuration;    
     private float k_GroundedRadius = .5f;   
     private float k_ClimbRadius = 1.0f;
     private float k_UnderRadius = 1f;
@@ -36,6 +36,7 @@ public class PlayerCharacter : MonoBehaviour {
         m_SpriteRenderer = GetComponent<SpriteRenderer>();
         m_Audio = GetComponent<AudioSource>();
         m_Animator = GetComponent<Animator>();
+        m_HasSword = true;
         m_AttackIdx = 0;
         m_GroundCheck = transform.Find("GroundCheck");              
         m_ForwardRotation = transform.rotation;              
@@ -52,7 +53,7 @@ public class PlayerCharacter : MonoBehaviour {
 
         baseSpeed = m_MaxSpeed;
         blockSpeed = 0f;
-        attackSpeed = m_MaxSpeed * (2 / 3f);
+        throwAnimDuration = .25f;
     }
 	
 	// FixedUpdate
@@ -79,7 +80,7 @@ public class PlayerCharacter : MonoBehaviour {
             m_Animator.speed = 0;
         }
 
-	    if (m_Attacking || m_Threw)
+	    if (m_Attacking || Time.time - lastThrowTime <= throwAnimDuration)
 	    {
 	        m_Animator.speed = Mathf.Abs(m_AnimationSpeed);
 	    }
@@ -110,7 +111,7 @@ public class PlayerCharacter : MonoBehaviour {
            !(Time.time - lastThrowTime < m_AttackDelay))
         {
             // switch to walk animation
-            animPath = m_Threw ? Constants.ANIM_WALKN : Constants.ANIM_WALK; 
+            animPath = m_HasSword ? Constants.ANIM_WALK : Constants.ANIM_WALKN; 
             m_Animator.runtimeAnimatorController = Resources.Load(
                 animPath) as RuntimeAnimatorController;
         }             
@@ -120,14 +121,12 @@ public class PlayerCharacter : MonoBehaviour {
             m_Grounded = false;
             m_Rigidbody2D.AddForce(new Vector2(0f, m_JumpForce));
             lastJumpTime = Time.time;
-            String spritePath = m_Threw ? Constants.SPITE_JUMPN 
-                : Constants.SPRITE_JUMP;
+            String spritePath = m_HasSword ? Constants.SPRITE_JUMP 
+                : Constants.SPRITE_JUMPN;
             m_Animator.runtimeAnimatorController = Resources.Load(
                 Constants.ANIM_EMPTY) as RuntimeAnimatorController;
-            Debug.Log("Sprite path: " + spritePath);
             Sprite sprite = Resources.Load<Sprite>(spritePath);
 
-            Debug.Log("Sprite name: " + sprite.name);
             m_SpriteRenderer.sprite = sprite;
         }
     }  
@@ -138,17 +137,17 @@ public class PlayerCharacter : MonoBehaviour {
     */
     public void Attack(bool attack, bool block, bool threw)
     {
-        if (!m_Threw)
+        if (m_HasSword)
         {
             m_MaxSpeed = baseSpeed;
-            if (threw && Time.time - lastThrowTime > m_ThrowDelay)
+            if (threw && m_HasSword) //Time.time - lastThrowTime > m_ThrowDelay)
             {
                 m_Animator.runtimeAnimatorController = Resources.Load(
                     Constants.ANIM_THROW) as RuntimeAnimatorController;
-                m_Threw = true;
+                m_HasSword = false;
                 lastThrowTime = Time.time;
-                
-                Invoke("stopThrowing", m_ThrowDelay);
+
+                Invoke("throwSword", throwAnimDuration);
                 return;
             }
             
@@ -164,7 +163,7 @@ public class PlayerCharacter : MonoBehaviour {
             }
 
             
-            if (attack && (Time.time - lastAttackTime > m_AttackDelay) && !m_Threw)
+            if (attack && (Time.time - lastAttackTime > m_AttackDelay) && m_HasSword)
             {
                 m_Attacking = true;
                 m_Animator.runtimeAnimatorController = Resources
@@ -175,6 +174,15 @@ public class PlayerCharacter : MonoBehaviour {
                 Invoke("stopAttacking", m_AttackDelay);
             }
         }
+    }
+    
+    // throwSword
+    public void throwSword()
+    {
+        GameObject sword = Resources.Load<GameObject>(Constants.OBJECT_SWORD);
+        Vector3 offset = transform.rotation.y < m_ForwardRotation.y ? 
+            new Vector2(-3.5f, 0) : new Vector2(3, 0);
+        Instantiate(sword, transform.position + offset, transform.rotation);
     }
 
     // isAttacking
@@ -192,7 +200,7 @@ public class PlayerCharacter : MonoBehaviour {
     // stopThrowing
     void stopThrowing()
     {
-        m_Threw = false;
+        m_HasSword = true;
     }
 
     // takeDamage
@@ -208,6 +216,16 @@ public class PlayerCharacter : MonoBehaviour {
     // OnTriggerEnter2D
     void OnTriggerEnter2D(Collider2D other)
     {
+        if (other.tag == "Sword")
+        {
+            Destroy(other.gameObject);
+            m_HasSword = true;
 
+            if (!m_Grounded)
+            {
+                m_SpriteRenderer.sprite = Resources.Load<Sprite>(
+                    Constants.SPRITE_JUMP);
+            }
+        }
     }
 }
