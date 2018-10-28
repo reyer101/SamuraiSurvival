@@ -11,7 +11,7 @@ public class PlayerCharacter : MonoBehaviour {
     public float m_MaxSpeed, m_JumpForce, m_AnimationSpeed, m_AttackDelay,
         m_ThrowDelay;
     public int HP;
-    private int m_AttackIdx;
+    private int m_AttackIdx, m_AttackSoundIdx;
     private bool m_Grounded, m_Attacking, m_HasSword;    
     private AudioSource m_Audio;
     private Animator m_Animator;  
@@ -38,6 +38,7 @@ public class PlayerCharacter : MonoBehaviour {
         m_Animator = GetComponent<Animator>();
         m_HasSword = true;
         m_AttackIdx = 0;
+        m_AttackSoundIdx = 0;
         m_GroundCheck = transform.Find("GroundCheck");              
         m_ForwardRotation = transform.rotation;              
         m_BackRotation = new Quaternion(0, m_ForwardRotation.y - 1, 0, 0);          
@@ -147,6 +148,10 @@ public class PlayerCharacter : MonoBehaviour {
                 m_HasSword = false;
                 lastThrowTime = Time.time;
 
+                m_Audio.clip = Resources.Load<AudioClip>(String.Format(
+                    Constants.CLIP_SWING, 0));
+                m_Audio.Play();
+
                 Invoke("throwSword", throwAnimDuration);
                 return;
             }
@@ -162,7 +167,6 @@ public class PlayerCharacter : MonoBehaviour {
                 return;
             }
 
-            
             if (attack && (Time.time - lastAttackTime > m_AttackDelay) && m_HasSword)
             {
                 m_Attacking = true;
@@ -170,6 +174,12 @@ public class PlayerCharacter : MonoBehaviour {
                     .Load(m_Attacks[m_AttackIdx % 2]) as RuntimeAnimatorController;
                 ++m_AttackIdx;
                 lastAttackTime = Time.time;
+
+                string clip = String.Format(Constants.CLIP_SWING,
+                    m_AttackSoundIdx % 3);
+                m_Audio.clip = Resources.Load<AudioClip>(clip);
+                m_Audio.Play();
+                ++m_AttackSoundIdx;
 
                 Invoke("stopAttacking", m_AttackDelay);
             }
@@ -223,8 +233,15 @@ public class PlayerCharacter : MonoBehaviour {
 
             if (!m_Grounded)
             {
+                m_Animator.runtimeAnimatorController = Resources.Load(
+                    Constants.ANIM_EMPTY) as RuntimeAnimatorController;
                 m_SpriteRenderer.sprite = Resources.Load<Sprite>(
                     Constants.SPRITE_JUMP);
+            }
+            else
+            {
+                m_Animator.runtimeAnimatorController = Resources.Load(
+                    Constants.ANIM_WALK) as RuntimeAnimatorController;
             }
         }
     }

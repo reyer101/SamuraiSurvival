@@ -8,6 +8,7 @@ public class Constants : MonoBehaviour {
     private static string PREFIX_ANIM = "AnimationControllers/";
     private static string PREFIX_SPRITE = "Sprites/";
     private static string PREFIX_OBJECT = "Objects/";
+    private static string PREFIX_AUDIO = "Audio/";
 
     // Player Animations 
     public static string ANIM_EMPTY = "";
@@ -28,4 +29,7 @@ public class Constants : MonoBehaviour {
     
     // Game Objects
     public static string OBJECT_SWORD = PREFIX_OBJECT + "sword";
+    
+    // Sounds 
+    public static string CLIP_SWING = PREFIX_AUDIO + "sword_slash{0}";
 }
