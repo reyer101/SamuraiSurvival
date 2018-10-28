@@ -394,6 +394,7 @@
           <e p="PlayerCharacter.cs" t="Include" />
           <e p="PlayerController.cs" t="Include" />
           <e p="SwordMover.cs" t="Include" />
+          <e p="TitleController.cs" t="Include" />
         </e>
         <e p="Utils" t="Include">
           <e p="Constants.cs" t="Include" />

@@ -74,7 +74,7 @@ public class PlayerCharacter : MonoBehaviour {
 
         if(m_Grounded)
         {
-            m_Animator.speed = Mathf.Abs(m_AnimationSpeed * .2f * m_Rigidbody2D.velocity.x);                    
+            m_Animator.speed = Mathf.Abs(m_AnimationSpeed * .2f * m_Rigidbody2D.velocity.x);  
         } 
         else
         {            
