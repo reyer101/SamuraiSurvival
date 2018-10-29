@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.UI;
 using UnityEngine;
 
 public class TitleController : MonoBehaviour
 {
-	public float m_ScrollSpeed, m_TerrainDistance, m_BackgroundDistance;
+	public float m_ScrollSpeed, m_TerrainDistance, m_BackgroundDistance,
+		m_FadeRate;
 
 	private static float TERRAIN_DIFF = 380f;
 	private static float BACKGROUND_DIFF = 5825f;
@@ -13,7 +15,11 @@ public class TitleController : MonoBehaviour
 	private GameObject m_Player;
 	private GameObject m_Terrain, m_Terrain2, m_Background, m_Background2;
 	private Camera m_Camera;
-	private float startTerrainX, startBackgroundX;
+	
+	// ui stuff
+	private Image m_Fade;
+	
+	private float startTerrainX, startBackgroundX, startAlpha = 255f;
 
 	private bool inOrderTerrain, inOrderBackground;
 	
@@ -24,6 +30,8 @@ public class TitleController : MonoBehaviour
 		m_Terrain2 = GameObject.Find("Terrain 2");
 		m_Background = GameObject.Find("Background");
 		m_Background2 = GameObject.Find("Background 2");
+		m_Fade = GameObject.FindGameObjectWithTag("Fade")
+			.GetComponent<Image>();
 		m_Camera = Camera.main;
 
 		inOrderTerrain = true;
@@ -36,6 +44,11 @@ public class TitleController : MonoBehaviour
 	
 	void Update ()
 	{
+		// fade out black 
+		m_Fade.color = new Color(0, 0, 0, m_Fade.color.a - 
+			(m_FadeRate / 100f) * Time.deltaTime);
+		Debug.Log("Color: " + m_Fade.color.ToString());
+		
 		// move the player at the scroll speed
 		m_Player.GetComponent<Rigidbody2D>().velocity = new Vector2(
 			m_ScrollSpeed, 0);
