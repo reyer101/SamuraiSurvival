@@ -7,7 +7,7 @@ using UnityEngine;
 public class TitleController : MonoBehaviour
 {
 	public float m_ScrollSpeed, m_TerrainDistance, m_BackgroundDistance,
-		m_FadeRate;
+		m_FadeRate, m_TitleRate;
 
 	private static float TERRAIN_DIFF = 380f;
 	private static float BACKGROUND_DIFF = 5825f;
@@ -17,9 +17,10 @@ public class TitleController : MonoBehaviour
 	private Camera m_Camera;
 	
 	// ui stuff
-	private Image m_Fade;
+	private Image m_Fade, m_Title;
 	
-	private float startTerrainX, startBackgroundX, startAlpha = 255f;
+	private float startTerrainX, startBackgroundX, startTime,
+		visibleAlpha = 255f;
 
 	private bool inOrderTerrain, inOrderBackground;
 	
@@ -31,6 +32,8 @@ public class TitleController : MonoBehaviour
 		m_Background = GameObject.Find("Background");
 		m_Background2 = GameObject.Find("Background 2");
 		m_Fade = GameObject.FindGameObjectWithTag("Fade")
+			.GetComponent<Image>();
+		m_Title = GameObject.FindGameObjectWithTag("Title")
 			.GetComponent<Image>();
 		m_Camera = Camera.main;
 
@@ -44,10 +47,21 @@ public class TitleController : MonoBehaviour
 	
 	void Update ()
 	{
-		// fade out black 
-		m_Fade.color = new Color(0, 0, 0, m_Fade.color.a - 
-			(m_FadeRate / 100f) * Time.deltaTime);
-		Debug.Log("Color: " + m_Fade.color.ToString());
+		if (Time.time - startTime > 5.5)
+		{
+			// fade out black 
+			m_Fade.color = new Color(0, 0, 0, m_Fade.color.a - 
+				(m_FadeRate / 100f) * Time.deltaTime);
+			Debug.Log("Fade alpha: " + m_Fade.color.a);
+		}
+
+		if (Time.time - startTime > 24)
+		{
+			// fade in title
+			m_Title.color = new Color(m_Title.color.r, m_Title.color.g,
+				m_Title.color.b, m_Title.color.a + (m_TitleRate * Time.deltaTime) / 100);
+			Debug.Log("Title alpha: " + m_Title.color.a);
+		}
 		
 		// move the player at the scroll speed
 		m_Player.GetComponent<Rigidbody2D>().velocity = new Vector2(
