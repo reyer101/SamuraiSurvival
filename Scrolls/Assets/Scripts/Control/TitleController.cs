@@ -3,11 +3,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.UI;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityStandardAssets.CrossPlatformInput;
 
 public class TitleController : MonoBehaviour
 {
 	public float m_ScrollSpeed, m_TerrainDistance, m_BackgroundDistance,
-		m_FadeRate, m_TitleRate;
+		m_FadeRate, m_TitleRate, m_GlowStrength, m_GlowSpeed;
 
 	private static float TERRAIN_DIFF = 380f;
 	private static float BACKGROUND_DIFF = 5825f;
@@ -18,9 +20,10 @@ public class TitleController : MonoBehaviour
 	
 	// ui stuff
 	private Image m_Fade, m_Title;
+	private Text m_PromptText;
 	
-	private float startTerrainX, startBackgroundX, startTime,
-		visibleAlpha = 255f;
+	private float startTerrainX, startBackgroundX, startTime, glowAlpha = .6f,
+		visibleAlpha = 255f, glowDiff = .001f;
 
 	private bool inOrderTerrain, inOrderBackground;
 	
@@ -35,10 +38,13 @@ public class TitleController : MonoBehaviour
 			.GetComponent<Image>();
 		m_Title = GameObject.FindGameObjectWithTag("Title")
 			.GetComponent<Image>();
+		m_PromptText = GameObject.Find("Prompt").GetComponent<Text>();
 		m_Camera = Camera.main;
 
 		inOrderTerrain = true;
 		inOrderBackground = true;
+
+		m_GlowSpeed = m_GlowSpeed / 1000f;
 
 		// initial starting positions for terrain and background
 		startTerrainX = m_Player.transform.position.x;
@@ -52,15 +58,42 @@ public class TitleController : MonoBehaviour
 			// fade out black 
 			m_Fade.color = new Color(0, 0, 0, m_Fade.color.a - 
 				(m_FadeRate / 100f) * Time.deltaTime);
-			Debug.Log("Fade alpha: " + m_Fade.color.a);
 		}
 
 		if (Time.time - startTime > 24)
 		{
 			// fade in title
-			m_Title.color = new Color(m_Title.color.r, m_Title.color.g,
-				m_Title.color.b, m_Title.color.a + (m_TitleRate * Time.deltaTime) / 100);
-			Debug.Log("Title alpha: " + m_Title.color.a);
+			float alpha = m_Title.color.a + (m_TitleRate *
+				Time.deltaTime) / 100;
+			m_Title.color = new Color(255f, 255f, 255f, alpha);
+		}
+
+		// make prompt text pulse
+		if (glowAlpha <= .6f)
+		{
+			glowDiff = m_GlowSpeed * m_GlowStrength;
+		} 
+		
+		Debug.Log("Glow subtract: " + (glowAlpha - 1.0f));
+		
+		if (glowAlpha - 1.0f > 0f)
+		{
+			glowDiff = -(m_GlowSpeed * m_GlowStrength);
+		}
+
+		glowAlpha = glowAlpha + glowDiff;
+		m_PromptText.color = new Color(255f, 255f, 255f, glowAlpha);
+		
+
+		if (m_Title.color.a > .9f)
+		{
+			m_PromptText.text = "Press 'space' to begin";
+
+			if (CrossPlatformInputManager.GetButtonDown("Jump"))
+			{
+				// load the main scene
+				SceneManager.LoadScene(1);
+			}
 		}
 		
 		// move the player at the scroll speed
