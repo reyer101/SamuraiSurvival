@@ -8,8 +8,7 @@ using UnityEngine;
 
 // PlayerCharacter
 public class PlayerCharacter : MonoBehaviour {    
-    public float m_MaxSpeed, m_JumpForce, m_AnimationSpeed, m_AttackDelay,
-        m_ThrowDelay;
+    public float m_MaxSpeed, m_JumpForce, m_AnimationSpeed, m_AttackDelay;
     public int HP;
     private int m_AttackIdx, m_AttackSoundIdx;
     private bool m_Grounded, m_Attacking, m_HasSword;    
@@ -89,7 +88,7 @@ public class PlayerCharacter : MonoBehaviour {
 
     /*
     Name: Move
-    Parameters: float horizontal, bool jump, bool crouch
+    Parameters: float horizontal, bool jump
     */
     public void Move(float horizontal, bool jump)
     {
@@ -134,14 +133,14 @@ public class PlayerCharacter : MonoBehaviour {
     
     /*
     Name: Attack
-    Parameters: bool attack, bool block, bool
+    Parameters: bool attack, bool block, bool threw
     */
     public void Attack(bool attack, bool block, bool threw)
     {
         if (m_HasSword)
         {
             m_MaxSpeed = baseSpeed;
-            if (threw && m_HasSword) //Time.time - lastThrowTime > m_ThrowDelay)
+            if (threw && m_HasSword)
             {
                 m_Animator.runtimeAnimatorController = Resources.Load(
                     Constants.ANIM_THROW) as RuntimeAnimatorController;
@@ -152,7 +151,7 @@ public class PlayerCharacter : MonoBehaviour {
                     Constants.CLIP_SWING, 0));
                 m_Audio.Play();
 
-                Invoke("throwSword", throwAnimDuration);
+                Invoke("ThrowSword", throwAnimDuration);
                 return;
             }
             
@@ -181,13 +180,13 @@ public class PlayerCharacter : MonoBehaviour {
                 m_Audio.Play();
                 ++m_AttackSoundIdx;
 
-                Invoke("stopAttacking", m_AttackDelay);
+                Invoke("StopAttacking", m_AttackDelay);
             }
         }
     }
     
     // throwSword
-    public void throwSword()
+    public void ThrowSword()
     {
         GameObject sword = Resources.Load<GameObject>(Constants.OBJECT_SWORD);
         Vector3 offset = transform.rotation.y < m_ForwardRotation.y ? 
@@ -196,25 +195,25 @@ public class PlayerCharacter : MonoBehaviour {
     }
 
     // isAttacking
-    public bool isAttacking()
+    public bool IsAttacking()
     {
         return m_Attacking;
     }
 
     // stopAttacking
-    void stopAttacking()
+    void StopAttacking()
     {
         m_Attacking = false;
     }
 
     // stopThrowing
-    void stopThrowing()
+    void StopThrowing()
     {
         m_HasSword = true;
     }
 
     // takeDamage
-    void takeDamage()
+    void TakeDamage()
     {
         HP -= 1;             
         if (HP == 0)

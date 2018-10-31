@@ -226,6 +226,7 @@
     <Compile Include="Assets\ProCamera2D\ProCamera2D.cs" />
     <Compile Include="Assets\Scripts\Control\PlayerCharacter.cs" />
     <Compile Include="Assets\Scripts\Control\PlayerController.cs" />
+    <Compile Include="Assets\Scripts\Control\Shadow.cs" />
     <Compile Include="Assets\Scripts\Control\SwordMover.cs" />
     <Compile Include="Assets\Scripts\Control\TitleController.cs" />
     <Compile Include="Assets\Scripts\Utils\Constants.cs" />
