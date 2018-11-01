@@ -73,7 +73,8 @@ public class PlayerCharacter : MonoBehaviour {
 
         if(m_Grounded)
         {
-            m_Animator.speed = Mathf.Abs(m_AnimationSpeed * .2f * m_Rigidbody2D.velocity.x);  
+            m_Animator.speed = Mathf.Abs(m_AnimationSpeed * .2f 
+                * m_Rigidbody2D.velocity.x);  
         } 
         else
         {            
@@ -103,6 +104,7 @@ public class PlayerCharacter : MonoBehaviour {
                             
         m_Rigidbody2D.velocity = new Vector2(
             horizontal * m_MaxSpeed, m_Rigidbody2D.velocity.y);
+        Debug.Log(m_Rigidbody2D.velocity);
         m_GroundCheck.localPosition = m_WalkGroundCheck;
 
         // default no animation 

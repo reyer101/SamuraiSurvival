@@ -1,7 +1,6 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class Shadow : MonoBehaviour
 {
@@ -11,19 +10,24 @@ public class Shadow : MonoBehaviour
 	private AudioSource m_Audio;
 	private Animator m_Animator;
 	private Quaternion m_ForwardRotation, m_BackRotation;
+	private Vector3 m_PlayerDirection;
 	private String[] m_Attacks;
-	
-	public float m_MaxSpeed, m_AttackDelay;
-	private float baseSpeed, blockSpeed = 0f,
-		lastAttackTime = -999f;
+
+	// Percent chance to attack when in range
+	[Range(0, 100f)]
+	public float m_AttackChance; 
+	public float m_MaxSpeed, m_AttackDelay, m_BlockDelay;
+	private float baseSpeed, playerDistanceX, playerDistanceY,
+		blockSpeed = 0f, lastAttackTime = -999f;
 
 	private int m_AttackIdx = 0, m_AttackSoundIdx;
-	private bool m_Attacking;
+	private bool m_Attacking, m_Blocking;
 
 	void Start ()
 	{
 		m_Player = GameObject.FindGameObjectWithTag("Player");
 		m_SpriteRenderer = GetComponent<SpriteRenderer>();
+		m_Rigidbody2D = GetComponent<Rigidbody2D>();
 		m_Audio = GetComponent<AudioSource>();
 		m_Animator = GetComponent<Animator>();
 		m_Attacks = new[] {Constants.ANIM_ATTACK1, Constants.ANIM_ATTACK2};
@@ -32,8 +36,34 @@ public class Shadow : MonoBehaviour
 		m_BackRotation = new Quaternion(0, m_ForwardRotation.y - 1, 0, 0);
 	}
 	
-	void Update () {
+	void Update ()
+	{
+		// calculate player direction and distance
+		m_PlayerDirection = m_Player.transform.position - transform.position;
+		playerDistanceX = Math.Abs(m_PlayerDirection.x);
+		playerDistanceY = Math.Abs(m_PlayerDirection.y);
+
+		float horizontal = 0;
+		bool attack = false, block = false;
 		
+		m_Animator.speed = 0;
+		if (playerDistanceX > 4f)
+		{
+			// normalize the direction vector for velocity
+			horizontal = (float) Math.Round(m_PlayerDirection.normalized.x);
+			m_Animator.speed = Mathf.Abs(m_Rigidbody2D.velocity.x) / 8f;
+		}
+		else
+		{
+			attack = true;
+			if (Random.Range(0f, 100f) >= m_AttackChance 
+					&& playerDistanceY < 4f)
+			{
+				block = true;
+				attack = false;
+			}
+		}
+		Move(horizontal);
 	}
 	
 	/*
@@ -42,6 +72,7 @@ public class Shadow : MonoBehaviour
     */
 	public void Move(float horizontal)
 	{
+		//Debug.Log("Horizontal: " + horizontal);
 		if (horizontal < 0)
 		{
 			transform.rotation = m_BackRotation;
@@ -99,9 +130,15 @@ public class Shadow : MonoBehaviour
 		}
 	}
 	
-	// stopAttacking
+	// StopAttacking
 	private void StopAttacking()
 	{
 		m_Attacking = false;
+	}
+	
+	// StopBlocking
+	private void StopBlocking()
+	{
+		m_Blocking = false;
 	}
 }
