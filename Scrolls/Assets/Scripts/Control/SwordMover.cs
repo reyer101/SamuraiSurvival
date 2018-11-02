@@ -18,7 +18,6 @@ public class SwordMover : MonoBehaviour
 		m_Player = GameObject.FindGameObjectWithTag("Player");
 		m_SpawnTime = Time.time;
 		m_HitTerrain = false;
-		Debug.Log("Rotation: " + transform.rotation);
 	}
 	
 	// Update is called once per frame
@@ -46,7 +45,6 @@ public class SwordMover : MonoBehaviour
 	// OnTriggerEnter2D
 	private void OnTriggerEnter2D(Collider2D other)
 	{
-		Debug.Log("Hit game collider: " + other.gameObject.name);
 		if (other.gameObject.tag == "Terrain")
 		{
 			m_HitTerrain = true;

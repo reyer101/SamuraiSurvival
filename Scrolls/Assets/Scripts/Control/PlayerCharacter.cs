@@ -104,7 +104,6 @@ public class PlayerCharacter : MonoBehaviour {
                             
         m_Rigidbody2D.velocity = new Vector2(
             horizontal * m_MaxSpeed, m_Rigidbody2D.velocity.y);
-        Debug.Log(m_Rigidbody2D.velocity);
         m_GroundCheck.localPosition = m_WalkGroundCheck;
 
         // default no animation 
