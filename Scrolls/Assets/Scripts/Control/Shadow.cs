@@ -37,7 +37,8 @@ public class Shadow : MonoBehaviour
 		choiceDelay;
 
 	private int m_AttackIdx = 0, m_AttackSoundIdx, attackChain = 0;
-	private bool m_Attacking, m_Blocking, m_LastBlock, m_Vulnerable;
+	private bool m_Attacking, m_Blocking, m_LastBlock, m_Vulnerable,
+		m_LastVulnerable;
 
 	void Start ()
 	{
@@ -72,17 +73,28 @@ public class Shadow : MonoBehaviour
 		}
 		else
 		{
-			if (Random.Range(0f, 100f) <= m_VulnerableChance || m_Vulnerable)
+			if (m_Blocking || m_Attacking || m_Vulnerable)
+			{
+				return;
+			}
+			
+			if (!m_LastVulnerable && Random.Range(0f, 100f) <= 
+					m_VulnerableChance)
 			{
 				m_Vulnerable = true;
+				m_LastVulnerable = true;
+				attackChain = 0;
+				m_LastBlock = false;
 				m_SpriteRenderer.sprite = Resources.Load<Sprite>(
-					Constants.SPRITE_IDLE);
+					Constants.SPRITE_VULNERABLE);
 				Invoke("StopVulnerability", m_VulnerableDuration);
 
 				return;
 			}
+
+			m_LastVulnerable = false;
 			
-			if (Time.time - lastChoiceTime >= choiceDelay)
+			if (Time.time - lastChoiceTime >= choiceDelay && !m_Vulnerable)
 			{
 				attack = true;
 				m_Animator.speed = .5f;
@@ -143,6 +155,7 @@ public class Shadow : MonoBehaviour
 			m_MaxSpeed = blockSpeed;
 			m_Blocking = true;
 
+			Debug.Log("Block");
 			attackChain = 0;
 			m_LastBlock = true;
 			choiceDelay = m_BlockDuration;
@@ -164,7 +177,8 @@ public class Shadow : MonoBehaviour
 			m_Audio.clip = Resources.Load<AudioClip>(clip);
 			m_Audio.Play();
 			++m_AttackSoundIdx;
-
+			
+			Debug.Log("Attack");
 			++attackChain;
 			m_LastBlock = false;
 			choiceDelay = m_AttackDelay;
