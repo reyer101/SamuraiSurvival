@@ -2,8 +2,7 @@
 
 // Constants
 public class Constants : MonoBehaviour {
-    // Audio
-
+    
     // Prefixes
     private static string PREFIX_ANIM = "AnimationControllers/";
     private static string PREFIX_SPRITE = "Sprites/";
@@ -14,9 +13,6 @@ public class Constants : MonoBehaviour {
     public static string ANIM_EMPTY = "";
     public static string ANIM_WALK = PREFIX_ANIM + "main_walk_0";
     public static string ANIM_WALKN = PREFIX_ANIM + "main_walk_no_sword_0";
-    public static string ANIM_JUMP = PREFIX_ANIM + "main_walk_1";
-    public static string ANIM_JUMPN = PREFIX_ANIM + "main_walk_no_sword_1";
-    public static string ANIM_BLOCK = PREFIX_ANIM + "main_walk_2";
     public static string ANIM_ATTACK1 = PREFIX_ANIM + "attack_1_0";
     public static string ANIM_ATTACK2 = PREFIX_ANIM + "attack_2_0";
     public static string ANIM_THROW = PREFIX_ANIM + "throw_0";
@@ -31,6 +27,11 @@ public class Constants : MonoBehaviour {
     // Game Objects
     public static string OBJECT_SWORD = PREFIX_OBJECT + "sword";
     
-    // Sounds 
+    // Audio 
     public static string CLIP_SWING = PREFIX_AUDIO + "sword_slash{0}";
+    public static string CLIP_BLOCK = PREFIX_AUDIO + "sword_block{0}";
+    public static string CLIP_IMPACT = PREFIX_AUDIO + "sword_impact";
+    
+    // Tags
+    public static string TAG_SWORD = "Sword";
 }

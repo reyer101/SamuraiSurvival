@@ -5,7 +5,8 @@ using Random = UnityEngine.Random;
 
 public class Shadow : MonoBehaviour
 {
-	private GameObject m_Player;
+	private GameObject m_PlayerObject;
+	private PlayerCharacter m_Player;
 	private SpriteRenderer m_SpriteRenderer;
 	private Rigidbody2D m_Rigidbody2D;
 	private AudioSource m_Audio;
@@ -25,12 +26,18 @@ public class Shadow : MonoBehaviour
 	public float m_VulnerableDuration;
 
 	[Range(0, 10f)]
+	public float m_ReadyRange;
+
+	[Range(0, 10f)] 
 	public float m_AttackRange;
 	
 	public float m_MaxSpeed, m_AttackDelay, m_BlockDuration;
 
 	[Range(0, 4)] 
 	public int m_MaxAttackChain;
+
+	[Range(1, 20)] 
+	public int m_HP;
 	
 	private float baseSpeed, playerDistanceX, playerDistanceY,
 		blockSpeed = 0f, lastAttackTime = -999f, lastChoiceTime = -99f,
@@ -42,7 +49,8 @@ public class Shadow : MonoBehaviour
 
 	void Start ()
 	{
-		m_Player = GameObject.FindGameObjectWithTag("Player");
+		m_PlayerObject = GameObject.FindGameObjectWithTag("Player");
+		m_Player = m_PlayerObject.GetComponent<PlayerCharacter>();
 		m_SpriteRenderer = GetComponent<SpriteRenderer>();
 		m_Rigidbody2D = GetComponent<Rigidbody2D>();
 		m_Audio = GetComponent<AudioSource>();
@@ -58,14 +66,25 @@ public class Shadow : MonoBehaviour
 	void FixedUpdate ()
 	{
 		// calculate player direction and distance
-		m_PlayerDirection = m_Player.transform.position - transform.position;
+		m_PlayerDirection = m_PlayerObject.transform.position 
+			- transform.position;
 		playerDistanceX = Math.Abs(m_PlayerDirection.x);
 		playerDistanceY = Math.Abs(m_PlayerDirection.y);
 
 		float horizontal = 0;
 		bool attack = false, block = false;
 		
-		if (playerDistanceX >= m_AttackRange)
+		// always face the player's direction
+		if (m_PlayerDirection.x < 0)
+		{
+			transform.rotation = m_BackRotation;
+		}
+		else
+		{
+			transform.rotation = m_ForwardRotation;
+		}
+		
+		if (playerDistanceX >= m_ReadyRange)
 		{
 			// normalize the direction vector for velocity
 			horizontal = (float) Math.Round(m_PlayerDirection.normalized.x);
@@ -94,7 +113,8 @@ public class Shadow : MonoBehaviour
 
 			m_LastVulnerable = false;
 			
-			if (Time.time - lastChoiceTime >= choiceDelay && !m_Vulnerable)
+			if (Time.time - lastChoiceTime >= choiceDelay 
+					&& !m_Vulnerable)
 			{
 				attack = true;
 				m_Animator.speed = .5f;
@@ -121,15 +141,6 @@ public class Shadow : MonoBehaviour
     */
 	public void Move(float horizontal)
 	{
-		if (horizontal < 0)
-		{
-			transform.rotation = m_BackRotation;
-		}
-		else if (horizontal > 0)
-		{
-			transform.rotation = m_ForwardRotation;
-		}
-
 		if (!m_Blocking && !m_Attacking && Time.time - choiceDelay - .5f > lastChoiceTime)
 		{
 			m_Rigidbody2D.velocity = new Vector2(
@@ -155,7 +166,6 @@ public class Shadow : MonoBehaviour
 			m_MaxSpeed = blockSpeed;
 			m_Blocking = true;
 
-			Debug.Log("Block");
 			attackChain = 0;
 			m_LastBlock = true;
 			choiceDelay = m_BlockDuration;
@@ -178,12 +188,31 @@ public class Shadow : MonoBehaviour
 			m_Audio.Play();
 			++m_AttackSoundIdx;
 			
-			Debug.Log("Attack");
+			// damage the player if they are in range
+			Invoke("DamagePlayer", .2f);
+			
 			++attackChain;
 			m_LastBlock = false;
 			choiceDelay = m_AttackDelay;
 			Invoke("StopAttacking", m_AttackDelay);
 		}
+	}
+	
+	// DamagePlayer
+	private void DamagePlayer()
+	{
+		if (playerDistanceX <= m_AttackRange && playerDistanceY
+		    <= m_AttackRange)
+		{
+			m_Player.TakeDamage();
+			m_Audio.Stop();
+		}
+	}
+	
+	// TakeDamage
+	private void TakeDamage()
+	{
+		
 	}
 	
 	// StopAttacking

@@ -1,17 +1,14 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using JetBrains.Rider.Unity.Editor;
-using UnityEditorInternal;
-using UnityEngine.SceneManagement;
 using UnityEngine;
 
 // PlayerCharacter
 public class PlayerCharacter : MonoBehaviour {    
     public float m_MaxSpeed, m_JumpForce, m_AnimationSpeed, m_AttackDelay;
-    public int HP;
-    private int m_AttackIdx, m_AttackSoundIdx;
-    private bool m_Grounded, m_Attacking, m_HasSword;    
+    
+    [Range(1, 20)]
+    public int m_HP;
+    private int m_AttackIdx = 0, m_AttackSoundIdx = 0, m_BlockSoundIdx = 0;
+    private bool m_Grounded, m_Attacking, m_Blocking, m_HasSword;    
     private AudioSource m_Audio;
     private Animator m_Animator;  
     private Rigidbody2D m_Rigidbody2D;
@@ -26,8 +23,6 @@ public class PlayerCharacter : MonoBehaviour {
     private float lastJumpTime, lastAttackTime, lastThrowTime, baseSpeed, 
         blockSpeed, throwAnimDuration;    
     private float k_GroundedRadius = .5f;   
-    private float k_ClimbRadius = 1.0f;
-    private float k_UnderRadius = 1f;
 
     // Awake
     void Awake () {             
@@ -36,8 +31,6 @@ public class PlayerCharacter : MonoBehaviour {
         m_Audio = GetComponent<AudioSource>();
         m_Animator = GetComponent<Animator>();
         m_HasSword = true;
-        m_AttackIdx = 0;
-        m_AttackSoundIdx = 0;
         m_GroundCheck = transform.Find("GroundCheck");              
         m_ForwardRotation = transform.rotation;              
         m_BackRotation = new Quaternion(0, m_ForwardRotation.y - 1, 0, 0);          
@@ -58,8 +51,7 @@ public class PlayerCharacter : MonoBehaviour {
 	
 	// FixedUpdate
 	void FixedUpdate () {        
-        m_Grounded = false;            
-        m_Rigidbody2D.gravityScale = 2;              
+        m_Grounded = false;                         
 
         // Check if player is standing on ground by searching for colliders overlapping radius at bottom of player
         Collider2D[] gColliders = Physics2D.OverlapCircleAll(m_GroundCheck.position, k_GroundedRadius, m_LayerMask);
@@ -138,31 +130,39 @@ public class PlayerCharacter : MonoBehaviour {
     */
     public void Attack(bool attack, bool block, bool threw)
     {
+        m_Blocking = false;
         if (m_HasSword)
         {
             m_MaxSpeed = baseSpeed;
             if (threw && m_HasSword)
             {
+                // start the sword throw animation 
                 m_Animator.runtimeAnimatorController = Resources.Load(
                     Constants.ANIM_THROW) as RuntimeAnimatorController;
                 m_HasSword = false;
                 lastThrowTime = Time.time;
 
+                // play the sword throw audio clip
                 m_Audio.clip = Resources.Load<AudioClip>(String.Format(
                     Constants.CLIP_SWING, 0));
                 m_Audio.Play();
 
+                // throw the sword once animation completes
                 Invoke("ThrowSword", throwAnimDuration);
                 return;
             }
             
             if (block && m_Grounded)
             {
+                // load the block sprite
                 m_Animator.runtimeAnimatorController = Resources.Load(
                     Constants.ANIM_EMPTY) as RuntimeAnimatorController;
                 m_SpriteRenderer.sprite = Resources.Load<Sprite>(
                     Constants.SPRITE_BLOCK);
+                
+                // prevent movement while blocking
                 m_MaxSpeed = blockSpeed;
+                m_Blocking = true;
 
                 return;
             }
@@ -186,8 +186,8 @@ public class PlayerCharacter : MonoBehaviour {
         }
     }
     
-    // throwSword
-    public void ThrowSword()
+    // ThrowSword
+    void ThrowSword()
     {
         GameObject sword = Resources.Load<GameObject>(Constants.OBJECT_SWORD);
         Vector3 offset = transform.rotation.y < m_ForwardRotation.y ? 
@@ -195,44 +195,59 @@ public class PlayerCharacter : MonoBehaviour {
         Instantiate(sword, transform.position + offset, transform.rotation);
     }
 
-    // isAttacking
-    public bool IsAttacking()
-    {
-        return m_Attacking;
-    }
-
-    // stopAttacking
+    // StopAttacking
     void StopAttacking()
     {
         m_Attacking = false;
     }
 
-    // stopThrowing
+    // StopThrowing
     void StopThrowing()
     {
         m_HasSword = true;
     }
 
-    // takeDamage
-    void TakeDamage()
+    // TakeDamage
+    public void TakeDamage()
     {
-        HP -= 1;             
-        if (HP == 0)
-        {            
-            SceneManager.LoadScene(SceneManager.GetSceneAt(0).name);            
+        string clip;
+        if (!m_Blocking) 
+        {
+            // lose hp and set impact clip path
+            m_HP -= 1;
+            clip = Constants.CLIP_IMPACT;
+            Debug.Log("TakeDamage(): " + m_HP);
+            if (m_HP == 0)
+            {
+                // player dead, do dead stuff here
+                //SceneManager.LoadScene(SceneManager.GetSceneAt(0).name);
+            }
         }
+        else
+        {
+            // set block clip path
+            clip = String.Format(Constants.CLIP_BLOCK,
+                m_BlockSoundIdx % 2);
+            ++m_BlockSoundIdx;
+        }
+
+        // play either block or impact audio clip
+        m_Audio.clip = Resources.Load<AudioClip>(clip);
+        m_Audio.Play();
     }
 
     // OnTriggerEnter2D
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.tag == "Sword")
+        if (other.CompareTag(Constants.TAG_SWORD))
         {
+            // "catch" the sword
             Destroy(other.gameObject);
-            m_HasSword = true;
+            StopThrowing();
 
             if (!m_Grounded)
             {
+                // toggle jump animation
                 m_Animator.runtimeAnimatorController = Resources.Load(
                     Constants.ANIM_EMPTY) as RuntimeAnimatorController;
                 m_SpriteRenderer.sprite = Resources.Load<Sprite>(
@@ -240,6 +255,7 @@ public class PlayerCharacter : MonoBehaviour {
             }
             else
             {
+                // toggle walk animation
                 m_Animator.runtimeAnimatorController = Resources.Load(
                     Constants.ANIM_WALK) as RuntimeAnimatorController;
             }
