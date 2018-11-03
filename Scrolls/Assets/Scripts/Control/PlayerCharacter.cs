@@ -4,10 +4,13 @@ using UnityEngine;
 // PlayerCharacter
 public class PlayerCharacter : MonoBehaviour {    
     public float m_MaxSpeed, m_JumpForce, m_AnimationSpeed, m_AttackDelay;
+
+    [Range(0, 10)] 
+    public float m_AttackRange;
     
     [Range(1, 20)]
     public int m_HP;
-    private int m_AttackIdx = 0, m_AttackSoundIdx = 0, m_BlockSoundIdx = 0;
+    private int m_AttackIdx, m_AttackSoundIdx, m_BlockSoundIdx;
     private bool m_Grounded, m_Attacking, m_Blocking, m_HasSword;    
     private AudioSource m_Audio;
     private Animator m_Animator;  
@@ -53,8 +56,10 @@ public class PlayerCharacter : MonoBehaviour {
 	void FixedUpdate () {        
         m_Grounded = false;                         
 
-        // Check if player is standing on ground by searching for colliders overlapping radius at bottom of player
-        Collider2D[] gColliders = Physics2D.OverlapCircleAll(m_GroundCheck.position, k_GroundedRadius, m_LayerMask);
+        // Check if player is standing on ground by searching for
+        // colliders overlapping radius at bottom of player
+        Collider2D[] gColliders = Physics2D.OverlapCircleAll(
+            m_GroundCheck.position, k_GroundedRadius, m_LayerMask);
         for (int i = 0; i < gColliders.Length; i++)
         {                      
             if (gColliders[i].gameObject != gameObject)  
@@ -169,18 +174,24 @@ public class PlayerCharacter : MonoBehaviour {
 
             if (attack && (Time.time - lastAttackTime > m_AttackDelay) && m_HasSword)
             {
+                // start attack animation
                 m_Attacking = true;
                 m_Animator.runtimeAnimatorController = Resources
                     .Load(m_Attacks[m_AttackIdx % 2]) as RuntimeAnimatorController;
                 ++m_AttackIdx;
                 lastAttackTime = Time.time;
 
+                // play attack audio clip
                 string clip = String.Format(Constants.CLIP_SWING,
                     m_AttackSoundIdx % 3);
                 m_Audio.clip = Resources.Load<AudioClip>(clip);
                 m_Audio.Play();
                 ++m_AttackSoundIdx;
+                
+                // damage all enemies in range
+                Invoke("DamageTargets", .2f);
 
+                // stop attacking after attack delay
                 Invoke("StopAttacking", m_AttackDelay);
             }
         }
@@ -206,6 +217,24 @@ public class PlayerCharacter : MonoBehaviour {
     {
         m_HasSword = true;
     }
+    
+    // DamageTargets
+    void DamageTargets()
+    {
+        bool facingForward = transform.rotation == m_ForwardRotation;
+        Vector2 direction = facingForward ? Vector2.right : Vector2.left;
+        RaycastHit2D[] hits = Physics2D.RaycastAll(transform.position,
+            direction, m_AttackRange);
+
+        foreach (RaycastHit2D hit in hits)
+        {
+            GameObject go = hit.transform.gameObject;
+            if (go.CompareTag(Constants.TAG_SHADOW))
+            {
+                go.GetComponent<Shadow>().TakeDamage();
+            }
+        }
+    }
 
     // TakeDamage
     public void TakeDamage()
@@ -216,7 +245,6 @@ public class PlayerCharacter : MonoBehaviour {
             // lose hp and set impact clip path
             m_HP -= 1;
             clip = Constants.CLIP_IMPACT;
-            Debug.Log("TakeDamage(): " + m_HP);
             if (m_HP == 0)
             {
                 // player dead, do dead stuff here

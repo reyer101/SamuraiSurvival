@@ -34,4 +34,5 @@ public class Constants : MonoBehaviour {
     
     // Tags
     public static string TAG_SWORD = "Sword";
+    public static string TAG_SHADOW = "Shadow";
 }

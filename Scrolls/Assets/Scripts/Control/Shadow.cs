@@ -43,9 +43,9 @@ public class Shadow : MonoBehaviour
 		blockSpeed = 0f, lastAttackTime = -999f, lastChoiceTime = -99f,
 		choiceDelay;
 
-	private int m_AttackIdx = 0, m_AttackSoundIdx, attackChain = 0;
+	private int m_AttackIdx, m_AttackSoundIdx, m_BlockSoundIdx, attackChain;
 	private bool m_Attacking, m_Blocking, m_LastBlock, m_Vulnerable,
-		m_LastVulnerable;
+		m_LastVulnerable, m_CanMove = true;
 
 	void Start ()
 	{
@@ -72,7 +72,7 @@ public class Shadow : MonoBehaviour
 		playerDistanceY = Math.Abs(m_PlayerDirection.y);
 
 		float horizontal = 0;
-		bool attack = false, block = false;
+		bool attack = false, block = false, vulnerable = false;
 		
 		// always face the player's direction
 		if (m_PlayerDirection.x < 0)
@@ -87,11 +87,15 @@ public class Shadow : MonoBehaviour
 		if (playerDistanceX >= m_ReadyRange)
 		{
 			// normalize the direction vector for velocity
+			m_CanMove = true;
+			m_MaxSpeed = baseSpeed;
 			horizontal = (float) Math.Round(m_PlayerDirection.normalized.x);
 			m_Animator.speed = Mathf.Abs(m_Rigidbody2D.velocity.x) / 8f;
 		}
 		else
 		{
+			m_CanMove = false;
+			m_Animator.speed = .5f;
 			if (m_Blocking || m_Attacking || m_Vulnerable)
 			{
 				return;
@@ -100,15 +104,7 @@ public class Shadow : MonoBehaviour
 			if (!m_LastVulnerable && Random.Range(0f, 100f) <= 
 					m_VulnerableChance)
 			{
-				m_Vulnerable = true;
-				m_LastVulnerable = true;
-				attackChain = 0;
-				m_LastBlock = false;
-				m_SpriteRenderer.sprite = Resources.Load<Sprite>(
-					Constants.SPRITE_VULNERABLE);
-				Invoke("StopVulnerability", m_VulnerableDuration);
-
-				return;
+				vulnerable = true;
 			}
 
 			m_LastVulnerable = false;
@@ -117,7 +113,6 @@ public class Shadow : MonoBehaviour
 					&& !m_Vulnerable)
 			{
 				attack = true;
-				m_Animator.speed = .5f;
 				float rand = Random.Range(0f, 100f);
 				if (rand >= m_AttackChance && playerDistanceY < 4f 
 					&& !m_LastBlock || attackChain == m_MaxAttackChain)
@@ -131,7 +126,7 @@ public class Shadow : MonoBehaviour
 			}
 		}
 		
-		Attack(attack, block);
+		Attack(attack, block, vulnerable);
 		Move(horizontal);
 	}
 	
@@ -141,7 +136,7 @@ public class Shadow : MonoBehaviour
     */
 	public void Move(float horizontal)
 	{
-		if (!m_Blocking && !m_Attacking && Time.time - choiceDelay - .5f > lastChoiceTime)
+		if (m_CanMove)
 		{
 			m_Rigidbody2D.velocity = new Vector2(
 				horizontal * m_MaxSpeed * 10f, m_Rigidbody2D.velocity.y);
@@ -154,10 +149,31 @@ public class Shadow : MonoBehaviour
     Name: Attack
     Parameters: bool attack, bool block
     */
-	public void Attack(bool attack, bool block)
-	{		
+	public void Attack(bool attack, bool block, bool vulnerable)
+	{
+		if (m_Attacking || m_Blocking || m_Vulnerable)
+		{
+			return;
+		}
+		
+		if (vulnerable)
+		{
+			m_Vulnerable = true;
+			m_LastVulnerable = true;
+			attackChain = 0;
+			m_LastBlock = false;
+			m_Animator.runtimeAnimatorController = Resources.Load(
+				Constants.ANIM_EMPTY) as RuntimeAnimatorController;
+			m_SpriteRenderer.sprite = Resources.Load<Sprite>(
+				Constants.SPRITE_VULNERABLE);
+			m_MaxSpeed = blockSpeed;
+			Invoke("StopVulnerability", m_VulnerableDuration);
+
+			return;
+		}
+		
 		m_MaxSpeed = baseSpeed;
-		if (block || m_Blocking && !m_Attacking)
+		if (block)
 		{
 			m_Animator.runtimeAnimatorController = Resources.Load(
 				Constants.ANIM_EMPTY) as RuntimeAnimatorController;
@@ -210,8 +226,30 @@ public class Shadow : MonoBehaviour
 	}
 	
 	// TakeDamage
-	private void TakeDamage()
+	public void TakeDamage()
 	{
+		string clip;
+		if (!m_Blocking) 
+		{
+			// lose hp and set impact clip path
+			m_HP -= 1;
+			clip = Constants.CLIP_IMPACT;
+			if (m_HP == 0)
+			{
+				// shadow dead, do dead stuff here
+			}
+		}
+		else
+		{
+			// set block clip path
+			clip = String.Format(Constants.CLIP_BLOCK,
+				m_BlockSoundIdx % 2);
+			++m_BlockSoundIdx;
+		}
+
+		// play either block or impact audio clip
+		m_Audio.clip = Resources.Load<AudioClip>(clip);
+		m_Audio.Play();
 		
 	}
 	
