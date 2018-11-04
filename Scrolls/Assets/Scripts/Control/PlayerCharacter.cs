@@ -9,9 +9,9 @@ public class PlayerCharacter : MonoBehaviour {
     public float m_AttackRange;
     
     [Range(1, 20)]
-    public int m_HP;
+    public float m_HP;
     private int m_AttackIdx, m_AttackSoundIdx, m_BlockSoundIdx;
-    private bool m_Grounded, m_Attacking, m_Blocking, m_HasSword;    
+    private bool m_Grounded, m_Attacking, m_Blocking, m_HasSword, m_Pulse, dim;    
     private AudioSource m_Audio;
     private Animator m_Animator;  
     private Rigidbody2D m_Rigidbody2D;
@@ -83,6 +83,35 @@ public class PlayerCharacter : MonoBehaviour {
 	        m_Animator.speed = Mathf.Abs(m_AnimationSpeed);
 	    }
 	}  
+    
+    // LateUpdate
+    private void LateUpdate()
+    {
+        if (m_Pulse)
+        {
+            float a = m_SpriteRenderer.color.a;    
+            if (a >= .99f)
+            {
+                dim = true;
+            }
+            
+            if (a <= .6f)
+            {
+                dim = false;
+            }
+
+            if (dim)
+            {
+                m_SpriteRenderer.color = new Color(1, 0, 0,
+                    a - a * Time.deltaTime * 5f);
+            }
+            else
+            {
+                m_SpriteRenderer.color = new Color(1, 0, 0,
+                    a + a * Time.deltaTime * 5f);
+            }   
+        }
+    }
 
     /*
     Name: Move
@@ -231,13 +260,20 @@ public class PlayerCharacter : MonoBehaviour {
             GameObject go = hit.transform.gameObject;
             if (go.CompareTag(Constants.TAG_SHADOW))
             {
-                go.GetComponent<Shadow>().TakeDamage();
+                go.GetComponent<Shadow>().ProcessAttack(false);
             }
         }
     }
+    
+    // StopPulse
+    void StopPulse()
+    {
+        m_Pulse = false;
+        m_SpriteRenderer.color = Color.white;
+    }
 
-    // TakeDamage
-    public void TakeDamage()
+    // ProcessAttack
+    public void ProcessAttack()
     {
         string clip;
         if (!m_Blocking) 
@@ -245,6 +281,9 @@ public class PlayerCharacter : MonoBehaviour {
             // lose hp and set impact clip path
             m_HP -= 1;
             clip = Constants.CLIP_IMPACT;
+            m_Pulse = true;
+            m_SpriteRenderer.color = new Color(1f, 0.54f, 1f);
+            Invoke("StopPulse", .25f);
             if (m_HP == 0)
             {
                 // player dead, do dead stuff here

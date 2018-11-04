@@ -4,35 +4,37 @@
 public class Constants : MonoBehaviour {
     
     // Prefixes
-    private static string PREFIX_ANIM = "AnimationControllers/";
-    private static string PREFIX_SPRITE = "Sprites/";
-    private static string PREFIX_OBJECT = "Objects/";
-    private static string PREFIX_AUDIO = "Audio/";
+    private static readonly string PREFIX_ANIM = "AnimationControllers/";
+    private static readonly string PREFIX_SPRITE = "Sprites/";
+    private static readonly string PREFIX_OBJECT = "Objects/";
+    private static readonly string PREFIX_AUDIO = "Audio/";
 
-    // Player Animations 
-    public static string ANIM_EMPTY = "";
-    public static string ANIM_WALK = PREFIX_ANIM + "main_walk_0";
-    public static string ANIM_WALKN = PREFIX_ANIM + "main_walk_no_sword_0";
-    public static string ANIM_ATTACK1 = PREFIX_ANIM + "attack_1_0";
-    public static string ANIM_ATTACK2 = PREFIX_ANIM + "attack_2_0";
-    public static string ANIM_THROW = PREFIX_ANIM + "throw_0";
+    // Animations 
+    public static readonly string ANIM_EMPTY = "";
+    public static readonly string ANIM_WALK = PREFIX_ANIM + "main_walk_0";
+    public static readonly string ANIM_WALKN = PREFIX_ANIM + "main_walk_no_sword_0";
+    public static readonly string ANIM_ATTACK1 = PREFIX_ANIM + "attack_1_0";
+    public static readonly string ANIM_ATTACK2 = PREFIX_ANIM + "attack_2_0";
+    public static readonly string ANIM_THROW = PREFIX_ANIM + "throw_0";
+    public static readonly string ANIM_SHADOW_PULSE = "Pulse";
+    public static readonly string ANIM_SHADOW_FADE = "Fade";
 
     // Player Sprites
-    public static string SPRITE_BLOCK = PREFIX_SPRITE + "block";
-    public static string SPRITE_JUMP = PREFIX_SPRITE + "jump_main";
-    public static string SPRITE_JUMPN = PREFIX_SPRITE + "jump_no_sword";
-    public static string SPRITE_IDLE = PREFIX_SPRITE + "main_walk_1";
-    public static string SPRITE_VULNERABLE = PREFIX_SPRITE + "vulnerable";
+    public static readonly string SPRITE_BLOCK = PREFIX_SPRITE + "block";
+    public static readonly string SPRITE_JUMP = PREFIX_SPRITE + "jump_main";
+    public static readonly string SPRITE_JUMPN = PREFIX_SPRITE + "jump_no_sword";
+    public static readonly string SPRITE_IDLE = PREFIX_SPRITE + "main_walk_1";
+    public static readonly string SPRITE_VULNERABLE = PREFIX_SPRITE + "vulnerable";
     
     // Game Objects
-    public static string OBJECT_SWORD = PREFIX_OBJECT + "sword";
+    public static readonly string OBJECT_SWORD = PREFIX_OBJECT + "sword";
     
     // Audio 
-    public static string CLIP_SWING = PREFIX_AUDIO + "sword_slash{0}";
-    public static string CLIP_BLOCK = PREFIX_AUDIO + "sword_block{0}";
-    public static string CLIP_IMPACT = PREFIX_AUDIO + "sword_impact";
+    public static readonly string CLIP_SWING = PREFIX_AUDIO + "sword_slash{0}";
+    public static readonly string CLIP_BLOCK = PREFIX_AUDIO + "sword_block{0}";
+    public static readonly string CLIP_IMPACT = PREFIX_AUDIO + "sword_impact";
     
     // Tags
-    public static string TAG_SWORD = "Sword";
-    public static string TAG_SHADOW = "Shadow";
+    public static readonly string TAG_SWORD = "Sword";
+    public static readonly string TAG_SHADOW = "Shadow";
 }

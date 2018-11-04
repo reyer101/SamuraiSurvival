@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Xml.Serialization;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -13,6 +12,8 @@ public class Shadow : MonoBehaviour
 	private Animator m_Animator;
 	private Quaternion m_ForwardRotation, m_BackRotation;
 	private Vector3 m_PlayerDirection;
+	private Color m_SpriteColor;
+	private String m_Anim = "";
 	private String[] m_Attacks;
 
 	// Percent chance to attack when in range
@@ -37,21 +38,22 @@ public class Shadow : MonoBehaviour
 	public int m_MaxAttackChain;
 
 	[Range(1, 20)] 
-	public int m_HP;
+	public float m_HP;
 	
 	private float baseSpeed, playerDistanceX, playerDistanceY,
 		blockSpeed = 0f, lastAttackTime = -999f, lastChoiceTime = -99f,
-		choiceDelay;
+		lastSwordHitTime = -99f, choiceDelay;
 
 	private int m_AttackIdx, m_AttackSoundIdx, m_BlockSoundIdx, attackChain;
 	private bool m_Attacking, m_Blocking, m_LastBlock, m_Vulnerable,
-		m_LastVulnerable, m_CanMove = true;
+		m_LastVulnerable, m_CanMove = true, m_Dead, dim;
 
 	void Start ()
 	{
 		m_PlayerObject = GameObject.FindGameObjectWithTag("Player");
 		m_Player = m_PlayerObject.GetComponent<PlayerCharacter>();
 		m_SpriteRenderer = GetComponent<SpriteRenderer>();
+		m_SpriteColor = m_SpriteRenderer.color;
 		m_Rigidbody2D = GetComponent<Rigidbody2D>();
 		m_Audio = GetComponent<AudioSource>();
 		m_Animator = GetComponent<Animator>();
@@ -65,6 +67,12 @@ public class Shadow : MonoBehaviour
 	
 	void FixedUpdate ()
 	{
+		// do nothing if dead
+		if (m_Dead)
+		{
+			return;
+		}
+		
 		// calculate player direction and distance
 		m_PlayerDirection = m_PlayerObject.transform.position 
 			- transform.position;
@@ -130,6 +138,54 @@ public class Shadow : MonoBehaviour
 		Move(horizontal);
 	}
 	
+	// LateUpdate
+	private void LateUpdate()
+	{
+		float r, g, b, a;
+		Color color;
+		switch (m_Anim)
+		{
+			case "Pulse":
+				a = m_SpriteRenderer.color.a;    
+				if (a >= m_SpriteColor.a)
+				{
+					dim = true;
+				}
+            
+				if (a <= .6f)
+				{
+					dim = false;
+				}
+
+				color = m_SpriteColor;
+				r = color.r;
+				g = color.g;
+				b = color.b;
+				if (dim)
+				{
+					m_SpriteRenderer.color =  new Color(r, g, b,
+						a - a * Time.deltaTime * 5f);
+				}
+				else
+				{
+					m_SpriteRenderer.color = new Color(r, g, b,
+						a + a * Time.deltaTime * 5f);
+				}   
+				break;
+			case "Fade":
+				color = m_SpriteColor;
+				a = m_SpriteRenderer.color.a;
+				r = color.r;
+				g = color.g;
+				b = color.b;
+				
+				m_SpriteRenderer.color = new Color(r, g, b,
+					a - a * Time.deltaTime * .75f);
+				
+				break;
+		}
+	}
+
 	/*
     Name: Move
     Parameters: float horizontal
@@ -215,29 +271,36 @@ public class Shadow : MonoBehaviour
 	}
 	
 	// DamagePlayer
-	private void DamagePlayer()
+	void DamagePlayer()
 	{
 		if (playerDistanceX <= m_AttackRange && playerDistanceY
 		    <= m_AttackRange)
 		{
-			m_Player.TakeDamage();
+			m_Player.ProcessAttack();
 			m_Audio.Stop();
 		}
 	}
 	
-	// TakeDamage
-	public void TakeDamage()
+	// ProcessAttack
+	public void ProcessAttack(bool swordThrow)
 	{
 		string clip;
+		float hpLoss = swordThrow ? .5f : 1f;
 		if (!m_Blocking) 
 		{
 			// lose hp and set impact clip path
-			m_HP -= 1;
-			clip = Constants.CLIP_IMPACT;
-			if (m_HP == 0)
+			m_HP -= hpLoss;
+			if (m_HP < .5f)
 			{
-				// shadow dead, do dead stuff here
+				m_Dead = true;
+				m_Animator.speed = 0;
+				m_Anim = Constants.ANIM_SHADOW_FADE;
+				return;
 			}
+			
+			m_Anim = Constants.ANIM_SHADOW_PULSE;
+			Invoke("StopAnim", .25f);
+			clip = Constants.CLIP_IMPACT;
 		}
 		else
 		{
@@ -253,21 +316,40 @@ public class Shadow : MonoBehaviour
 		
 	}
 	
+	// StopAnim
+	void StopAnim()
+	{
+		m_Anim = "";
+		m_SpriteRenderer.color = m_SpriteColor;
+	}
+	
 	// StopAttacking
-	private void StopAttacking()
+	void StopAttacking()
 	{
 		m_Attacking = false;
 	}
 	
 	// StopBlocking
-	private void StopBlocking()
+	void StopBlocking()
 	{
 		m_Blocking = false;
 	}
 	
 	// StopVulnerability
-	private void StopVulnerability()
+	void StopVulnerability()
 	{
 		m_Vulnerable = false;
+	}
+	
+	// OnTriggerEnter2D
+	private void OnTriggerEnter2D(Collider2D other)
+	{
+		// if hit by a thrown sword
+		if (other.gameObject.CompareTag(Constants.TAG_SWORD) 
+			&& Time.time - lastSwordHitTime >= .25f)
+		{
+			lastSwordHitTime = Time.time;
+			ProcessAttack(true);
+		}
 	}
 }
