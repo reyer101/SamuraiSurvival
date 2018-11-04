@@ -53,6 +53,11 @@ public class TitleController : MonoBehaviour
 	
 	void Update ()
 	{
+		if (CrossPlatformInputManager.GetButtonDown("Cancel"))
+		{
+			Application.Quit();
+		}
+		
 		if (Time.time - startTime > 5.5)
 		{
 			// fade out black 

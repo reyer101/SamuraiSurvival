@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityStandardAssets.CrossPlatformInput;
 
 // CharacterController
@@ -22,6 +23,18 @@ public class PlayerController : MonoBehaviour {
         {
             m_Jump = CrossPlatformInputManager.GetButtonDown("Jump");
         }
+	    
+		
+		// TODO: remove these
+	    if (Input.GetKeyDown(KeyCode.P))
+	    {
+	        SceneManager.LoadScene(1);
+	    }
+
+		if (CrossPlatformInputManager.GetButtonDown("Cancel"))
+		{
+			SceneManager.LoadScene(0);
+		}
 
 	    m_Block = CrossPlatformInputManager.GetButton("Block");
 	    m_Attack = CrossPlatformInputManager.GetButtonDown("Attack");

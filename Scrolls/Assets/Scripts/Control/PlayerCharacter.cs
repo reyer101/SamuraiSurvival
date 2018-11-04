@@ -8,10 +8,11 @@ public class PlayerCharacter : MonoBehaviour {
     [Range(0, 10)] 
     public float m_AttackRange;
     
-    [Range(1, 20)]
+    [Range(1, 1000)]
     public float m_HP;
     private int m_AttackIdx, m_AttackSoundIdx, m_BlockSoundIdx;
-    private bool m_Grounded, m_Attacking, m_Blocking, m_HasSword, m_Pulse, dim;    
+    private bool m_Grounded, m_Attacking, m_Blocking, m_HasSword, m_Pulse, dim;
+    private GameObject m_HealthBar;
     private AudioSource m_Audio;
     private Animator m_Animator;  
     private Rigidbody2D m_Rigidbody2D;
@@ -24,11 +25,13 @@ public class PlayerCharacter : MonoBehaviour {
     private string[] m_Attacks;
           
     private float lastJumpTime, lastAttackTime, lastThrowTime, baseSpeed, 
-        blockSpeed, throwAnimDuration;    
+        blockSpeed, throwAnimDuration, initialHealthScale, maxHp;    
     private float k_GroundedRadius = .5f;   
 
     // Awake
-    void Awake () {             
+    void Awake ()
+    {
+        m_HealthBar = transform.Find(Constants.OBJECT_HEALTHBAR).gameObject;
         m_Rigidbody2D = GetComponent<Rigidbody2D>();
         m_SpriteRenderer = GetComponent<SpriteRenderer>();
         m_Audio = GetComponent<AudioSource>();
@@ -39,6 +42,8 @@ public class PlayerCharacter : MonoBehaviour {
         m_BackRotation = new Quaternion(0, m_ForwardRotation.y - 1, 0, 0);          
         m_LayerMask = -1;
         m_WalkGroundCheck = m_GroundCheck.localPosition;
+        initialHealthScale = m_HealthBar.transform.localScale.x;
+        maxHp = m_HP;
         lastJumpTime = -999f;
         lastAttackTime = -999f;
         lastThrowTime = -999f;
@@ -127,6 +132,8 @@ public class PlayerCharacter : MonoBehaviour {
         {
             transform.rotation = m_ForwardRotation;
         }
+
+        m_HealthBar.transform.rotation = Quaternion.identity;
                             
         m_Rigidbody2D.velocity = new Vector2(
             horizontal * m_MaxSpeed, m_Rigidbody2D.velocity.y);
@@ -271,6 +278,15 @@ public class PlayerCharacter : MonoBehaviour {
         m_Pulse = false;
         m_SpriteRenderer.color = Color.white;
     }
+    
+    // DropHealthBar
+    void DropHealthBar()
+    {
+        Vector3 healthScale = m_HealthBar.transform.localScale;
+        healthScale = new Vector3((initialHealthScale * m_HP) / maxHp,
+            healthScale.y);
+        m_HealthBar.transform.localScale = healthScale;
+    }
 
     // ProcessAttack
     public void ProcessAttack()
@@ -280,11 +296,12 @@ public class PlayerCharacter : MonoBehaviour {
         {
             // lose hp and set impact clip path
             m_HP -= 1;
+            DropHealthBar();
             clip = Constants.CLIP_IMPACT;
             m_Pulse = true;
             m_SpriteRenderer.color = new Color(1f, 0.54f, 1f);
             Invoke("StopPulse", .25f);
-            if (m_HP == 0)
+            if (m_HP < .5f)
             {
                 // player dead, do dead stuff here
                 //SceneManager.LoadScene(SceneManager.GetSceneAt(0).name);

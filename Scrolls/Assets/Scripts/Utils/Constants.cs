@@ -28,6 +28,7 @@ public class Constants : MonoBehaviour {
     
     // Game Objects
     public static readonly string OBJECT_SWORD = PREFIX_OBJECT + "sword";
+    public static readonly string OBJECT_HEALTHBAR = "HealthBar";
     
     // Audio 
     public static readonly string CLIP_SWING = PREFIX_AUDIO + "sword_slash{0}";

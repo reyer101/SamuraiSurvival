@@ -181,6 +181,11 @@ public class Shadow : MonoBehaviour
 				
 				m_SpriteRenderer.color = new Color(r, g, b,
 					a - a * Time.deltaTime * .75f);
+
+				if (m_SpriteRenderer.color.a <= .1)
+				{
+					DestroyImmediate(gameObject);
+				}
 				
 				break;
 		}
@@ -346,7 +351,7 @@ public class Shadow : MonoBehaviour
 	{
 		// if hit by a thrown sword
 		if (other.gameObject.CompareTag(Constants.TAG_SWORD) 
-			&& Time.time - lastSwordHitTime >= .25f)
+			&& Time.time - lastSwordHitTime >= .5f)
 		{
 			lastSwordHitTime = Time.time;
 			ProcessAttack(true);
