@@ -8,11 +8,11 @@ public class PlayerCharacter : MonoBehaviour {
     [Range(0, 10)] 
     public float m_AttackRange;
     
-    [Range(1, 1000)]
+    [Range(1, 50)]
     public float m_HP;
     private int m_AttackIdx, m_AttackSoundIdx, m_BlockSoundIdx;
     private bool m_Grounded, m_Attacking, m_Blocking, m_HasSword, m_Pulse, dim;
-    private GameObject m_HealthBar;
+    private GameObject m_HealthBar, m_HealthForeground;
     private AudioSource m_Audio;
     private Animator m_Animator;  
     private Rigidbody2D m_Rigidbody2D;
@@ -24,14 +24,17 @@ public class PlayerCharacter : MonoBehaviour {
     private Quaternion m_ForwardRotation, m_BackRotation;
     private string[] m_Attacks;
           
-    private float lastJumpTime, lastAttackTime, lastThrowTime, baseSpeed, 
-        blockSpeed, throwAnimDuration, initialHealthScale, maxHp;    
+    private float lastJumpTime = -999f, lastAttackTime = -999f,
+        lastThrowTime = -999f, baseSpeed, lastDamageTime = -999f, blockSpeed,
+        throwAnimDuration, initialHealthScale, maxHp;    
     private float k_GroundedRadius = .5f;   
 
     // Awake
     void Awake ()
     {
         m_HealthBar = transform.Find(Constants.OBJECT_HEALTHBAR).gameObject;
+        m_HealthForeground = m_HealthBar.transform.Find(Constants
+            .OBJECT_HEALTHFOREGROUND).gameObject;
         m_Rigidbody2D = GetComponent<Rigidbody2D>();
         m_SpriteRenderer = GetComponent<SpriteRenderer>();
         m_Audio = GetComponent<AudioSource>();
@@ -42,11 +45,8 @@ public class PlayerCharacter : MonoBehaviour {
         m_BackRotation = new Quaternion(0, m_ForwardRotation.y - 1, 0, 0);          
         m_LayerMask = -1;
         m_WalkGroundCheck = m_GroundCheck.localPosition;
-        initialHealthScale = m_HealthBar.transform.localScale.x;
+        initialHealthScale = m_HealthForeground.transform.localScale.x;
         maxHp = m_HP;
-        lastJumpTime = -999f;
-        lastAttackTime = -999f;
-        lastThrowTime = -999f;
         m_Attacks = new[] {Constants.ANIM_ATTACK1, Constants.ANIM_ATTACK2};
 
         m_Animator.runtimeAnimatorController = Resources.Load(
@@ -59,8 +59,13 @@ public class PlayerCharacter : MonoBehaviour {
 	
 	// FixedUpdate
 	void FixedUpdate () {        
-        m_Grounded = false;                         
+        m_Grounded = false;
 
+	    if (Time.time - lastDamageTime > 3f)
+	    {
+	        m_HealthBar.SetActive(false);
+	    }
+	    
         // Check if player is standing on ground by searching for
         // colliders overlapping radius at bottom of player
         Collider2D[] gColliders = Physics2D.OverlapCircleAll(
@@ -127,13 +132,13 @@ public class PlayerCharacter : MonoBehaviour {
         if (horizontal < 0)
         {
             transform.rotation = m_BackRotation;
+            m_HealthBar.transform.localRotation = m_BackRotation;
         }
         else if (horizontal > 0)
         {
             transform.rotation = m_ForwardRotation;
+            m_HealthBar.transform.localRotation = m_ForwardRotation;
         }
-
-        m_HealthBar.transform.rotation = Quaternion.identity;
                             
         m_Rigidbody2D.velocity = new Vector2(
             horizontal * m_MaxSpeed, m_Rigidbody2D.velocity.y);
@@ -282,10 +287,13 @@ public class PlayerCharacter : MonoBehaviour {
     // DropHealthBar
     void DropHealthBar()
     {
-        Vector3 healthScale = m_HealthBar.transform.localScale;
+        Vector3 healthScale = m_HealthForeground.transform.localScale;
         healthScale = new Vector3((initialHealthScale * m_HP) / maxHp,
             healthScale.y);
-        m_HealthBar.transform.localScale = healthScale;
+        m_HealthForeground.transform.localScale = healthScale;
+
+        lastDamageTime = Time.time;
+        m_HealthBar.SetActive(true);
     }
 
     // ProcessAttack
