@@ -2,69 +2,36 @@
 using UnityEngine;
 
 // PlayerCharacter
-public class PlayerCharacter : MonoBehaviour {    
-    public float m_MaxSpeed, m_JumpForce, m_AnimationSpeed, m_AttackDelay;
-
-    [Range(0, 10)] 
-    public float m_AttackRange;
+public class PlayerCharacter : AbsCharacter {    
     
-    [Range(1, 50)]
-    public float m_HP;
-    private int m_AttackIdx, m_AttackSoundIdx, m_BlockSoundIdx;
-    private bool m_Grounded, m_Attacking, m_Blocking, m_HasSword, m_Pulse, dim;
-    private GameObject m_HealthBar, m_HealthForeground;
-    private AudioSource m_Audio;
-    private Animator m_Animator;  
-    private Rigidbody2D m_Rigidbody2D;
-    private SpriteRenderer m_SpriteRenderer;
+    public float m_JumpForce;
+    
+    private bool m_Grounded, m_HasSword;
     private Transform m_GroundCheck;
     private CircleCollider2D m_CircleCollider2D;
     private LayerMask m_LayerMask;     
     private Vector2 m_CrouchGroundCheck, m_WalkGroundCheck;
-    private Quaternion m_ForwardRotation, m_BackRotation;
-    private string[] m_Attacks;
-          
-    private float lastJumpTime = -999f, lastAttackTime = -999f,
-        lastThrowTime = -999f, baseSpeed, lastDamageTime = -999f, blockSpeed,
-        throwAnimDuration, initialHealthScale, maxHp;    
+
+    private float lastJumpTime = -999f, lastThrowTime = -999f,
+        throwAnimDuration;    
     private float k_GroundedRadius = .5f;   
 
     // Awake
-    void Awake ()
+    void Start ()
     {
-        m_HealthBar = transform.Find(Constants.OBJECT_HEALTHBAR).gameObject;
-        m_HealthForeground = m_HealthBar.transform.Find(Constants
-            .OBJECT_HEALTHFOREGROUND).gameObject;
-        m_Rigidbody2D = GetComponent<Rigidbody2D>();
-        m_SpriteRenderer = GetComponent<SpriteRenderer>();
-        m_Audio = GetComponent<AudioSource>();
-        m_Animator = GetComponent<Animator>();
         m_HasSword = true;
-        m_GroundCheck = transform.Find("GroundCheck");              
-        m_ForwardRotation = transform.rotation;              
-        m_BackRotation = new Quaternion(0, m_ForwardRotation.y - 1, 0, 0);          
+        m_GroundCheck = transform.Find("GroundCheck");                     
         m_LayerMask = -1;
         m_WalkGroundCheck = m_GroundCheck.localPosition;
-        initialHealthScale = m_HealthForeground.transform.localScale.x;
-        maxHp = m_HP;
-        m_Attacks = new[] {Constants.ANIM_ATTACK1, Constants.ANIM_ATTACK2};
-
         m_Animator.runtimeAnimatorController = Resources.Load(
             Constants.ANIM_WALK) as RuntimeAnimatorController;
-
-        baseSpeed = m_MaxSpeed;
-        blockSpeed = 0f;
         throwAnimDuration = .25f;
     }
 	
 	// FixedUpdate
 	void FixedUpdate () {        
+	    base.FixedUpdate();
         m_Grounded = false;
-
-	    if (Time.time - lastDamageTime > 3f)
-	    {
-	        m_HealthBar.SetActive(false);
-	    }
 	    
         // Check if player is standing on ground by searching for
         // colliders overlapping radius at bottom of player
@@ -93,35 +60,6 @@ public class PlayerCharacter : MonoBehaviour {
 	        m_Animator.speed = Mathf.Abs(m_AnimationSpeed);
 	    }
 	}  
-    
-    // LateUpdate
-    private void LateUpdate()
-    {
-        if (m_Pulse)
-        {
-            float a = m_SpriteRenderer.color.a;    
-            if (a >= .99f)
-            {
-                dim = true;
-            }
-            
-            if (a <= .6f)
-            {
-                dim = false;
-            }
-
-            if (dim)
-            {
-                m_SpriteRenderer.color = new Color(1, 0, 0,
-                    a - a * Time.deltaTime * 5f);
-            }
-            else
-            {
-                m_SpriteRenderer.color = new Color(1, 0, 0,
-                    a + a * Time.deltaTime * 5f);
-            }   
-        }
-    }
 
     /*
     Name: Move
@@ -247,18 +185,18 @@ public class PlayerCharacter : MonoBehaviour {
         Instantiate(sword, transform.position + offset, transform.rotation);
     }
 
-    // StopAttacking
-    void StopAttacking()
-    {
-        m_Attacking = false;
-    }
-
     // StopThrowing
     void StopThrowing()
     {
         m_HasSword = true;
     }
     
+    // ProcessDead
+    protected override void ProcessDead()
+    {
+        // TODO: do player dead stuff here
+    }
+
     // DamageTargets
     void DamageTargets()
     {
@@ -272,60 +210,9 @@ public class PlayerCharacter : MonoBehaviour {
             GameObject go = hit.transform.gameObject;
             if (go.CompareTag(Constants.TAG_SHADOW))
             {
-                go.GetComponent<Shadow>().ProcessAttack(false);
+                go.GetComponent<ShadowCharacter>().ProcessAttack(false);
             }
         }
-    }
-    
-    // StopPulse
-    void StopPulse()
-    {
-        m_Pulse = false;
-        m_SpriteRenderer.color = Color.white;
-    }
-    
-    // DropHealthBar
-    void DropHealthBar()
-    {
-        Vector3 healthScale = m_HealthForeground.transform.localScale;
-        healthScale = new Vector3((initialHealthScale * m_HP) / maxHp,
-            healthScale.y);
-        m_HealthForeground.transform.localScale = healthScale;
-
-        lastDamageTime = Time.time;
-        m_HealthBar.SetActive(true);
-    }
-
-    // ProcessAttack
-    public void ProcessAttack()
-    {
-        string clip;
-        if (!m_Blocking) 
-        {
-            // lose hp and set impact clip path
-            m_HP -= 1;
-            DropHealthBar();
-            clip = Constants.CLIP_IMPACT;
-            m_Pulse = true;
-            m_SpriteRenderer.color = new Color(1f, 0.54f, 1f);
-            Invoke("StopPulse", .25f);
-            if (m_HP < .5f)
-            {
-                // player dead, do dead stuff here
-                //SceneManager.LoadScene(SceneManager.GetSceneAt(0).name);
-            }
-        }
-        else
-        {
-            // set block clip path
-            clip = String.Format(Constants.CLIP_BLOCK,
-                m_BlockSoundIdx % 2);
-            ++m_BlockSoundIdx;
-        }
-
-        // play either block or impact audio clip
-        m_Audio.clip = Resources.Load<AudioClip>(clip);
-        m_Audio.Play();
     }
 
     // OnTriggerEnter2D

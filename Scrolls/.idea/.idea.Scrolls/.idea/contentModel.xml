@@ -391,9 +391,10 @@
       </e>
       <e p="Assets/Scripts" t="Include">
         <e p="Control" t="Include">
+          <e p="AbsCharacter.cs" t="Include" />
           <e p="PlayerCharacter.cs" t="Include" />
           <e p="PlayerController.cs" t="Include" />
-          <e p="Shadow.cs" t="Include" />
+          <e p="ShadowCharacter.cs" t="Include" />
           <e p="SwordMover.cs" t="Include" />
           <e p="TitleController.cs" t="Include" />
         </e>
