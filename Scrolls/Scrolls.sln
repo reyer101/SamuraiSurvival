@@ -1,13 +1,13 @@
-
+﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assembly-CSharp", "Assembly-CSharp.csproj", "{F6CB83CB-B25D-F442-7698-A8CE0531BCF1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Scrolls", "Assembly-CSharp.csproj", "{F6CB83CB-B25D-F442-7698-A8CE0531BCF1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assembly-CSharp-firstpass", "Assembly-CSharp-firstpass.csproj", "{4045224E-A39C-AE0E-E217-ABF9B5555F6F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Scrolls", "Assembly-CSharp-firstpass.csproj", "{4045224E-A39C-AE0E-E217-ABF9B5555F6F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assembly-CSharp-Editor-firstpass", "Assembly-CSharp-Editor-firstpass.csproj", "{D08BD8CC-8799-1F8E-8E4E-5FD10ABF4942}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Scrolls", "Assembly-CSharp-Editor-firstpass.csproj", "{D08BD8CC-8799-1F8E-8E4E-5FD10ABF4942}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assembly-CSharp-Editor", "Assembly-CSharp-Editor.csproj", "{B118CC1E-637E-41D5-F543-B98F27269573}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Scrolls", "Assembly-CSharp-Editor.csproj", "{B118CC1E-637E-41D5-F543-B98F27269573}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

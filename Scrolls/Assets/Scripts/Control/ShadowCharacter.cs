@@ -1,12 +1,12 @@
 ﻿using System;
+using System.Collections;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
 public class ShadowCharacter : AbsCharacter
 {
-	private GameObject m_PlayerObject;
 	private PlayerCharacter m_Player;
-	private Vector3 m_PlayerDirection;
+	private ShadowController m_ShadowController;
 
 	// Percent chance to attack when in range
 	[Range(0, 100f)]
@@ -26,40 +26,29 @@ public class ShadowCharacter : AbsCharacter
 	[Range(0, 4)] 
 	public int m_MaxAttackChain;
 	
-	private float playerDistanceX, playerDistanceY, lastChoiceTime = -99f,
-		lastSwordHitTime = -99f, choiceDelay;
+	private float lastChoiceTime = -99f, lastSwordHitTime = -99f, choiceDelay;
 
 	private int attackChain;
-	private bool m_LastBlock, m_Vulnerable, m_LastVulnerable, m_CanMove = true;
+	private bool m_LastBlock, m_Vulnerable, m_LastVulnerable;
 
 	void Start ()
 	{
-		m_PlayerObject = GameObject.FindGameObjectWithTag("Player");
-		m_Player = m_PlayerObject.GetComponent<PlayerCharacter>();
+		m_Player = GameObject.FindGameObjectWithTag("Player")
+			.GetComponent<PlayerCharacter>();
+		m_ShadowController = GetComponent<ShadowController>();
+		m_DamageColor = m_SpriteColor;
 		choiceDelay = m_AttackDelay;
 	}
 	
 	void FixedUpdate ()
 	{
 		base.FixedUpdate();
-		
-		// do nothing if dead
-		if (m_Dead)
-		{
-			return;
-		}
-		
-		// calculate player direction and distance
-		m_PlayerDirection = m_PlayerObject.transform.position 
-			- transform.position;
-		playerDistanceX = Math.Abs(m_PlayerDirection.x);
-		playerDistanceY = Math.Abs(m_PlayerDirection.y);
 
-		float horizontal = 0;
-		bool attack = false, block = false, vulnerable = false;
+		//float horizontal = 0;
+		//bool attack = false, block = false, vulnerable = false;
 		
 		// always face the player's direction
-		if (m_PlayerDirection.x < 0)
+		if (m_ShadowController.GetPlayerDirection().x < 0)
 		{
 			transform.rotation = m_BackRotation;
 			m_HealthBar.transform.localRotation = m_BackRotation;
@@ -70,7 +59,7 @@ public class ShadowCharacter : AbsCharacter
 			m_HealthBar.transform.localRotation = m_ForwardRotation;
 		}
 		
-		if (playerDistanceX >= m_ReadyRange)
+		/*if (playerDistanceX >= m_ReadyRange)
 		{
 			// normalize the direction vector for velocity
 			m_CanMove = true;
@@ -113,7 +102,7 @@ public class ShadowCharacter : AbsCharacter
 		}
 		
 		Attack(attack, block, vulnerable);
-		Move(horizontal);
+		Move(horizontal);*/
 	}
 	
 	// LateUpdate
@@ -149,13 +138,11 @@ public class ShadowCharacter : AbsCharacter
     */
 	public void Move(float horizontal)
 	{
-		if (m_CanMove)
-		{
-			m_Rigidbody2D.velocity = new Vector2(
-				horizontal * m_MaxSpeed * 10f, m_Rigidbody2D.velocity.y);
-			m_Animator.runtimeAnimatorController = Resources.Load(
-				Constants.ANIM_WALK) as RuntimeAnimatorController;
-		}
+		m_Rigidbody2D.velocity = new Vector2(
+			horizontal * m_MaxSpeed * 10f, m_Rigidbody2D.velocity.y);
+		m_Animator.runtimeAnimatorController = Resources.Load(
+			Constants.ANIM_WALK) as RuntimeAnimatorController;
+		m_Animator.speed = Mathf.Abs(m_Rigidbody2D.velocity.x) / 100f;
 	}  
 	
 	/*
@@ -218,7 +205,7 @@ public class ShadowCharacter : AbsCharacter
 			++m_AttackSoundIdx;
 			
 			// damage the player if they are in range
-			Invoke("DamagePlayer", .2f);
+			StartCoroutine(DamagePlayer(new Vector2(), .2f));
 			
 			++attackChain;
 			m_LastBlock = false;
@@ -228,9 +215,10 @@ public class ShadowCharacter : AbsCharacter
 	}
 	
 	// DamagePlayer
-	void DamagePlayer()
+	IEnumerator DamagePlayer(Vector2 playerDistance, float delay)
 	{
-		if (playerDistanceX <= m_AttackRange && playerDistanceY
+		yield return new WaitForSeconds(delay);
+		if (playerDistance.x <= m_AttackRange && playerDistance.y
 		    <= m_AttackRange)
 		{
 			m_Player.ProcessAttack(false);
@@ -244,6 +232,16 @@ public class ShadowCharacter : AbsCharacter
 		m_Dead = true;
 		m_Animator.speed = 0;
 		m_Anim = Constants.ANIM_SHADOW_FADE;	
+	}
+
+	// IsVulnerable
+	public bool isVulnerable() {
+		return m_Vulnerable;
+	}
+
+	// IsIdle
+	public bool IsIdle() {
+		return !m_Blocking && !m_Attacking && !m_Vulnerable;
 	}
 
 	// StopBlocking
