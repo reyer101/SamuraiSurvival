@@ -1,9 +1,12 @@
 ﻿<Properties StartupItem="Assembly-CSharp.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Control/AlecController.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Control/ShadowCharacter.cs">
     <Files>
-      <File FileName="Assets/Scripts/Control/PlayerCharacter.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/Control/AlecController.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/Control/ShadowController.cs" Line="37" Column="63" />
+      <File FileName="Assets/Scripts/Control/AbsCharacter.cs" Line="41" Column="13" />
+      <File FileName="Assets/Scripts/Control/ShadowCharacter.cs" Line="100" Column="25" />
+      <File FileName="Assets/Scripts/Control/PlayerCharacter.cs" Line="5" Column="1" />
+      <File FileName="Assets/Scripts/Utils/Constants.cs" Line="4" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

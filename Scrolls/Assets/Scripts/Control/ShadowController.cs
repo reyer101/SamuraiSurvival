@@ -7,7 +7,6 @@ public class ShadowController : MonoBehaviour
 	private GameObject m_PlayerObject;
 	private ShadowCharacter m_Shadow;
 	private Vector3 m_PlayerDirection;
-	private bool m_CanMove = true;
 
 	private float playerDistanceX, playerDistanceY;
 
@@ -58,12 +57,10 @@ public class ShadowController : MonoBehaviour
 		if (playerDistanceX >= m_ReadyRange)
 		{
 			// normalize the direction vector for velocity
-			m_CanMove = true;
 			horizontal = (float) Math.Round(m_PlayerDirection.normalized.x);
 		}
 		else
 		{
-			m_CanMove = false;
 			if (m_Shadow.IsBlocking() || m_Shadow.IsAttacking() 
 					|| m_Shadow.isVulnerable())
 			{
@@ -82,7 +79,7 @@ public class ShadowController : MonoBehaviour
 			{
 				attack = true;
 				float rand = Random.Range(0f, 100f);
-				if (rand >= m_AttackChance && playerDistanceY < 4f 
+				if (rand >= m_AttackChance
 					&& !m_LastBlock || attackChain == m_MaxAttackChain)
 				{
 					block = true;

@@ -43,9 +43,6 @@ public class ShadowCharacter : AbsCharacter
 	void FixedUpdate ()
 	{
 		base.FixedUpdate();
-
-		//float horizontal = 0;
-		//bool attack = false, block = false, vulnerable = false;
 		
 		// always face the player's direction
 		if (m_ShadowController.GetPlayerDirection().x < 0)
@@ -58,51 +55,6 @@ public class ShadowCharacter : AbsCharacter
 			transform.rotation = m_ForwardRotation;
 			m_HealthBar.transform.localRotation = m_ForwardRotation;
 		}
-		
-		/*if (playerDistanceX >= m_ReadyRange)
-		{
-			// normalize the direction vector for velocity
-			m_CanMove = true;
-			m_MaxSpeed = baseSpeed;
-			horizontal = (float) Math.Round(m_PlayerDirection.normalized.x);
-			m_Animator.speed = Mathf.Abs(m_Rigidbody2D.velocity.x) / 8f;
-		}
-		else
-		{
-			m_CanMove = false;
-			m_Animator.speed = .5f;
-			if (m_Blocking || m_Attacking || m_Vulnerable)
-			{
-				return;
-			}
-			
-			if (!m_LastVulnerable && Random.Range(0f, 100f) <= 
-					m_VulnerableChance)
-			{
-				vulnerable = true;
-			}
-
-			m_LastVulnerable = false;
-			
-			if (Time.time - lastChoiceTime >= choiceDelay 
-					&& !m_Vulnerable)
-			{
-				attack = true;
-				float rand = Random.Range(0f, 100f);
-				if (rand >= m_AttackChance && playerDistanceY < 4f 
-					&& !m_LastBlock || attackChain == m_MaxAttackChain)
-				{
-					m_Animator.speed = 0;
-					choiceDelay = m_BlockDuration;
-					block = true;
-					attack = false;
-				}
-				lastChoiceTime = Time.time;
-			}
-		}
-		
-		Attack(attack, block, vulnerable);
-		Move(horizontal);*/
 	}
 	
 	// LateUpdate
@@ -138,11 +90,15 @@ public class ShadowCharacter : AbsCharacter
     */
 	public void Move(float horizontal)
 	{
-		m_Rigidbody2D.velocity = new Vector2(
-			horizontal * m_MaxSpeed * 10f, m_Rigidbody2D.velocity.y);
-		m_Animator.runtimeAnimatorController = Resources.Load(
-			Constants.ANIM_WALK) as RuntimeAnimatorController;
-		m_Animator.speed = Mathf.Abs(m_Rigidbody2D.velocity.x) / 100f;
+		if (horizontal != 0f) {
+			m_Rigidbody2D.velocity = new Vector2 (
+				horizontal * m_MaxSpeed * 10f, m_Rigidbody2D.velocity.y);
+			m_Animator.runtimeAnimatorController = Resources.Load (
+				Constants.ANIM_WALK) as RuntimeAnimatorController;
+			m_Animator.speed = Mathf.Abs (m_Rigidbody2D.velocity.x) / 100f;
+		} else {
+			m_Animator.speed = .4f;
+		}
 	}  
 	
 	/*
@@ -155,7 +111,7 @@ public class ShadowCharacter : AbsCharacter
 		{
 			return;
 		}
-		
+			
 		if (vulnerable)
 		{
 			m_Vulnerable = true;
@@ -175,6 +131,7 @@ public class ShadowCharacter : AbsCharacter
 		m_MaxSpeed = baseSpeed;
 		if (block)
 		{
+			Debug.Log ("Block");
 			m_Animator.runtimeAnimatorController = Resources.Load(
 				Constants.ANIM_EMPTY) as RuntimeAnimatorController;
 			m_SpriteRenderer.sprite = Resources.Load<Sprite>(
@@ -191,7 +148,7 @@ public class ShadowCharacter : AbsCharacter
 		}
 
 		if (attack && Time.time - lastAttackTime > m_AttackDelay)
-		{
+		{ 
 			m_Attacking = true;
 			m_Animator.runtimeAnimatorController = Resources
 				.Load(m_Attacks[m_AttackIdx % 2]) as RuntimeAnimatorController;
@@ -247,6 +204,7 @@ public class ShadowCharacter : AbsCharacter
 	// StopBlocking
 	void StopBlocking()
 	{
+		Debug.Log ("Stop blocking");
 		m_Blocking = false;
 	}
 	
