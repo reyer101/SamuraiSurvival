@@ -18,7 +18,7 @@ public class ShadowController : MonoBehaviour
 	public float m_VulnerableChance;
 
 	[Range(0, 10f)]
-	public float m_ReadyRange;
+	public float m_AttackRange;
 
 	public float m_BlockDuration;
 
@@ -54,16 +54,19 @@ public class ShadowController : MonoBehaviour
 		float horizontal = 0;
 		bool attack = false, block = false, vulnerable = false;
 
-		if (playerDistanceX >= m_ReadyRange)
+		//Debug.Log(String.Format("({0:F}, {1:F})", playerDistanceX, m_ReadyRange));
+		if (playerDistanceX > m_AttackRange)
 		{
 			// normalize the direction vector for velocity
 			horizontal = (float) Math.Round(m_PlayerDirection.normalized.x);
+			GetComponent<ShadowCharacter> ().StopAction ();
 		}
 		else
 		{
 			if (m_Shadow.IsBlocking() || m_Shadow.IsAttacking() 
 					|| m_Shadow.isVulnerable())
 			{
+				Debug.Log("Return");
 				return;
 			}
 

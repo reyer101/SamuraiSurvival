@@ -7,6 +7,7 @@ public class ShadowCharacter : AbsCharacter
 {
 	private PlayerCharacter m_Player;
 	private ShadowController m_ShadowController;
+	private Vector2 m_PlayerDistance;
 
 	// Percent chance to attack when in range
 	[Range(0, 100f)]
@@ -17,9 +18,6 @@ public class ShadowCharacter : AbsCharacter
 
 	[Range(0, 4f)] 
 	public float m_VulnerableDuration;
-
-	[Range(0, 10f)]
-	public float m_ReadyRange;
 	
 	public float m_BlockDuration;
 
@@ -55,6 +53,10 @@ public class ShadowCharacter : AbsCharacter
 			transform.rotation = m_ForwardRotation;
 			m_HealthBar.transform.localRotation = m_ForwardRotation;
 		}
+
+		m_PlayerDistance = m_Player.transform.position - transform.position;
+		m_PlayerDistance = new Vector2 (Math.Abs (m_PlayerDistance.x),
+			Math.Abs (m_PlayerDistance.y));
 	}
 	
 	// LateUpdate
@@ -92,7 +94,7 @@ public class ShadowCharacter : AbsCharacter
 	{
 		if (horizontal != 0f) {
 			m_Rigidbody2D.velocity = new Vector2 (
-				horizontal * m_MaxSpeed * 10f, m_Rigidbody2D.velocity.y);
+				horizontal * baseSpeed * 10f, m_Rigidbody2D.velocity.y);
 			m_Animator.runtimeAnimatorController = Resources.Load (
 				Constants.ANIM_WALK) as RuntimeAnimatorController;
 			m_Animator.speed = Mathf.Abs (m_Rigidbody2D.velocity.x) / 100f;
@@ -131,7 +133,6 @@ public class ShadowCharacter : AbsCharacter
 		m_MaxSpeed = baseSpeed;
 		if (block)
 		{
-			Debug.Log ("Block");
 			m_Animator.runtimeAnimatorController = Resources.Load(
 				Constants.ANIM_EMPTY) as RuntimeAnimatorController;
 			m_SpriteRenderer.sprite = Resources.Load<Sprite>(
@@ -162,7 +163,7 @@ public class ShadowCharacter : AbsCharacter
 			++m_AttackSoundIdx;
 			
 			// damage the player if they are in range
-			StartCoroutine(DamagePlayer(new Vector2(), .2f));
+			StartCoroutine(DamagePlayer(m_PlayerDistance, .2f));
 			
 			++attackChain;
 			m_LastBlock = false;
@@ -201,10 +202,16 @@ public class ShadowCharacter : AbsCharacter
 		return !m_Blocking && !m_Attacking && !m_Vulnerable;
 	}
 
+	// StopAction
+	public void StopAction() {
+		m_Blocking = false;
+		m_Attacking = false;
+		m_Vulnerable = false;
+	}
+
 	// StopBlocking
 	void StopBlocking()
 	{
-		Debug.Log ("Stop blocking");
 		m_Blocking = false;
 	}
 	
