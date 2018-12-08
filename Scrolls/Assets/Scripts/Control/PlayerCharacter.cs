@@ -20,7 +20,8 @@ public class PlayerCharacter : AbsCharacter {
     void Start ()
     {
         m_HasSword = true;
-        m_GroundCheck = transform.Find("GroundCheck");                     
+        m_GroundCheck = transform.Find("GroundCheck");  
+        m_DamageColor = new Color(1f, 0.3f, 0.24f);
         m_LayerMask = -1;
         m_WalkGroundCheck = m_GroundCheck.localPosition;
         m_Animator.runtimeAnimatorController = Resources.Load(

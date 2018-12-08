@@ -13,7 +13,7 @@ public abstract class AbsCharacter : MonoBehaviour {
 	protected AudioSource m_Audio;
 	protected Animator m_Animator;
 	protected Quaternion m_ForwardRotation, m_BackRotation;
-	protected Color m_SpriteColor;
+	protected Color m_SpriteColor, m_DamageColor;
 	protected readonly string[] m_Attacks = {Constants.ANIM_ATTACK1, 
 		Constants.ANIM_ATTACK2}; 
 	protected string m_Anim = "";
@@ -75,7 +75,7 @@ public abstract class AbsCharacter : MonoBehaviour {
 					dim = false;
 				}
 
-				color = m_SpriteColor;
+				color = m_DamageColor;
 				r = color.r;
 				g = color.g;
 				b = color.b;
@@ -112,6 +112,7 @@ public abstract class AbsCharacter : MonoBehaviour {
 			clip = Constants.CLIP_IMPACT;
 			lastDamageTime = Time.time;
 			m_HealthBar.SetActive(true);
+			m_SpriteRenderer.color = m_DamageColor;
 			DropHealthBar();
 			if (m_HP < .5f)
 			{
@@ -151,6 +152,23 @@ public abstract class AbsCharacter : MonoBehaviour {
 	void StopAttacking()
 	{
 		m_Attacking = false;
+	}
+
+	// IsDead
+	public bool IsDead()
+	{
+		return m_Dead;
+	}
+
+	// IsAttacking
+	public bool IsAttacking()
+	{
+		return m_Attacking;
+	}
+
+	// IsBlocking
+	public bool IsBlocking() {
+		return m_Blocking;
 	}
 	
 	// DropHealthBar
