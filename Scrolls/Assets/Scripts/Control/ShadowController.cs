@@ -1,21 +1,28 @@
 ﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
+using Move = Constants.Move;
 
 public class ShadowController : MonoBehaviour
 {
 	private GameObject m_PlayerObject;
 	private ShadowCharacter m_Shadow;
 	private Vector3 m_PlayerDirection;
+	private List<int> m_MovePool; 
 
-	private float playerDistanceX, playerDistanceY;
+	private float playerDistanceX, playerDistanceY, moveSum, startTime;
+	private bool m_LastBlock, m_LastVulnerable;
 
 	// Percent chance to attack when in range
-	[Range(0, 100f)]
-	public float m_AttackChance;
+	[Range(0, 100)]
+	public int m_AttackChance;
 
-	[Range(0, 100f)] 
-	public float m_VulnerableChance;
+	[Range(0, 100)] 
+	public int m_VulnerableChance;
+
+	[Range(0, 100)]
+	public int m_BlockChance;
 
 	[Range(0, 10f)]
 	public float m_AttackRange;
@@ -25,16 +32,18 @@ public class ShadowController : MonoBehaviour
 	[Range(0, 4)] 
 	public int m_MaxAttackChain;
 
-	//private float lastChoiceTime = -99f, lastSwordHitTime = -99f, choiceDelay;
-
-	private int attackChain;
-	private bool m_LastBlock, m_LastVulnerable;
-
 	// Start
 	void Start ()
 	{
 		m_Shadow = GetComponent<ShadowCharacter>();
 		m_PlayerObject = GameObject.FindGameObjectWithTag("Player");
+		moveSum = m_AttackChance + m_BlockChance + m_VulnerableChance;
+		InitMovePool ();
+
+		Debug.Log("After InitMovePool()");
+		foreach (int move in m_MovePool) {
+			Debug.Log ("Move: " + move);
+		}
 	}
 
 	// Fixed Update
@@ -63,40 +72,114 @@ public class ShadowController : MonoBehaviour
 		}
 		else
 		{
-			if (m_Shadow.IsBlocking() || m_Shadow.IsAttacking() 
-					|| m_Shadow.isVulnerable())
+			if (!m_Shadow.IsIdle())
 			{
-				Debug.Log("Return");
 				return;
 			}
+				
+//			if (!m_LastVulnerable && Random.Range(0f, 100f) <= 
+//				m_VulnerableChance)
+//			{
+//				vulnerable = true;
+//				m_LastVulnerable = true;
+//			}
+//
+//			if (!m_Shadow.isVulnerable())
+//			{
+//				m_LastVulnerable = false;
+//				attack = true;
+//				vulnerable = false;
+//				block = false;
+//				float rand = Random.Range(0f, 100f);
+//				if (rand >= m_AttackChance
+//					&& !m_LastBlock || m_Shadow.GetAttackChain() == m_MaxAttackChain)
+//				{
+//					m_LastBlock = true;
+//					block = true;
+//					attack = false;
+//				}
+//			}
 
-			if (!m_LastVulnerable && Random.Range(0f, 100f) <= 
-				m_VulnerableChance)
-			{
-				vulnerable = true;
-			}
-
-			m_LastVulnerable = false;
-
-			if (!m_Shadow.isVulnerable())
-			{
-				attack = true;
-				float rand = Random.Range(0f, 100f);
-				if (rand >= m_AttackChance
-					&& !m_LastBlock || attackChain == m_MaxAttackChain)
-				{
-					block = true;
-					attack = false;
-				}
-			}
+			m_Shadow.Attack(ComputeMove());
 		}
-
-		m_Shadow.Attack(attack, block, vulnerable);
+			
 		m_Shadow.Move(horizontal);
 	}
 
 	// GetPlayerDirection
 	public Vector3 GetPlayerDirection() {
 		return m_PlayerDirection;
+	}
+
+	// InitMovePool
+	private void InitMovePool() {
+		m_MovePool = new List<int>();
+
+		// add all basic attack moves
+		for (int i = 0; i < m_AttackChance; ++i) {
+			m_MovePool.Add ((int) Move.MOVE_ATTACK);
+		}
+
+		// add all block moves
+		for (int i = 0; i < m_BlockChance; ++i) {
+			m_MovePool.Add ((int) Move.MOVE_BLOCK);
+		}
+
+		// add all powerup moves
+		for (int i = 0; i < m_VulnerableChance; ++i) {
+			m_MovePool.Add ((int) Move.MOVE_POWERUP);
+		}
+	}
+
+	// ComputeMove
+	private int ComputeMove() {
+		int move = -1;
+		try {
+			move = m_MovePool [(int) (Random.Range (0, moveSum - 1))];
+		} catch (ArgumentOutOfRangeException e) {
+			Debug.Log ("Move pool error");
+		}
+
+		// compute initial move
+		switch (move) 
+		{
+			case (int)Move.MOVE_ATTACK:
+				if (m_Shadow.GetAttackChain () == m_MaxAttackChain) {
+				move = (int) (Random.Range (1, 2) == 1 ? Move.MOVE_BLOCK 
+					: Move.MOVE_POWERUP);
+				}
+				break;
+			case (int) Move.MOVE_BLOCK:
+				if (m_LastBlock) {
+				move = (int) (Random.Range (1, 2) == 1 ? Move.MOVE_ATTACK 
+					: Move.MOVE_POWERUP);
+				}
+				break;
+			case (int) Move.MOVE_POWERUP:
+				if (m_LastVulnerable) {
+					move = (int)(Random.Range (1, 2) == 1 ? Move.MOVE_ATTACK 
+						: Move.MOVE_BLOCK);
+				}
+				break;
+		}
+
+		// make additional move adjustments (last block, powerup, etc.)
+		switch (move) 
+		{
+			case (int) Move.MOVE_ATTACK:
+				m_LastBlock = false;
+				m_LastVulnerable = false;
+				break;
+			case (int) Move.MOVE_BLOCK:
+				m_LastBlock = true;
+				m_LastVulnerable = false;
+				break;
+			case (int) Move.MOVE_POWERUP:
+				m_LastBlock = false;
+				m_LastVulnerable = true;
+				break;
+		}
+
+		return move;
 	}
 }

@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 
 // Constants
-public class Constants : MonoBehaviour {
+public class Constants {
     
     // Prefixes
     private static readonly string PREFIX_ANIM = "AnimationControllers/";
@@ -39,4 +39,10 @@ public class Constants : MonoBehaviour {
     // Tags
     public static readonly string TAG_SWORD = "Sword";
     public static readonly string TAG_SHADOW = "Shadow";
+
+	public enum Move {
+		MOVE_ATTACK,
+		MOVE_BLOCK,
+		MOVE_POWERUP
+	}
 }

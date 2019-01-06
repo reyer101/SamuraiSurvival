@@ -2,32 +2,21 @@
 using System.Collections;
 using UnityEngine;
 using Random = UnityEngine.Random;
+using ShadowMove = Constants.Move;
 
 public class ShadowCharacter : AbsCharacter
 {
 	private PlayerCharacter m_Player;
 	private ShadowController m_ShadowController;
 	private Vector2 m_PlayerDistance;
-
-	// Percent chance to attack when in range
-	[Range(0, 100f)]
-	public float m_AttackChance;
-
-	[Range(0, 100f)] 
-	public float m_VulnerableChance;
+	private float lastSwordHitTime = -99f;
+	private int attackChain;
+	private bool m_Vulnerable;
 
 	[Range(0, 4f)] 
 	public float m_VulnerableDuration;
 	
 	public float m_BlockDuration;
-
-	[Range(0, 4)] 
-	public int m_MaxAttackChain;
-	
-	private float lastChoiceTime = -99f, lastSwordHitTime = -99f, choiceDelay;
-
-	private int attackChain;
-	private bool m_LastBlock, m_Vulnerable, m_LastVulnerable;
 
 	void Start ()
 	{
@@ -35,7 +24,6 @@ public class ShadowCharacter : AbsCharacter
 			.GetComponent<PlayerCharacter>();
 		m_ShadowController = GetComponent<ShadowController>();
 		m_DamageColor = m_SpriteColor;
-		choiceDelay = m_AttackDelay;
 	}
 	
 	void FixedUpdate ()
@@ -107,69 +95,103 @@ public class ShadowCharacter : AbsCharacter
     Name: Attack
     Parameters: bool attack, bool block
     */
-	public void Attack(bool attack, bool block, bool vulnerable)
+	public void Attack(int move)
 	{
-		if (m_Attacking || m_Blocking || m_Vulnerable)
-		{
-			return;
-		}
-			
-		if (vulnerable)
-		{
-			m_Vulnerable = true;
-			m_LastVulnerable = true;
-			attackChain = 0;
-			m_LastBlock = false;
-			m_Animator.runtimeAnimatorController = Resources.Load(
-				Constants.ANIM_EMPTY) as RuntimeAnimatorController;
-			m_SpriteRenderer.sprite = Resources.Load<Sprite>(
-				Constants.SPRITE_VULNERABLE);
-			m_MaxSpeed = blockSpeed;
-			Invoke("StopVulnerability", m_VulnerableDuration);
+		// TODO: Remove this after moving all logic to ShadowController
+//		if (!IsIdle())
+//		{
+//			return;
+//		}
 
-			return;
-		}
-		
 		m_MaxSpeed = baseSpeed;
-		if (block)
+		switch (move) 
 		{
-			m_Animator.runtimeAnimatorController = Resources.Load(
-				Constants.ANIM_EMPTY) as RuntimeAnimatorController;
-			m_SpriteRenderer.sprite = Resources.Load<Sprite>(
-				Constants.SPRITE_BLOCK);
-			m_MaxSpeed = blockSpeed;
-			m_Blocking = true;
+			case (int) ShadowMove.MOVE_ATTACK:
+				m_Attacking = true;
+				m_Animator.runtimeAnimatorController = Resources
+					.Load(m_Attacks[m_AttackIdx % 2]) as RuntimeAnimatorController;
+				++m_AttackIdx;
+				lastAttackTime = Time.time;
 
-			attackChain = 0;
-			m_LastBlock = true;
-			choiceDelay = m_BlockDuration;
-			Invoke("StopBlocking", m_BlockDuration);
+				string clip = String.Format(Constants.CLIP_SWING,
+					m_AttackSoundIdx % 3);
+				m_Audio.clip = Resources.Load<AudioClip>(clip);
+				m_Audio.Play();
+				++m_AttackSoundIdx;
 
-			return;
+				// damage the player if they are in range
+				StartCoroutine(DamagePlayer(m_PlayerDistance, .2f));
+
+				Invoke("StopAttacking", m_AttackDelay);
+				break;
+			case (int) ShadowMove.MOVE_BLOCK:
+				m_Animator.runtimeAnimatorController = Resources.Load(
+					Constants.ANIM_EMPTY) as RuntimeAnimatorController;
+				m_SpriteRenderer.sprite = Resources.Load<Sprite>(
+					Constants.SPRITE_BLOCK);
+				m_MaxSpeed = blockSpeed;
+				m_Blocking = true;
+
+				Invoke("StopBlocking", m_BlockDuration);
+				break;
+			case (int) ShadowMove.MOVE_POWERUP:
+				m_Vulnerable = true;
+				m_Animator.runtimeAnimatorController = Resources.Load(
+					Constants.ANIM_EMPTY) as RuntimeAnimatorController;
+				m_SpriteRenderer.sprite = Resources.Load<Sprite>(
+					Constants.SPRITE_VULNERABLE);
+				m_MaxSpeed = blockSpeed;
+				Invoke("StopVulnerability", m_VulnerableDuration);
+				break;
 		}
 
-		if (attack && Time.time - lastAttackTime > m_AttackDelay)
-		{ 
-			m_Attacking = true;
-			m_Animator.runtimeAnimatorController = Resources
-				.Load(m_Attacks[m_AttackIdx % 2]) as RuntimeAnimatorController;
-			++m_AttackIdx;
-			lastAttackTime = Time.time;
-
-			string clip = String.Format(Constants.CLIP_SWING,
-				m_AttackSoundIdx % 3);
-			m_Audio.clip = Resources.Load<AudioClip>(clip);
-			m_Audio.Play();
-			++m_AttackSoundIdx;
 			
-			// damage the player if they are in range
-			StartCoroutine(DamagePlayer(m_PlayerDistance, .2f));
-			
-			++attackChain;
-			m_LastBlock = false;
-			choiceDelay = m_AttackDelay;
-			Invoke("StopAttacking", m_AttackDelay);
-		}
+//		if (vulnerable)
+//		{
+//			m_Vulnerable = true;
+//			m_Animator.runtimeAnimatorController = Resources.Load(
+//				Constants.ANIM_EMPTY) as RuntimeAnimatorController;
+//			m_SpriteRenderer.sprite = Resources.Load<Sprite>(
+//				Constants.SPRITE_VULNERABLE);
+//			m_MaxSpeed = blockSpeed;
+//			Invoke("StopVulnerability", m_VulnerableDuration);
+//
+//			return;
+//		}
+//
+//		if (block)
+//		{
+//			m_Animator.runtimeAnimatorController = Resources.Load(
+//				Constants.ANIM_EMPTY) as RuntimeAnimatorController;
+//			m_SpriteRenderer.sprite = Resources.Load<Sprite>(
+//				Constants.SPRITE_BLOCK);
+//			m_MaxSpeed = blockSpeed;
+//			m_Blocking = true;
+//
+//			Invoke("StopBlocking", m_BlockDuration);
+//
+//			return;
+//		}
+//
+//		if (attack && Time.time - lastAttackTime > m_AttackDelay)
+//		{ 
+//			m_Attacking = true;
+//			m_Animator.runtimeAnimatorController = Resources
+//				.Load(m_Attacks[m_AttackIdx % 2]) as RuntimeAnimatorController;
+//			++m_AttackIdx;
+//			lastAttackTime = Time.time;
+//
+//			string clip = String.Format(Constants.CLIP_SWING,
+//				m_AttackSoundIdx % 3);
+//			m_Audio.clip = Resources.Load<AudioClip>(clip);
+//			m_Audio.Play();
+//			++m_AttackSoundIdx;
+//			
+//			// damage the player if they are in range
+//			StartCoroutine(DamagePlayer(m_PlayerDistance, .2f));
+//
+//			Invoke("StopAttacking", m_AttackDelay);
+//		}
 	}
 	
 	// DamagePlayer
@@ -179,6 +201,7 @@ public class ShadowCharacter : AbsCharacter
 		if (playerDistance.x <= m_AttackRange && playerDistance.y
 		    <= m_AttackRange)
 		{
+			attackChain++;
 			m_Player.ProcessAttack(false);
 			m_Audio.Stop();
 		}
@@ -202,11 +225,17 @@ public class ShadowCharacter : AbsCharacter
 		return !m_Blocking && !m_Attacking && !m_Vulnerable;
 	}
 
+	// GetAttackChain
+	public int GetAttackChain() {
+		return attackChain;
+	}
+
 	// StopAction
 	public void StopAction() {
 		m_Blocking = false;
 		m_Attacking = false;
 		m_Vulnerable = false;
+		StopAllCoroutines();
 	}
 
 	// StopBlocking
