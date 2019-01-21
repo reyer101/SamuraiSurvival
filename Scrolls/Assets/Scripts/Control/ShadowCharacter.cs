@@ -53,6 +53,8 @@ public class ShadowCharacter : AbsCharacter
 		base.LateUpdate();
 		float r, g, b, a;
 		Color color;
+
+		// hande shadow-specific effects
 		switch (m_Anim)
 		{
 			case "Fade":
@@ -97,12 +99,6 @@ public class ShadowCharacter : AbsCharacter
     */
 	public void Attack(int move)
 	{
-		// TODO: Remove this after moving all logic to ShadowController
-//		if (!IsIdle())
-//		{
-//			return;
-//		}
-
 		m_MaxSpeed = baseSpeed;
 		switch (move) 
 		{
@@ -124,74 +120,28 @@ public class ShadowCharacter : AbsCharacter
 
 				Invoke("StopAttacking", m_AttackDelay);
 				break;
-			case (int) ShadowMove.MOVE_BLOCK:
-				m_Animator.runtimeAnimatorController = Resources.Load(
+		case (int) ShadowMove.MOVE_BLOCK:
+				m_Animator.runtimeAnimatorController = Resources.Load (
 					Constants.ANIM_EMPTY) as RuntimeAnimatorController;
-				m_SpriteRenderer.sprite = Resources.Load<Sprite>(
+				m_SpriteRenderer.sprite = Resources.Load<Sprite> (
 					Constants.SPRITE_BLOCK);
 				m_MaxSpeed = blockSpeed;
 				m_Blocking = true;
+				attackChain = 0;
 
 				Invoke("StopBlocking", m_BlockDuration);
 				break;
-			case (int) ShadowMove.MOVE_POWERUP:
+		case (int) ShadowMove.MOVE_POWERUP:
 				m_Vulnerable = true;
-				m_Animator.runtimeAnimatorController = Resources.Load(
+				m_Animator.runtimeAnimatorController = Resources.Load (
 					Constants.ANIM_EMPTY) as RuntimeAnimatorController;
-				m_SpriteRenderer.sprite = Resources.Load<Sprite>(
+				m_SpriteRenderer.sprite = Resources.Load<Sprite> (
 					Constants.SPRITE_VULNERABLE);
 				m_MaxSpeed = blockSpeed;
+				attackChain = 0;
 				Invoke("StopVulnerability", m_VulnerableDuration);
 				break;
 		}
-
-			
-//		if (vulnerable)
-//		{
-//			m_Vulnerable = true;
-//			m_Animator.runtimeAnimatorController = Resources.Load(
-//				Constants.ANIM_EMPTY) as RuntimeAnimatorController;
-//			m_SpriteRenderer.sprite = Resources.Load<Sprite>(
-//				Constants.SPRITE_VULNERABLE);
-//			m_MaxSpeed = blockSpeed;
-//			Invoke("StopVulnerability", m_VulnerableDuration);
-//
-//			return;
-//		}
-//
-//		if (block)
-//		{
-//			m_Animator.runtimeAnimatorController = Resources.Load(
-//				Constants.ANIM_EMPTY) as RuntimeAnimatorController;
-//			m_SpriteRenderer.sprite = Resources.Load<Sprite>(
-//				Constants.SPRITE_BLOCK);
-//			m_MaxSpeed = blockSpeed;
-//			m_Blocking = true;
-//
-//			Invoke("StopBlocking", m_BlockDuration);
-//
-//			return;
-//		}
-//
-//		if (attack && Time.time - lastAttackTime > m_AttackDelay)
-//		{ 
-//			m_Attacking = true;
-//			m_Animator.runtimeAnimatorController = Resources
-//				.Load(m_Attacks[m_AttackIdx % 2]) as RuntimeAnimatorController;
-//			++m_AttackIdx;
-//			lastAttackTime = Time.time;
-//
-//			string clip = String.Format(Constants.CLIP_SWING,
-//				m_AttackSoundIdx % 3);
-//			m_Audio.clip = Resources.Load<AudioClip>(clip);
-//			m_Audio.Play();
-//			++m_AttackSoundIdx;
-//			
-//			// damage the player if they are in range
-//			StartCoroutine(DamagePlayer(m_PlayerDistance, .2f));
-//
-//			Invoke("StopAttacking", m_AttackDelay);
-//		}
 	}
 	
 	// DamagePlayer

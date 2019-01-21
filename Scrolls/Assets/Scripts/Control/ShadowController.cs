@@ -19,7 +19,7 @@ public class ShadowController : MonoBehaviour
 	public int m_AttackChance;
 
 	[Range(0, 100)] 
-	public int m_VulnerableChance;
+	public int m_PowerUpChance;
 
 	[Range(0, 100)]
 	public int m_BlockChance;
@@ -29,7 +29,7 @@ public class ShadowController : MonoBehaviour
 
 	public float m_BlockDuration;
 
-	[Range(0, 4)] 
+	[Range(0, 10)] 
 	public int m_MaxAttackChain;
 
 	// Start
@@ -37,13 +37,8 @@ public class ShadowController : MonoBehaviour
 	{
 		m_Shadow = GetComponent<ShadowCharacter>();
 		m_PlayerObject = GameObject.FindGameObjectWithTag("Player");
-		moveSum = m_AttackChance + m_BlockChance + m_VulnerableChance;
+		moveSum = m_AttackChance + m_BlockChance + m_PowerUpChance;
 		InitMovePool ();
-
-		Debug.Log("After InitMovePool()");
-		foreach (int move in m_MovePool) {
-			Debug.Log ("Move: " + move);
-		}
 	}
 
 	// Fixed Update
@@ -63,7 +58,6 @@ public class ShadowController : MonoBehaviour
 		float horizontal = 0;
 		bool attack = false, block = false, vulnerable = false;
 
-		//Debug.Log(String.Format("({0:F}, {1:F})", playerDistanceX, m_ReadyRange));
 		if (playerDistanceX > m_AttackRange)
 		{
 			// normalize the direction vector for velocity
@@ -76,29 +70,6 @@ public class ShadowController : MonoBehaviour
 			{
 				return;
 			}
-				
-//			if (!m_LastVulnerable && Random.Range(0f, 100f) <= 
-//				m_VulnerableChance)
-//			{
-//				vulnerable = true;
-//				m_LastVulnerable = true;
-//			}
-//
-//			if (!m_Shadow.isVulnerable())
-//			{
-//				m_LastVulnerable = false;
-//				attack = true;
-//				vulnerable = false;
-//				block = false;
-//				float rand = Random.Range(0f, 100f);
-//				if (rand >= m_AttackChance
-//					&& !m_LastBlock || m_Shadow.GetAttackChain() == m_MaxAttackChain)
-//				{
-//					m_LastBlock = true;
-//					block = true;
-//					attack = false;
-//				}
-//			}
 
 			m_Shadow.Attack(ComputeMove());
 		}
@@ -126,7 +97,7 @@ public class ShadowController : MonoBehaviour
 		}
 
 		// add all powerup moves
-		for (int i = 0; i < m_VulnerableChance; ++i) {
+		for (int i = 0; i < m_PowerUpChance; ++i) {
 			m_MovePool.Add ((int) Move.MOVE_POWERUP);
 		}
 	}
@@ -144,7 +115,7 @@ public class ShadowController : MonoBehaviour
 		switch (move) 
 		{
 			case (int)Move.MOVE_ATTACK:
-				if (m_Shadow.GetAttackChain () == m_MaxAttackChain) {
+				if (m_Shadow.GetAttackChain () >= m_MaxAttackChain) {
 				move = (int) (Random.Range (1, 2) == 1 ? Move.MOVE_BLOCK 
 					: Move.MOVE_POWERUP);
 				}
