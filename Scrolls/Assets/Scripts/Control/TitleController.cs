@@ -9,12 +9,12 @@ using UnityStandardAssets.CrossPlatformInput;
 public class TitleController : MonoBehaviour
 {
 	public float m_ScrollSpeed, m_TerrainDistance, m_BackgroundDistance,
-		m_FadeRate, m_TitleRate, m_GlowStrength, m_GlowSpeed;
+		m_FadeRate, m_TitleRate;
 
 	private static float TERRAIN_DIFF = 380f;
 	private static float BACKGROUND_DIFF = 5825f;
 	
-	private GameObject m_Player;
+	private GameObject m_Player, m_Menu;
 	private GameObject m_Terrain, m_Terrain2, m_Background, m_Background2;
 	private Camera m_Camera;
 	
@@ -22,14 +22,15 @@ public class TitleController : MonoBehaviour
 	private Image m_Fade, m_Title;
 	private Text m_PromptText;
 	
-	private float startTerrainX, startBackgroundX, startTime, glowAlpha = .6f,
-		visibleAlpha = 255f, glowDiff = .001f;
+	private float startTerrainX, startBackgroundX, startTime,
+		visibleAlpha = 255f;
 
-	private bool inOrderTerrain, inOrderBackground;
+	private bool inOrderTerrain, inOrderBackground, menuShowing;
 	
 
 	void Start () {
 		m_Player = GameObject.FindGameObjectWithTag("Player");
+		m_Menu = GameObject.FindGameObjectWithTag (Constants.TAG_MENU);
 		m_Terrain = GameObject.Find("Terrain");
 		m_Terrain2 = GameObject.Find("Terrain 2");
 		m_Background = GameObject.Find("Background");
@@ -38,17 +39,19 @@ public class TitleController : MonoBehaviour
 			.GetComponent<Image>();
 		m_Title = GameObject.FindGameObjectWithTag("Title")
 			.GetComponent<Image>();
-		m_PromptText = GameObject.Find("Prompt").GetComponent<Text>();
+		m_PromptText = GameObject.FindGameObjectWithTag ("Prompt").GetComponent<Text> ();
 		m_Camera = Camera.main;
 
 		inOrderTerrain = true;
 		inOrderBackground = true;
+		menuShowing = false;
 
-		m_GlowSpeed = m_GlowSpeed / 1000f;
+		m_Menu.SetActive (false);
 
 		// initial starting positions for terrain and background
 		startTerrainX = m_Player.transform.position.x;
 		startBackgroundX = m_Player.transform.position.x;
+
 	}
 	
 	void Update ()
@@ -58,47 +61,24 @@ public class TitleController : MonoBehaviour
 			Application.Quit();
 		}
 		
-		if (Time.time - startTime > 5.5)
+		if (Time.time - startTime > 5.5 && !menuShowing)
 		{
 			// fade out black 
 			m_Fade.color = new Color(0, 0, 0, m_Fade.color.a - 
 				(m_FadeRate / 100f) * Time.deltaTime);
 		}
 
-		if (Time.time - startTime > 24)
-		{
+		if (Time.time - startTime > 24 && !menuShowing) {
 			// fade in title
 			float alpha = m_Title.color.a + (m_TitleRate *
-				Time.deltaTime) / 100;
-			m_Title.color = new Color(255f, 255f, 255f, alpha);
+			              Time.deltaTime) / 100;
+			m_Title.color = new Color (255f, 255f, 255f, alpha);
 		}
-
-		// make prompt text pulse
-		if (glowAlpha <= .6f)
+			
+		if (CrossPlatformInputManager.GetButtonDown("Jump") && !menuShowing)
 		{
-			glowDiff = m_GlowSpeed * m_GlowStrength;
-		} 
-		
-		Debug.Log("Glow subtract: " + (glowAlpha - 1.0f));
-		
-		if (glowAlpha - 1.0f > 0f)
-		{
-			glowDiff = -(m_GlowSpeed * m_GlowStrength);
-		}
-
-		glowAlpha = glowAlpha + glowDiff;
-		m_PromptText.color = new Color(255f, 255f, 255f, glowAlpha);
-		
-
-		if (m_Title.color.a > .9f)
-		{
-			m_PromptText.text = "Press 'space' to begin";
-
-			if (CrossPlatformInputManager.GetButtonDown("Jump"))
-			{
-				// load the main scene
-				SceneManager.LoadScene(1);
-			}
+			// show the main menu
+			showMenu();
 		}
 		
 		// move the player at the scroll speed
@@ -154,5 +134,13 @@ public class TitleController : MonoBehaviour
 			background.transform.position += new Vector3(BACKGROUND_DIFF, 0, 0);
 			startBackgroundX = m_Player.transform.position.x;
 		}
+	}
+
+	void showMenu() {
+		m_Menu.SetActive(true);
+		menuShowing = true;
+		m_Title.color = Color.white;
+		m_Fade.enabled = false;
+		m_PromptText.text = "";
 	}
 }

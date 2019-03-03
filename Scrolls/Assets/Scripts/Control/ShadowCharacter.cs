@@ -6,6 +6,7 @@ using ShadowMove = Constants.Move;
 
 public class ShadowCharacter : AbsCharacter
 {
+	private DuelController m_DuelController;  // TODO: Generalize this for different game modes
 	private PlayerCharacter m_Player;
 	private ShadowController m_ShadowController;
 	private Vector2 m_PlayerDistance;
@@ -20,6 +21,8 @@ public class ShadowCharacter : AbsCharacter
 
 	void Start ()
 	{
+		m_DuelController = GameObject.FindGameObjectWithTag ("GameController")
+			.GetComponent<DuelController>();
 		m_Player = GameObject.FindGameObjectWithTag("Player")
 			.GetComponent<PlayerCharacter>();
 		m_ShadowController = GetComponent<ShadowController>();
@@ -69,6 +72,7 @@ public class ShadowCharacter : AbsCharacter
 
 				if (m_SpriteRenderer.color.a <= .1)
 				{
+					m_DuelController.stopDuel();
 					DestroyImmediate(gameObject);
 				}
 				

@@ -7,6 +7,7 @@ public class PlayerCharacter : AbsCharacter {
     public float m_JumpForce;
     
     private bool m_Grounded, m_HasSword;
+	private DuelController m_DuelController; // TODO: Generalize this for different game modes
     private Transform m_GroundCheck;
     private CircleCollider2D m_CircleCollider2D;
     private LayerMask m_LayerMask;     
@@ -20,6 +21,8 @@ public class PlayerCharacter : AbsCharacter {
     void Start ()
     {
         m_HasSword = true;
+		m_DuelController = GameObject.FindGameObjectWithTag ("GameController")
+			.GetComponent<DuelController> ();
         m_GroundCheck = transform.Find("GroundCheck");  
         m_DamageColor = new Color(1f, 0.3f, 0.24f);
         m_LayerMask = -1;
@@ -195,7 +198,7 @@ public class PlayerCharacter : AbsCharacter {
     // ProcessDead
     protected override void ProcessDead()
     {
-        // TODO: do player dead stuff here
+		m_DuelController.stopDuel();
     }
 
     // DamageTargets

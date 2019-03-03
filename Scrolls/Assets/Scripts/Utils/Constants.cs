@@ -30,6 +30,7 @@ public class Constants {
     public static readonly string OBJECT_SWORD = PREFIX_OBJECT + "sword";
     public static readonly string OBJECT_HEALTHBAR = "HealthBar";
     public static readonly string OBJECT_HEALTHFOREGROUND = "Foreground";
+	public static readonly string OBJECT_SHADOW = "Shadows/Shadow{0}";
     
     // Audio 
     public static readonly string CLIP_SWING = PREFIX_AUDIO + "sword_slash{0}";
@@ -39,6 +40,15 @@ public class Constants {
     // Tags
     public static readonly string TAG_SWORD = "Sword";
     public static readonly string TAG_SHADOW = "Shadow";
+	public static readonly string TAG_MENU = "Menu";
+
+	// Keys
+	public static readonly string KEY_DIFFICULTY = "keyDifficulty";
+
+	// Difficulties
+	public static readonly string EASY = "Easy";
+	public static readonly string MED = "Med";
+	public static readonly string HARD = "Hard";
 
 	public enum Move {
 		MOVE_ATTACK,
